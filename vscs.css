@@ -9,6 +9,8 @@
     align-items: center;
     position: relative;
     top: 0px;
+    padding: 2px;
+    border-radius: 2px ;
 }
 
 #navbar::before{
@@ -39,6 +41,7 @@
 #navbar ul{
     display: flex;
     font-family: 'Baloo Bhai', cursive;
+
 }
 
 #navbar ul li{ 
@@ -70,13 +73,8 @@ color: antiquewhite;
   height: 500px;
   width: 50%;
   line-height: 70px;
+}
 
-}
-#item1  p{
-  margin-top: 10%;
-  color: bisque;
-  text-shadow: 2px;
-}
 #item1 span{
   color:brown;
 }
@@ -94,8 +92,8 @@ color: antiquewhite;
 .about{
   width: 100%;
   height:200px;
-  background-color: rgb(220, 245, 237);
-  color: rgb(0, 0, 0);
+  background-color: rgb(1, 9, 6);
+  color: rgb(218, 213, 213);
   text-align: center;
   padding: 2px;
  
@@ -104,53 +102,24 @@ color: antiquewhite;
   font-family: fantasy,Times, serif;
 }
 .about h2:hover{
-  background-color: black;
-  color: beige;
+  background-color: rgb(206, 196, 196);
+  color: rgb(13, 13, 1);
 }
-/* Contact Section */
-
-#contact{
-  position: relative;
+#rainbow{
+  font-size: 2em;
+  font-weight: 700;
+  background: linear-gradient(90deg,red,orange, yellow, green, blue, white);
+  background-size: 17%;
+  
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: rgba(0, 0, 0, 0.2);
+  transition: all 1s;
+  
 }
-.h{
-  text-align: center;
-}
-.h:hover{
-  background-color: black;
-  color:aliceblue;
-}
-#contact::before{
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  opacity: 0.7;
-  background: url('contact.jpg') no-repeat center center/cover;
-
-}
-#contact-box{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 34px;
-}
-#contact-box input, 
-#contact-box textarea{
-  width: 100%;
-  padding: 0.5rem;
-  border-radius: 9px;
-  font-size: 1.1rem;
-} 
-
-#contact-box form{
-  width: 40%;
-}
-
-#contact-box label{
- font-size: 1.3rem;
- font-family: 'Bree Serif', serif;
-
+#rainbow:hover{
+  background-position: -17%;
+  color: white;
 }
 #footer{
   background-color: rgb(18, 7, 7);
