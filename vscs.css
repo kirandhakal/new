@@ -113,4 +113,28 @@ color: antiquewhite;
 height: 40px;
 color:rgb(201, 192, 192);
 }
+@media (min-width: 1025px) and (max-width: 1280px){
+    body {
+        background-color: rgb(3, 6, 3);
+    }
+    #item1{
+      margin-top: 21vh;
+      margin-left: 1vh;
+    }
+    #rainbow {
+      margin: 1vh 0.5vh;
+    
+    }
+    h1{
+      padding: 0.5vh;
+    }
+    #item2{
+      margin-top: 18vh;
+      margin-right: 0vh;
+    }
+
+    section{
+      margin-top: 71vh;
+    }
+}
 </style>
