@@ -117,14 +117,14 @@ color:rgb(201, 192, 192);
   /* Media Query for Mobile Devices */
   @media (max-width: 380px) {
     body {
-        background-color: red;
+        background-color: black;
     }
 }
   
 /* Media Query for low resolution  Tablets, Ipads */
 @media (min-width: 481px) and (max-width: 767px) {
     body {
-        background-color: yellow;
+        background-color: black;
     }
 }
   
@@ -162,7 +162,7 @@ color:rgb(201, 192, 192);
 /* Media Query for Laptops and Desktops */
 @media (min-width: 1025px) and (max-width: 1280px){
     body {
-        background-color: rgb(3, 6, 3);
+        background-color: black;
     }
     #item1{
       margin-top: 21vh;
