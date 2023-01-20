@@ -4,27 +4,33 @@
 }
 body{
     color:aqua;
-    background-color: rgb(24, 39, 107);
+    background-color: black;
 }
 .first{
     
     background-color: black;
     color:aqua;
-    margin: 0%;
-    padding: 1%;
+    margin: 2px;
+   
     display: flex;
     flex-wrap: wrap;
 font-weight: 100;
 font-family:  Times, serif;
-    height:50vw;
+    height:60%;
+    padding: 10px;
 }
-
+p{
+    height:5px;
+    width: 15px;
+    padding: 50px;
+  margin: -5px;
+}
 
 .second{
     color: rgb(130, 231, 6);
   margin: 2px;
     background-color: black;
-    height:50vw;
+    height:30vw;
     display:flex;
     flex-wrap: wrap;
 }
