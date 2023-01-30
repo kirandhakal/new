@@ -99,6 +99,7 @@ color: antiquewhite;
   -webkit-background-clip: text;
   color: rgba(0, 0, 0, 0.2);
   transition: all 1s;
+  text-align:center;
   
 }
 #rainbow:hover{
