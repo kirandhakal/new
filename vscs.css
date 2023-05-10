@@ -152,7 +152,7 @@ nav .content .links{
 }
 
 .it{
-  background-color: black;
+  background-color: rgb(0, 0, 0);
   height: 500px;
 display: flex;
 justify-content: center;
@@ -160,7 +160,7 @@ justify-content: center;
 }
 #item1{
 color: antiquewhite;
-  background-color: rgb(8, 10, 10);
+  background-color: rgb(0, 0, 0);
   height: 500px;
   width: 50%;
   line-height: 70px;
@@ -169,7 +169,7 @@ color: antiquewhite;
 }
 #item2{
   height: 500px;
-  background-color: rgb(12, 3, 3);
+ background-color: rgb(0, 0, 0);
   width: 50%;
   margin-top: 10px;
   margin-right: 10%;
@@ -200,7 +200,7 @@ max-height:500px;
   color: white;
 }
 #footer{
-  background-color: rgb(18, 7, 7);
+  background-color: rgb(0, 0, 0);
   font-size: 20px;
   text-align:center;
 height: 40px;
