@@ -18,7 +18,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(45deg, #0a0a0a, #3a4452);
+    background: black;
 }
 
 .calculator{
@@ -52,7 +52,7 @@ button{
     width: 60px;
     height: 60px;
     margin: 10px;
-    border-radius: 50%;
+    border-radius: 10%;
     background: transparent;
     color: #ffffff;
     font-size: 20px;
@@ -62,9 +62,20 @@ button{
 
 .equalBtn{
     background-color: #fb7c14;
+    height: 120px;
    
 }
 
 .operator{
     color: #3b0aee;
+}
+
+.equalBtn:hover{
+    color: red;
+}
+
+
+button:hover{
+    color: #fb7c14;
+    transform: scale(1.3);
 }
