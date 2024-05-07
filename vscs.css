@@ -362,3 +362,62 @@ color:rgb(201, 192, 192);
   }
 }
 
+.fcontainer {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 450px;
+  height: 350px;
+  perspective: 800px;
+  margin: 3%;
+  
+}
+
+.fcontainer:hover > .card {
+  cursor: pointer;
+  transform: rotateY(180deg);
+  height: 100%;
+}
+
+.card {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  transition: transform 1500ms;
+  transform-style: preserve-3d;
+ 
+}
+/* card:nth-child(2){
+  margin: 300px;
+} */
+
+.front,
+.back {
+  height: 100%;
+  width: 100%;
+  border-radius: 2rem;
+  box-shadow: 0 0 5px 2px rgba(230, 222, 222, 0.25);
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.front img {
+  width: 100%;
+  height: 100;
+  /* background-image: url(IMG_3.jpg); */
+}
+
+.back {
+  background-color: #3a3a3a;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  gap: 3rem;
+  color: antiquewhite;
+  text-align: center;
+  
+}
+
+
