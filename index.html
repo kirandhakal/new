@@ -10,7 +10,9 @@
   <link rel="stylesheet" href="vscs.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/> 
 </head>
-<body><section> 
+<body>
+	<div class="loader">LIVE SOON...</div>
+<!-- 	<section> 
    <div class="wrapper">
     <nav>
       <input type="checkbox" id="show-search">
@@ -20,14 +22,14 @@
       <div class="logo"><a href="#">kirandhakal</a></div>
         <ul class="links">
           <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">AboutMe</a></li>
+          <li><a href="about.html">AboutMe</a></li> -->
      <!--    <li>
             <a href="https://sites.google.com/gces.edu.np/my2ndclass?usp=sharing" class="desktop-link">notes</a>
           
           </li>
 		
           <li>-->
-          <li><a href ="https://docs.google.com/forms/d/e/1FAIpQLSdfW_9vZ8xDbCwZJ3N792pVKmiSd8tMPRv6mLEh3GjnONCseg/viewform?usp=sf_link">contact me</a></li>
+<!--           <li><a href ="https://docs.google.com/forms/d/e/1FAIpQLSdfW_9vZ8xDbCwZJ3N792pVKmiSd8tMPRv6mLEh3GjnONCseg/viewform?usp=sf_link">contact me</a></li> -->
 		 <!--   <li><a href="calculator.html">calculator</a></li>
 		 
           <li><a href="https://unknownnnp.blogspot.com/">blog</a></li>
@@ -41,7 +43,7 @@
         <button type="submit" class="go-icon"><i class="fas fa-long-arrow-alt-right"></i></button>
       </form>
 		    -->
-    </nav>
+<!--     </nav>
   </div>
 </section>
 <br><br>
@@ -56,12 +58,12 @@
       <h2> I AM <span class="multiText"></span>
     </div>
   </div>
-       <div id="item2"> <img src="kiran-cat.png" alt=""></div>
+       <div id="item2"> <img src="kiran-cat.png" alt=""></div> -->
 <!--       <div class="fcontainer">
       <div class="card">
         <div class="front">  <img src="kiran-cat.png" alt=""></div>
         <div class="back"> -->
-          <h1>ABOUT ME</h1> 
+<!--           <h1>ABOUT ME</h1> 
           <p>hi i am  kiran dhakal <br> web designer</p>
         </div>
       </div>
@@ -76,9 +78,9 @@
     <A href="https://www.facebook.com/kirandhakal715"target="_main"><img src="FB.png" alt="logo of facebook"width="40px" height="35px" align="left"></A>&nbsp;&nbsp;
       &nbsp;<A href="https://www.instagram.com/kirandhakal77"target="_main"><img src="insta.png" alt="insta"width="40px" height="36px" align="left"></A>&nbsp;&nbsp;
     &nbsp;&nbsp;<A href="https://github.com/kirandhakal"target="_main"><img src="github.jpeg"alt="logo of github" width="40px" height="40px" align="left"></A>&nbsp;&nbsp;
-    &nbsp;&nbsp;  <!--<A href="https://twitter.com/_kiran_Dkl"target="_main"><img src="twitter.png"alt="logo of youtube" width="40px" height="40px" align="left"></A>&nbsp;&nbsp; --> 
+    &nbsp;&nbsp;  <!--<A href="https://twitter.com/_kiran_Dkl"target="_main"><img src="twitter.png"alt="logo of youtube" width="40px" height="40px" align="left"></A>&nbsp;&nbsp; -->  -->
    
-     Created by kirandhakal copyright © 2022|All right reserved</p>
+<!--      Created by kirandhakal copyright © 2022|All right reserved</p>
     </footer>
     </section>
       
@@ -91,7 +93,65 @@
         backSpeed:70,
         backDelay :3500
       })
-    </script>
+    </script> -->
+	<style>
+		@keyframes load-loop {
+  0% {
+    background-position: 100%;
+  }
+
+  40% {
+    background-position: 50%;
+  }
+
+  50% {
+    background-position: 50%;
+  }
+
+  90% {
+    background-position: 0%;
+  }
+
+  100% {
+    background-position: 0%;
+  }
+}
+
+.loader {
+  position: relative;
+  font-family: sans-serif;
+  display: flex;
+  height: auto;
+  width: auto;
+  letter-spacing: 3px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 12px;
+  font-size: 1.45em;
+  color: transparent;
+  background: linear-gradient(to right,#fff 33.3%,#008cdd 33.3%, #008cdd 66.6%, #fff 66.6%) no-repeat;
+  background-size: 300%;
+  background-position: 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: infinite 1.4s load-loop ease;
+}
+
+.loader::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: block;
+  background: linear-gradient(to right,#008cdd 33.3%, transparent 33.3% , transparent 66.6%, #008cdd 66.6%) no-repeat;
+  background-size: 300%;
+  background-position: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  animation: infinite 1.4s load-loop ease;
+}
+	</style>
       
 
 </body>
