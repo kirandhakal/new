@@ -89,4 +89,12 @@ hiddenelements.forEach(
   (el)=> Observer.observe(el)
 );
 
-//
+//send mail
+ function sendMail(){
+  let parms ={
+    name:document.getElementById("name").value,
+    email:document.getElementById("email").value,
+    message:document.getElementById("message").value,
+  }
+emailjs.send("service_z84dxwp","template_4usn413",parms)
+ }
