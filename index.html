@@ -6,14 +6,17 @@
   <title>kiran dhakal</title>
   <link rel = "icon" href ="image/kd.png" 
   type = "image/x-icon">
-  <script type="text/javascript">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<!-- <script type="text/javascript">
    (function(){
       emailjs.init({
         publicKey: "7TsbQdGL4fQU0wehu",
       });
    })();
-</script>
-  <link rel="stylesheet" href="css/style.css">
+</script> -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
@@ -31,16 +34,9 @@
           <!-- <li class="nav-item">
             <a class="nav-link active" href="css/animation.html">about me</a>
           </li> -->
-            <li class="nav-item">
-            <a class="nav-link active" href="#skill">my skill</a>
-          </li>
-            <li class="nav-item">
-            <a class="nav-link active" href="#project">my projects</a>
-          </li>
           <li class="nav-item">
             <a class="nav-link active" href="#contact">contact me</a>
           </li>
-          
         </ul>
         <span class="navbar-text">
         <!-- todays time:  -->
@@ -67,9 +63,9 @@
       <div class="btn"><button>submit</button>
         <button>download</button></div>
     </div>
-    <div class="image"><img src="image/kiran1.png" alt="myimage"> </div>
+    <div class="image"><img src="image/img1.jpg" alt="myimage"> </div>
 </div>
- <div class="skill" id="skill">
+ <div class="skill">
   <h2>my skills</h2>
   <div class="skil animated">
   <!-- <i class="fa-brands fa-html5">html</i> -->
@@ -78,23 +74,20 @@
   <div class="icons"><i class="fa-brands fa-css3"></i></i>css</div>
   <div class="icons"><i class="fa-brands fa-js"></i>js</div>
   <div class="icons"><i class="fa-brands fa-react"></i>REACT</div>
-      <div class="icons"><i class="fa-brands fa-bootstrap"></i></i>bootstrap</div>
-<!--   <div class="icons"><i class="fa-brands fa-node-js"></i>node js</div> -->
+  <div class="icons"><i class="fa-brands fa-node-js"></i>node js</div>
   <div class="icons"><i class="fa-brands fa-figma"></i>figma</div>
   <div class="icons"><i class="fa-brands fa-git-alt"></i>git</div>
   <div class="icons"><i class="fa-brands fa-github"></i>github</div>
 
 </div>
 </div>
-<div class="myproject" id="project">
+<div class="myproject">
   <h2>my projects</h2>
   <div class="project animated">
     <div class="projectcontent"><h3>BLOOD BANK MANAGENT SYSTEM</h3>
       <div class="links"><a href="https://github.com/kirandhakal/bloodbankmanagementsystem">view in github</a></div>
       
     </div>
-    
-    <div class="projectcontent"><h3>CODE EDITOR</h3> <div class="links"> <a href="https://github.com/kirandhakal/codeeditor">view in github</a><span><a href="https://kirandhakal.github.io/codeeditor/">take a look</a></span></div></div>
     <div class="projectcontent"><h3>TIC TAC TOE</h3> <div class="links"> <a href="https://github.com/kirandhakal/tictactoe">view in github</a><span><a href="https://kirandhakal.github.io/tictactoe/">take a look</a></span></div></div>
     <div class="projectcontent"><h3>COLOR GENERATOR </h3> <div class="links"> <a href="https://github.com/kirandhakal/passwordgenerator">view in github</a><span><a href="https://kirandhakal.github.io/passwordgenerator/">take a look</a></span></div></div>
     <div class="projectcontent"><h3>QUIZ-APP </h3> <div class="links"> <a href="https://github.com/kirandhakal/quiz-app">view in github</a><span><a href="https://kirandhakal.github.io/quiz-game/">take a look</a></span></div></div>
@@ -104,16 +97,20 @@
 </div>
 
 <div class="container animated" id="contact">
+  
   <div class="contact-box">
- 
+    
     <div class="right">
+      <form name="submit-to-google-sheet">
       <h2>Contact Us</h2>
-      <input type="text" class="field" placeholder="Your Name">
-      <input type="text" class="field" placeholder="Your Email">
+      <input type="text" class="field" name="name" id="name" placeholder="Your Name">
+      <input type="email" class="field" id="email" name="email" placeholder="Your Email">
       <!-- <input type="text" class="field" placeholder="Phone"> -->
-      <textarea placeholder="Message" class="field"></textarea>
-      <button class="cbtn">Send</button>
-    </div>
+      <textarea placeholder="Message" class="field" name="message" id="message"></textarea>
+      <button class="cbtn" onclick="sendMail()">Send</button>
+    </form>
+    <span id="msg"></span>
+  </div>
     <div class="left">
       <h2>Follow us</h2>
       
@@ -123,10 +120,28 @@
   <a href="https://github.com/kirandhakal"target="_blank"><i class="fa-brands fa-github"></i></a></li>
      </div>
   </div>
+
 </div>
 <!-- <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa-solid fa-house"></i></button> -->
 
  <footer class="footer"> copyright &#169 2022</footer>
+ <script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbz261LqFxIzgTLWuDxeJlyUEyAN71gtDS_nKFSrZrt-k7owPUyySUlU-NNBtgvY42G9/exec'
+  const form = document.forms['submit-to-google-sheet']
+  const msg = document.getElementById("msg")
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => {
+        msg.innerHTML ="message sent successfully"
+        setTimeout(function(){
+          msg.innerHTML=""
+        },5000)
+        form.reset()
+  })
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
   <script src="js/index.js"></script>
   <script src="https://kit.fontawesome.com/88a6dda80a.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
