@@ -371,6 +371,11 @@ animation-timing-function: fade;
 	min-height: 150px;
   resize: none;
 }
+#msg{
+  color: #2ecc71;
+  margin-top: 10px;
+  display: block;
+}
 
 .cbtn{
 	width: 100%;
