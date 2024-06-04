@@ -1,4 +1,4 @@
-// clock start
+// -------------------------------------------clock start-------------------------//
 const displayTime = document.querySelector(".display-time");
 // Time
 function showTime() {
@@ -70,9 +70,22 @@ function updateDate() {
 }
 
 updateDate();
-//clock ends
+//-------------------------------------------clock ends-------------------------------------//
+//----------------------------------offline------------------------//
+const check =document.getElementById("status");
+if(navigator.onLine){
+  // check.innerHTML='<div class="online"> you are  back online</div>';
+}else{
+  // alert("you are offline");
+  check.innerHTML='<div class="offline"> you are offline</div>';
+  setTimeout(() => {
+    check.innerHTML="";
+  }, "3000");
+  
+}
+//----------------------------------offline------------------------//
 
-//animations
+//-------------------------------------------------animations-------------------------------//
 const Observer =new IntersectionObserver((entries)=>{
   entries.forEach((entry)=>{
     if(entry.isIntersecting){
@@ -83,18 +96,51 @@ const Observer =new IntersectionObserver((entries)=>{
     }
   });
 });
-
-const hiddenelements =document.querySelectorAll('.skil');
+const hiddenelements1 =document.querySelectorAll('.hidden1');
+const hiddenelements =document.querySelectorAll('.hidden');
 hiddenelements.forEach(
   (el)=> Observer.observe(el)
 );
+hiddenelements1.forEach(
+  (el)=> Observer.observe(el)
+);
+//------------------------------------ animations ends------------------------------------------//
 
-//send mail
- function sendMail(){
-  let parms ={
-    name:document.getElementById("name").value,
-    email:document.getElementById("email").value,
-    message:document.getElementById("message").value,
+// ------------------------------------send mail-----------------------------------------------//
+const scriptURL = 'https://script.google.com/macros/s/AKfycbz261LqFxIzgTLWuDxeJlyUEyAN71gtDS_nKFSrZrt-k7owPUyySUlU-NNBtgvY42G9/exec'
+const form = document.forms['submit-to-google-sheet']
+const msg = document.getElementById("msg")
+form.addEventListener('submit', e => {
+  e.preventDefault()
+  fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+    .then(response => {
+      msg.innerHTML ="message sent successfully"
+      setTimeout(function(){
+        msg.innerHTML=""
+      },5000)
+      form.reset()
+})
+    .catch(error => console.error('Error!', error.message))
+})
+//--------------------------------------Sens send mail-------------------------------------------//
+//---------------------To TOP -------------------------------------------------------------//
+// Get the button
+let mybutton = document.getElementById("top");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
   }
-emailjs.send("service_z84dxwp","template_4usn413",parms)
- }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+//--------------------------end of top-------------------------------------------------//
