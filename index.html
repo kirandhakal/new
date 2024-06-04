@@ -10,41 +10,37 @@
   <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
 </script>
-<!-- <script type="text/javascript">
-   (function(){
-      emailjs.init({
-        publicKey: "7TsbQdGL4fQU0wehu",
-      });
-   })();
-</script> -->
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">kiran dhakal</a>
+      <a class="navbar-brand" href="#"><img src="image/kd.png"width="20px" alt="logo"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link active" href="css/animation.html">about me</a>
-          </li> -->
-           <li class="nav-item">
-            <a class="nav-link active" href="#skill">my skill</a>
-          </li>
-           <li class="nav-item">
-            <a class="nav-link active" href="#project">my project</a>
+            <a class="nav-link active" aria-current="page" href="#">HOME</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#contact">contact me</a>
+            <a class="nav-link active" href="#skill">MY SKILL</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#project">MY PROJECT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#services">MY SERVICES</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#contact">CONTACT ME</a>
+          </li>
+        
         </ul>
-        <span class="navbar-text">
+      
+        <span class="navbar-text" >
         <!-- todays time:  -->
          <div class="container-fluid">
           <div class="clock">
@@ -61,54 +57,100 @@
     </div>
   </nav>
  
-  
+ <div id="status"></div>
    <div class="main">
     <div class="text" >
-      <span>HI,I AM KIRAN DHAKAL</span>
+      <span>HI! I AM KIRAN DHAKAL</span>
       <P> I AM A WEB DEVELOPER.</P>
-      <div class="btn"><button>submit</button>
+      <div class="btn"><button>submit</button><br>
         <button>download</button></div>
     </div>
-    <div class="image"><img src="image/kiran1.png" alt="myimage"> </div>
+    <div class="image">
+      <!-- <img src="image/kiran1.png" alt="myimage">  -->
+    </div>
 </div>
  <div class="skill" id="skill">
   <h2>my skills</h2>
   <div class="skil animated">
   <!-- <i class="fa-brands fa-html5">html</i> -->
 
-  <div class="icons"><i class="fa-brands fa-html5"></i>html</div>
-  <div class="icons"><i class="fa-brands fa-css3"></i></i>css</div>
-  <div class="icons"><i class="fa-brands fa-js"></i>js</div>
+  <div class="icons"><i class="fa-brands fa-html5"></i>HTML</div>
+  <div class="icons"><i class="fa-brands fa-css3"></i></i>CSS</div>
+  <div class="icons"><i class="fa-brands fa-js"></i>JS</div>
   <div class="icons"><i class="fa-brands fa-react"></i>REACT</div>
-  <div class="icons"><i class="fa-brands fa-node-js"></i>node js</div>
-  <div class="icons"><i class="fa-brands fa-figma"></i>figma</div>
-  <div class="icons"><i class="fa-brands fa-git-alt"></i>git</div>
-  <div class="icons"><i class="fa-brands fa-github"></i>github</div>
+  <div class="icons"><i class="fa-brands fa-node-js"></i>NODE JS</div>
+  <div class="icons"><i class="fa-brands fa-figma"></i>FIGMA</div>
+  <div class="icons"><i class="fa-brands fa-git-alt"></i>GIT</div>
+  <div class="icons"><i class="fa-brands fa-github"></i>GITHUB</div>
 
 </div>
 </div>
-<div class="myproject" id="project">
+<div class="myproject " id="project">
   <h2>my projects</h2>
-  <div class="project animated">
-    <div class="projectcontent"><h3>BLOOD BANK MANAGENT SYSTEM</h3>
-      <div class="links"><a href="https://github.com/kirandhakal/bloodbankmanagementsystem">view in github</a></div>
-      
-    </div>
-    <div class="projectcontent"><h3>TIC TAC TOE</h3> <div class="links"> <a href="https://github.com/kirandhakal/tictactoe">view in github</a><span><a href="https://kirandhakal.github.io/tictactoe/">take a look</a></span></div></div>
-    <div class="projectcontent"><h3>COLOR GENERATOR </h3> <div class="links"> <a href="https://github.com/kirandhakal/passwordgenerator">view in github</a><span><a href="https://kirandhakal.github.io/passwordgenerator/">take a look</a></span></div></div>
-    <div class="projectcontent"><h3>QUIZ-APP </h3> <div class="links"> <a href="https://github.com/kirandhakal/quiz-app">view in github</a><span><a href="https://kirandhakal.github.io/quiz-game/">take a look</a></span></div></div>
+  <div class="project animated ">
+    <div class="projectcontent hidden"><h3>BLOOD BANK MANAGENT SYSTEM</h3>
+      <p> Blood Bank Management System is a Web App solution designed to efficiently manage
+        the operations of a blood bank.It aims to organize the process of blood donation, storage,
+        and distribution while ensuring optimal record management and improved accessibility for
+        patients in need. </p>
+      <div class="links"><a href="https://github.com/kirandhakal/bloodbankmanagementsystem">VIEW IN GITHUB</a></div></div>
+  
+       <div class="projectcontent hidden"><h3>CODE-EDITOR </h3>
+        <p>KBS Code Editor is a Web App where users can write a code into the code editor and can
+          compiler.So, this application will save time in installing the
+          entire compiler. The purpose of this project is to design and develop a real-time code editor
+          application.</p>
+        <div class="links"> <a href="https://github.com/kirandhakal/codeeditor">VIEW IN GITHUB</a>
+         <span><a href="https://kirandhakal.github.io/codeeditor/">TAKE A LOOK</a></span></div></div>
+
+    <div class="projectcontent hidden1"><h3>TIC TAC TOE</h3>
+      <p>The creation and execution of a web-based version of the popular game Tic Tac Toe is discussed in this paper with the goal of making it entertaining and easy to use. The program makes use of contemporary web technologies, such as JavaScript, HTML5, CSS3, and HTML5, to produce an engaging and dynamic game interface. JavaScript is used to implement the game logic, guaranteeing a seamless and effective user experience. The application's primary features are its two-player mode, dynamic game state updates, and attractive yet basic user interface.</p>
+       <div class="links"> <a href="https://github.com/kirandhakal/tictactoe">VIEW IN GITHUB</a>
+        <span><a href="https://kirandhakal.github.io/tictactoe/">TAKE A LOOK</a></span></div></div>
+    <div class="projectcontent hidden1"><h3>COLOR GENERATOR </h3>
+      <p>The goal of the web-based color generator tool presented in this article is to help developers and designers create visually pleasing color palettes. With the help of contemporary web technologies like HTML5, CSS3, and JavaScript, the program offers a user experience that is responsive and easy to use. The application's primary role is to create random colors and display them in hexadecimal, RGB, and HSL formats along with suggestions for complimentary and comparable colors.</p>
+       <div class="links"> <a href="https://github.com/kirandhakal/passwordgenerator">VIEW IN GITHUB</a>
+        <span><a href="https://kirandhakal.github.io/passwordgenerator/">TAKE A LOOK</a></span></div></div>
+    <div class="projectcontent hidden"><h3>QUIZ-APP </h3> 
+      <p>This quiz app makes use of Javascript for logic and interactivity, CSS for styling, and HTML for structure. Try your hand at being the quiz master by tracking your score and answering multiple-choice questions!</p>
+      <div class="links"> <a href="https://github.com/kirandhakal/quiz-app">VIEW IN GITHUB</a>
+        <span><a href="https://kirandhakal.github.io/quiz-game/">TAKE A LOOK</a></span></div></div>
     
      <!-- <div class="projectcontent"><h3> QUIZ-APP</h3> <class="links"><a href="https://github.com/kirandhakal/quiz-app">view in github</a><span><a href="https://kirandhakal.github.io/quiz-game/"> take a look</a></span></div></div> -->
   </div>
 </div>
+<!-- -----------------------------------------------my services--------------------------- -->
 
+  <div class="animated" id="services">
+   
+      <h1 class="sub-title">my services</h1>
+      <div class="services-list">
+        <div>  <h3><i class="fas fa-code"> web Design </i> </h3>
+          <p>I specialize in crafting exceptional web experiences using React JS.  This powerful JavaScript library allows me to build dynamic, user-friendly, and high-performing websites. React's component-based approach ensures efficient development and clean code, leading to a smooth and engaging experience for your visitors. My focus lies on creating intuitive and visually appealing interfaces that bring your vision to life across all devices.</p>
+         <!-- <a href="#">learn more</a> -->
+        </div>
+       <!-- app development -->
+       <div>  <h3><i class="fa-brands fa-app-store-ios"> App Development </i> </h3>
+        <p>I can craft exceptional mobile apps for you using Flutter, a powerful framework that allows building beautiful and high-performing apps for both iOS and Android with a single codebase. This translates to faster development and a smoother user experience for your audience. I focus on creating intuitive and engaging apps, ensuring your vision comes to life across both platforms.</p>
+     <!-- <a href="#">learn more</a> -->
+      </div>
+
+<!-- figma -->
+<div>  <h3><i class="fas fa-crop-alt"> UI/UX Design </i> </h3>
+        <p>As a skilled front-end developer and UX/UI enthusiast, I bridge the gap between code and creativity. My passion lies in crafting seamless user experiences through clean, responsive web interfaces. From turning wireframes into interactive prototypes to designing pixel-perfect UI elements, I thrive on bringing digital visions to life. Let’s collaborate and build something remarkable!</p>
+
+<!-- <a href="#">learn more</a> -->
+</div>
+  </div>
+   </div> 
+   <!-- ------------------contact ------------------------- -->
 <div class="container animated" id="contact">
   
   <div class="contact-box">
     
     <div class="right">
       <form name="submit-to-google-sheet">
-      <h2>Contact Us</h2>
+      <h2>Contact Me</h2>
       <input type="text" class="field" name="name" id="name" placeholder="Your Name">
       <input type="email" class="field" id="email" name="email" placeholder="Your Email">
       <!-- <input type="text" class="field" placeholder="Phone"> -->
@@ -118,36 +160,22 @@
     <span id="msg"></span>
   </div>
     <div class="left">
-      <h2>Follow us</h2>
-      
+      <h2>Follow Me</h2> 
       <a href="https://www.facebook.com/kirandhakal715"target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
-      <a href="https://www.instagram.com/kirandhakal77"target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
-      
+      <a href="https://www.instagram.com/kirandhakal77"target="_blank"><i class="fa-brands fa-instagram"></i></a></li>    
   <a href="https://github.com/kirandhakal"target="_blank"><i class="fa-brands fa-github"></i></a></li>
+  <a href="https://www.linkedin.com/in/kirandhakal7/"target="_blank"><i class="fa-brands fa-linkedin"></i></a></li>
+  <div class="left-bottom"><h2>mail</h2>
+    <a href="mailto:kirandhakal715@gmail.com"><i class="fa-solid fa-envelope"></i></a> <a href="tel:+9779827591616"><i class="fa-solid fa-phone"></i></a> 
+    <!-- <i class="fa-brands fa-telegram"></i> -->
+  </div> 
+    
      </div>
+  
   </div>
-
 </div>
-<!-- <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa-solid fa-house"></i></button> -->
-
- <footer class="footer"> copyright &#169 2022</footer>
- <script>
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbz261LqFxIzgTLWuDxeJlyUEyAN71gtDS_nKFSrZrt-k7owPUyySUlU-NNBtgvY42G9/exec'
-  const form = document.forms['submit-to-google-sheet']
-  const msg = document.getElementById("msg")
-  form.addEventListener('submit', e => {
-    e.preventDefault()
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-      .then(response => {
-        msg.innerHTML ="message sent successfully"
-        setTimeout(function(){
-          msg.innerHTML=""
-        },5000)
-        form.reset()
-  })
-      .catch(error => console.error('Error!', error.message))
-  })
-</script>
+<button onclick="topFunction()" id="top" title="Go to top"><i class="fa-solid fa-arrow-up"></i></button>
+ <footer class="footer"> copyright &#169 2022 | ALL RIGHT RESERVED</footer>
   <script src="js/index.js"></script>
   <script src="https://kit.fontawesome.com/88a6dda80a.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
