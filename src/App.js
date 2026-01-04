@@ -7,6 +7,7 @@ import SkillsSection from './components/sections/SkillsSection';
 import ProjectsSection from './components/sections/ProjectsSection';
 import ServicesSection from './components/sections/ServicesSection';
 import ContactSection from './components/sections/ContactSection';
+import ChatbaseWidget from './components/sections/ChatbaseWidget';
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -37,6 +38,7 @@ const App = () => {
         </div>
       </main>
       <NavBar activeSection={activeSection} setActiveSection={setActiveSection} />
+      <ChatbaseWidget />
       <Footer />
     </div>
   );

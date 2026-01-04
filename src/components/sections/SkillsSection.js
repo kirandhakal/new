@@ -1,51 +1,48 @@
-import React from 'react';
-import Docker from '/home/dhakalkiran/vrit/animation/PCA/fpca/src/assests/images/docker.svg';
-import Figma from '/home/dhakalkiran/vrit/animation/PCA/fpca/src/assests/images/figma.svg';
-import Node from '/home/dhakalkiran/vrit/animation/PCA/fpca/src/assests/images/node.svg';
-import Git from '/home/dhakalkiran/vrit/animation/PCA/fpca/src/assests/images/git.svg';
-import GitHub from '/home/dhakalkiran/vrit/animation/PCA/fpca/src/assests/images/github.svg';
+import Docker from '../../assets/images/docker.svg';
+import Figma from '../../assets/images/figma.svg';
+import Node from '../../assets/images/node.svg';
+import Git from '../../assets/images/git.svg';
+import GitHub from '../../assets/images/github.svg';
 
 // SVG Icon Components
 const NodeIcon = () => (
-   <img
-            src={Node}
-            alt="Docker Icon" className="w-16 h-16"
-          />
- 
+  <img
+    src={Node}
+    alt="Node.js Icon" // Corrected alt text
+    className="w-16 h-16"
+  />
 );
 
 const DockerIcon = () => (
-   <img
-            src={Docker}
-            alt="Docker Icon" className="w-16 h-16"
-          />
- 
-
-
+  <img
+    src={Docker}
+    alt="Docker Icon" // Corrected alt text
+    className="w-16 h-16"
+  />
 );
 
 const GitIcon = () => (
-   <img
-            src={Git}
-            alt="Docker Icon" className="w-16 h-16"
-          />
- 
+  <img
+    src={Git}
+    alt="Git Icon" // Corrected alt text
+    className="w-16 h-16"
+  />
 );
 
 const GitHubIcon = () => (
-   <img
-            src={GitHub}
-            alt="Docker Icon" className="w-16 h-16"
-          />
- 
+  <img
+    src={GitHub}
+    alt="GitHub Icon" // Corrected alt text
+    className="w-16 h-16"
+  />
 );
 
 const FigmaIcon = () => (
-   <img
-            src={Figma}
-            alt="Docker Icon" className="w-16 h-16"
-          />
- 
+  <img
+    src={Figma}
+    alt="Figma Icon" // Corrected alt text
+    className="w-16 h-16"
+  />
 );
 
 const SkillsSection = () => {
@@ -180,19 +177,6 @@ const SkillsSection = () => {
           ))}
         </div>
 
-        {/* Additional Info Section */}
-        {/* <div className="mt-16 text-center">
-          <div className="bg-white p-8 rounded-2xl shadow-lg max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">
-              Always Learning
-            </h3>
-            <p className="text-gray-600 leading-relaxed">
-              I'm passionate about staying up-to-date with the latest technologies 
-              and continuously expanding my skill set. Currently exploring advanced 
-              React patterns, cloud technologies, and modern development practices.
-            </p>
-          </div>
-        </div> */}
       </div>
     </div>
   );
