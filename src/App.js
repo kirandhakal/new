@@ -32,7 +32,7 @@ const App = () => {
   return (
     <div className="min-h-screen bg-yellow-50 flex flex-col">
       <Header />
-      <main className="flex-grow pt-20">
+      <main className="flex-grow pt-8">
         <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
           {renderSection()}
         </div>

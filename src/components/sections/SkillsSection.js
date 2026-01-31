@@ -4,7 +4,7 @@ import Figma from '../../assets/images/figma.svg';
 import Node from '../../assets/images/node.svg';
 import Git from '../../assets/images/git.svg';
 import GitHub from '../../assets/images/github.svg';
-import { Code2, Palette, Server, GitBranch, Box, Braces } from 'lucide-react';
+import { Code2, Braces } from 'lucide-react';
 
 // SVG Icon Components
 const NodeIcon = () => <img src={Node} alt="Node.js Icon" className="w-12 h-12" />;

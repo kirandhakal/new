@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import kiran1 from "../../assets/images/kiran1.jpg";
-import { Download, MessageCircle, ArrowRight, Sparkles } from "lucide-react";
+import { Download, MessageCircle, ArrowRight } from "lucide-react";
+
+const roles = [
+  "Web Developer",
+  "Full Stack Developer",
+  "Computer Engineer",
+  "AI Enthusiast"
+];
 
 const HomeSection = ({ setActiveSection }) => {
-  const roles = [
-    "Web Developer",
-    "Full Stack Developer",
-    "Computer Engineer",
-    "AI Enthusiast"
-  ];
-  
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -81,7 +81,7 @@ const HomeSection = ({ setActiveSection }) => {
                   {/* Animated Role Title */}
                   <div className="relative h-12 overflow-hidden">
                     <p 
-                      className={`text-2xl md:text-3xl font-bold text-gray-700 transition-all duration-500 ${
+                      className={`text-2xl md:text-3xl font-bold text-orange-700 transition-all duration-500 ${
                         isAnimating 
                           ? 'opacity-0 translate-y-8' 
                           : 'opacity-100 translate-y-0'
@@ -118,7 +118,7 @@ const HomeSection = ({ setActiveSection }) => {
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <a
-                  href="/assets/kiran_cv.pdf"
+                  href="/Kiran Dhakal - Web Developer.pdf"
                   download="Kiran-Dhakal-CV.pdf"
                   className="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white px-8 py-4 rounded-2xl font-bold transition-all transform hover:scale-105 hover:shadow-2xl overflow-hidden"
                   aria-label="Download Kiran Dhakal's CV"
@@ -144,7 +144,7 @@ const HomeSection = ({ setActiveSection }) => {
               <div className="pt-4">
                 <p className="text-sm text-gray-500 font-medium mb-3">Working with</p>
                 <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                  {['React', 'Node.js', 'TypeScript', 'Tailwind', 'MongoDB'].map((tech, i) => (
+                  {['React','Next js', 'Node.js', 'TypeScript', 'Tailwind', 'MongoDB' ,'Postgress'].map((tech, i) => (
                     <span 
                       key={i}
                       className="px-4 py-2 bg-white/60 backdrop-blur-sm rounded-full text-sm font-semibold text-gray-700 border border-orange-100/50 shadow-sm hover:shadow-md hover:scale-105 transition-all cursor-default"
