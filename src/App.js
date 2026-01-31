@@ -32,8 +32,9 @@ const App = () => {
   return (
     <div className="min-h-screen bg-yellow-50 flex flex-col">
       <Header />
-      <main className="flex-grow pt-8">
-        <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
+      {/* pt for fixed header; pb for bottom nav on mobile only */}
+      <main className="flex-grow pt-[72px] md:pt-20 pb-24 md:pb-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
           {renderSection()}
         </div>
       </main>

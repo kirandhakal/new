@@ -38,53 +38,26 @@ const HomeSection = ({ setActiveSection }) => {
         backgroundSize: '24px 24px'
       }}></div>
 
-      <div className="relative z-10 flex items-center justify-center px-6 py-12 md:py-20">
+      <div className="relative z-10 flex items-center justify-center px-4 sm:px-6 py-8 sm:py-12 md:py-20">
         <div className="max-w-5xl w-full">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Left Column - Image */}
-            <div className="flex justify-center md:justify-end order-2 md:order-1">
-              <div className="relative group">
-                {/* Animated rings */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-400 to-rose-400 opacity-20 animate-ping-slow"></div>
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 opacity-30 blur-xl group-hover:opacity-50 transition-opacity duration-500"></div>
-                
-                {/* Profile image */}
-                <div className="relative w-80 h-80 rounded-full overflow-hidden border-8 border-white shadow-2xl group-hover:scale-105 transition-transform duration-500">
-                  <img
-                    src={kiran1}
-                    alt="Kiran Dhakal - Web Developer"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                {/* Decorative elements */}
-                <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-gradient-to-br from-orange-400 to-rose-400 rounded-full blur-2xl opacity-60"></div>
-                <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-400 rounded-full blur-2xl opacity-60"></div>
-              </div>
-            </div>
-
-            {/* Right Column - Content */}
-            <div className="space-y-8 order-1 md:order-2 text-center md:text-left">
-              {/* Greeting tag */}
-              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full border border-orange-200/50 shadow-sm">
+          <div className="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            {/* Mobile: 1) Greeting + Name + Role  2) Image  3) Rest. Desktop: Image left, content right. */}
+            {/* Block 1: Greeting + "I'm Kiran Dhakal" + role (mobile order 1); desktop: col 2 row 1 */}
+            <div className="flex flex-col items-center md:items-start text-center md:text-left order-1 w-full md:col-start-2 md:row-start-1 space-y-4 md:space-y-0">
+              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-orange-200/50 shadow-sm">
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span className="text-lg font-medium text-gray-700">Hey there! Welcome to my portfolio</span>
+                <span className="text-sm sm:text-lg font-medium text-gray-700">Hey there! Welcome to my portfolio</span>
               </div>
-
-              {/* Main heading */}
-              <div className="space-y-4">
-                <h1 className="text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 leading-tight tracking-tight">
+              <div className="space-y-3 md:space-y-4">
+                <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 leading-tight tracking-tight">
                   I'm Kiran Dhakal
                 </h1>
                 <div className="flex items-center gap-3 justify-center md:justify-start">
-                  <div className="h-1 w-12 bg-gradient-to-r from-orange-500 to-rose-500 rounded-full"></div>
-                  {/* Animated Role Title */}
-                  <div className="relative h-12 overflow-hidden">
-                    <p 
-                      className={`text-2xl md:text-3xl font-bold text-orange-700 transition-all duration-500 ${
-                        isAnimating 
-                          ? 'opacity-0 translate-y-8' 
-                          : 'opacity-100 translate-y-0'
+                  <div className="h-1 w-10 sm:w-12 bg-gradient-to-r from-orange-500 to-rose-500 rounded-full"></div>
+                  <div className="relative h-10 sm:h-12 overflow-hidden">
+                    <p
+                      className={`text-xl sm:text-2xl md:text-3xl font-bold text-orange-700 transition-all duration-500 ${
+                        isAnimating ? 'opacity-0 translate-y-8' : 'opacity-100 translate-y-0'
                       }`}
                     >
                       {roles[currentRoleIndex]}
@@ -92,24 +65,43 @@ const HomeSection = ({ setActiveSection }) => {
                   </div>
                 </div>
               </div>
+            </div>
 
-              {/* Description */}
-              <p className="text-lg text-gray-600 leading-relaxed max-w-xl">
+            {/* Block 2: Image — right below "I'm Kiran Dhakal" on mobile; desktop: col 1, span 2 rows */}
+            <div className="flex justify-center md:justify-end order-2 w-full md:col-start-1 md:row-start-1 md:row-span-2">
+              <div className="relative group">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-400 to-rose-400 opacity-20 animate-ping-slow"></div>
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 opacity-30 blur-xl group-hover:opacity-50 transition-opacity duration-500"></div>
+                <div className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full overflow-hidden border-4 md:border-8 border-white shadow-2xl group-hover:scale-105 transition-transform duration-500">
+                  <img
+                    src={kiran1}
+                    alt="Kiran Dhakal - Web Developer"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-gradient-to-br from-orange-400 to-rose-400 rounded-full blur-2xl opacity-60"></div>
+                <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-400 rounded-full blur-2xl opacity-60"></div>
+              </div>
+            </div>
+
+            {/* Block 3: Description, stats, CTAs, tech (mobile order 3); desktop: col 2 row 2 */}
+            <div className="space-y-6 sm:space-y-8 order-3 w-full text-center md:text-left md:col-start-2 md:row-start-2 md:flex md:flex-col md:items-start">
+              <p className="text-base sm:text-lg text-gray-600 leading-relaxed max-w-xl mx-auto md:mx-0">
                 Crafting exceptional digital experiences through clean code and thoughtful design. 
                 I transform ideas into responsive, interactive web applications that users love.
               </p>
 
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-4 max-w-md">
-                <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-orange-100/50 shadow-sm">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-md mx-auto md:mx-0">
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-orange-100/50 shadow-sm">
                   <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-rose-600">3+</div>
                   <div className="text-xs text-gray-600 font-medium mt-1">Years Exp</div>
                 </div>
-                <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-orange-100/50 shadow-sm">
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-orange-100/50 shadow-sm">
                   <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-rose-600">20+</div>
                   <div className="text-xs text-gray-600 font-medium mt-1">Projects</div>
                 </div>
-                <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-orange-100/50 shadow-sm">
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-orange-100/50 shadow-sm">
                   <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-rose-600">10+</div>
                   <div className="text-xs text-gray-600 font-medium mt-1">Happy Clients</div>
                 </div>

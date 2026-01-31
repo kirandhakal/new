@@ -39,3 +39,25 @@
 img {
   object-fit: cover;
 }
+
+/* Safe area for bottom nav on mobile (notch/home indicator) */
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* AI Chatbase widget: mobile-friendly position, no overlap with bottom nav or content */
+@media (max-width: 767px) {
+  .chatbase-widget-mobile-friendly {
+    bottom: 5.5rem !important; /* above bottom nav (~88px) */
+    right: max(1rem, env(safe-area-inset-right)) !important;
+    left: auto !important;
+    top: auto !important;
+    z-index: 60 !important; /* above bottom nav (z-50) when chat is open */
+  }
+
+  .chatbase-widget-mobile-friendly iframe {
+    max-height: calc(100dvh - 8rem) !important; /* leave space for header + nav */
+    border-radius: 1rem 1rem 0 0 !important;
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12) !important;
+  }
+}
