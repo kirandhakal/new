@@ -1,57 +1,186 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import kiran1 from "../../assets/images/kiran1.jpg"; // Ensure this path is correct
+import kiran1 from "../../assets/images/kiran1.jpg";
+import { Download, MessageCircle, ArrowRight, Sparkles } from "lucide-react";
 
 const HomeSection = ({ setActiveSection }) => {
+  const roles = [
+    "Web Developer",
+    "Full Stack Developer",
+    "Computer Engineer",
+    "AI Enthusiast"
+  ];
+  
+  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
+        setIsAnimating(false);
+      }, 500); // Half of the animation duration
+    }, 3000); // Change role every 3 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
-      <div className="text-center space-y-6 px-8">
-        {/* Profile Circle */}
-        <div className="relative w-48 h-48 mx-auto">
-          <div className="absolute w-full h-full rounded-full bg-gradient-to-r from-purple-600 to-blue-500 animate-pulse-slow pointer-events-none"></div>
-          <img
-            src={kiran1}
-            alt="Kiran Dhakal"
-            className="w-40 h-40 rounded-full object-cover border-4 border-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
-          />
-        </div>
+    <div className="relative overflow-hidden bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50">
+      {/* Decorative elements */}
+      <div className="absolute top-20 right-20 w-72 h-72 bg-gradient-to-br from-orange-200/30 to-rose-200/30 rounded-full blur-3xl animate-float"></div>
+      <div className="absolute bottom-20 left-20 w-96 h-96 bg-gradient-to-tr from-amber-200/30 to-orange-200/30 rounded-full blur-3xl animate-float-delayed"></div>
+      
+      {/* Dot pattern overlay */}
+      <div className="absolute inset-0 opacity-[0.015]" style={{
+        backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
+        backgroundSize: '24px 24px'
+      }}></div>
 
-        {/* Intro */}
-        <h1 className="text-5xl font-bold text-gray-800 mb-4">
-          Hi! I AM KIRAN DHAKAL
-        </h1>
-        <p className="text-2xl text-gray-600 mb-8">I AM A WEB DEVELOPER</p>
-        <p className="text-lg text-gray-500 mb-8">
-          I create responsive and interactive web applications using modern
-          technologies. I specialize in creating dynamic and beautiful web
-          pages. I have a passion for web development and love to create
-          user-friendly interfaces.
-        </p>
+      <div className="relative z-10 flex items-center justify-center px-6 py-12 md:py-20">
+        <div className="max-w-5xl w-full">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Image */}
+            <div className="flex justify-center md:justify-end order-2 md:order-1">
+              <div className="relative group">
+                {/* Animated rings */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-400 to-rose-400 opacity-20 animate-ping-slow"></div>
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 opacity-30 blur-xl group-hover:opacity-50 transition-opacity duration-500"></div>
+                
+                {/* Profile image */}
+                <div className="relative w-80 h-80 rounded-full overflow-hidden border-8 border-white shadow-2xl group-hover:scale-105 transition-transform duration-500">
+                  <img
+                    src={kiran1}
+                    alt="Kiran Dhakal - Web Developer"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
 
-        {/* Buttons */}
-        <div className="space-x-4">
-          <a
-            href="/assets/kiran_cv.pdf" // Ensure this file exists in public/assets/
-            download="Kiran-Dhakal-CV.pdf"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105"
-            aria-label="Download Kiran Dhakal's CV"
-          >
-            Download CV
-          </a>
-          <button
-            onClick={() => setActiveSection && setActiveSection("contact")}
-            className="bg-gray-800 hover:bg-gray-900 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105"
-            aria-label="Navigate to contact section"
-          >
-            Contact Me
-          </button>
+                {/* Decorative elements */}
+                <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-gradient-to-br from-orange-400 to-rose-400 rounded-full blur-2xl opacity-60"></div>
+                <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-400 rounded-full blur-2xl opacity-60"></div>
+              </div>
+            </div>
+
+            {/* Right Column - Content */}
+            <div className="space-y-8 order-1 md:order-2 text-center md:text-left">
+              {/* Greeting tag */}
+              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full border border-orange-200/50 shadow-sm">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span className="text-lg font-medium text-gray-700">Hey there! Welcome to my portfolio</span>
+              </div>
+
+              {/* Main heading */}
+              <div className="space-y-4">
+                <h1 className="text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 leading-tight tracking-tight">
+                  I'm Kiran Dhakal
+                </h1>
+                <div className="flex items-center gap-3 justify-center md:justify-start">
+                  <div className="h-1 w-12 bg-gradient-to-r from-orange-500 to-rose-500 rounded-full"></div>
+                  {/* Animated Role Title */}
+                  <div className="relative h-12 overflow-hidden">
+                    <p 
+                      className={`text-2xl md:text-3xl font-bold text-gray-700 transition-all duration-500 ${
+                        isAnimating 
+                          ? 'opacity-0 translate-y-8' 
+                          : 'opacity-100 translate-y-0'
+                      }`}
+                    >
+                      {roles[currentRoleIndex]}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Description */}
+              <p className="text-lg text-gray-600 leading-relaxed max-w-xl">
+                Crafting exceptional digital experiences through clean code and thoughtful design. 
+                I transform ideas into responsive, interactive web applications that users love.
+              </p>
+
+              {/* Stats */}
+              <div className="grid grid-cols-3 gap-4 max-w-md">
+                <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-orange-100/50 shadow-sm">
+                  <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-rose-600">3+</div>
+                  <div className="text-xs text-gray-600 font-medium mt-1">Years Exp</div>
+                </div>
+                <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-orange-100/50 shadow-sm">
+                  <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-rose-600">20+</div>
+                  <div className="text-xs text-gray-600 font-medium mt-1">Projects</div>
+                </div>
+                <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-4 border border-orange-100/50 shadow-sm">
+                  <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-rose-600">10+</div>
+                  <div className="text-xs text-gray-600 font-medium mt-1">Happy Clients</div>
+                </div>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <a
+                  href="/assets/kiran_cv.pdf"
+                  download="Kiran-Dhakal-CV.pdf"
+                  className="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white px-8 py-4 rounded-2xl font-bold transition-all transform hover:scale-105 hover:shadow-2xl overflow-hidden"
+                  aria-label="Download Kiran Dhakal's CV"
+                >
+                  <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  <Download size={20} className="relative z-10" />
+                  <span className="relative z-10">Download CV</span>
+                  <ArrowRight size={20} className="relative z-10 group-hover:translate-x-1 transition-transform" />
+                </a>
+                
+                <button
+                  onClick={() => setActiveSection && setActiveSection("contact")}
+                  className="group inline-flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-gray-800 px-8 py-4 rounded-2xl font-bold transition-all transform hover:scale-105 border-2 border-gray-200 hover:border-orange-300 shadow-lg hover:shadow-xl"
+                  aria-label="Navigate to contact section"
+                >
+                  <MessageCircle size={20} />
+                  <span>Let's Talk</span>
+                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+
+              {/* Tech stack preview */}
+              <div className="pt-4">
+                <p className="text-sm text-gray-500 font-medium mb-3">Working with</p>
+                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                  {['React', 'Node.js', 'TypeScript', 'Tailwind', 'MongoDB'].map((tech, i) => (
+                    <span 
+                      key={i}
+                      className="px-4 py-2 bg-white/60 backdrop-blur-sm rounded-full text-sm font-semibold text-gray-700 border border-orange-100/50 shadow-sm hover:shadow-md hover:scale-105 transition-all cursor-default"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) translateX(0px); }
+          50% { transform: translateY(-20px) translateX(10px); }
+        }
+        @keyframes float-delayed {
+          0%, 100% { transform: translateY(0px) translateX(0px); }
+          50% { transform: translateY(20px) translateX(-10px); }
+        }
+        @keyframes ping-slow {
+          0% { transform: scale(1); opacity: 0.3; }
+          50% { transform: scale(1.1); opacity: 0.1; }
+          100% { transform: scale(1.2); opacity: 0; }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-float-delayed { animation: float-delayed 7s ease-in-out infinite; }
+        .animate-ping-slow { animation: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite; }
+      `}</style>
     </div>
   );
 };
 
-// PropTypes for type checking
 HomeSection.propTypes = {
   setActiveSection: PropTypes.func.isRequired,
 };
