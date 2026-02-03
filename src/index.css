@@ -47,26 +47,38 @@ img {
 
 /* AI Chatbase widget: mobile-friendly position, no overlap with bottom nav or content */
 @media (max-width: 767px) {
+  /* Base: keep widget above other UI */
   .chatbase-widget-mobile-friendly,
-  #chatbase-bubble-button,
   #chatbase-bubble-window,
   [data-chatbase-host="true"] {
-    bottom: calc(10.5rem + env(safe-area-inset-bottom, 0px)) !important; /* increased height to clear contact button */
-    right: 1.5rem !important;
-    left: auto !important;
-    top: auto !important;
-    z-index: 100 !important; /* ensure it's above everything */
+    z-index: 100 !important;
   }
 
-  /* Specific handling for the bubble if it's separate */
+  /* Bubble button: tuck into bottom-right with safe area */
   #chatbase-bubble-button {
-    bottom: calc(12.5rem + env(safe-area-inset-bottom, 0px)) !important;
+    bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)) !important;
+    right: 1.25rem !important;
+    left: auto !important;
+    top: auto !important;
+  }
+
+  /* Popup window: full-width card with margins, no off-screen cutoffs */
+  #chatbase-bubble-window,
+  .chatbase-widget-mobile-friendly[data-chatbase-host="true"] {
+    left: 1rem !important;
+    right: 1rem !important;
+    bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)) !important;
+    top: auto !important;
+    width: auto !important;
+    max-width: none !important;
   }
 
   .chatbase-widget-mobile-friendly iframe,
   #chatbase-bubble-window iframe {
-    max-height: calc(100dvh - 20rem) !important; /* leave more space for viewport */
-    border-radius: 1.5rem !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+    width: 100% !important;
+    height: min(70dvh, 560px) !important;
+    max-height: calc(100dvh - 6.5rem) !important;
+    border-radius: 1.25rem !important;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22) !important;
   }
 }
