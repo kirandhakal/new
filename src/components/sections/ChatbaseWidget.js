@@ -4,22 +4,50 @@ const CHATBASE_WIDGET_CLASS = "chatbase-widget-mobile-friendly";
 
 function markChatbaseWidgetForMobile() {
   if (typeof document === "undefined") return;
-  // Find Chatbase widget: iframe from chatbase or fixed-position container that looks like a chat widget
+  
+  // 1. Target by common Chatbase IDs
+  const chatbaseIds = ['chatbase-bubble-button', 'chatbase-bubble-window', 'chatbase-message-container'];
+  chatbaseIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && !el.classList.contains(CHATBASE_WIDGET_CLASS)) {
+      el.classList.add(CHATBASE_WIDGET_CLASS);
+    }
+  });
+
+  // 2. Find Chatbase widget: iframe from chatbase or fixed-position container that looks like a chat widget
   const iframes = document.querySelectorAll('iframe[src*="chatbase"], iframe[src*="chatbase.co"]');
   for (const iframe of iframes) {
-    const container = iframe.closest("div");
-    if (container && !container.classList.contains(CHATBASE_WIDGET_CLASS)) {
-      container.classList.add(CHATBASE_WIDGET_CLASS);
-      container.setAttribute("data-chatbase-host", "true");
+    // Check parents for a fixed container
+    let parent = iframe.parentElement;
+    while (parent && parent !== document.body) {
+      if (window.getComputedStyle(parent).position === 'fixed') {
+        if (!parent.classList.contains(CHATBASE_WIDGET_CLASS)) {
+          parent.classList.add(CHATBASE_WIDGET_CLASS);
+          parent.setAttribute("data-chatbase-host", "true");
+        }
+        break;
+      }
+      parent = parent.parentElement;
+    }
+    
+    // Also mark the iframe itself just in case
+    if (!iframe.classList.contains(CHATBASE_WIDGET_CLASS)) {
+      iframe.classList.add(CHATBASE_WIDGET_CLASS);
     }
   }
-  // Also catch fixed bottom-right divs that might wrap the widget (button + iframe)
-  const fixedDivs = document.querySelectorAll('body > div[style*="position: fixed"], body > div[style*="position:fixed"]');
-  fixedDivs.forEach((div) => {
-    const hasChatbase = div.querySelector('iframe[src*="chatbase"]') || div.innerHTML.includes("chatbase");
-    if (hasChatbase && !div.classList.contains(CHATBASE_WIDGET_CLASS)) {
-      div.classList.add(CHATBASE_WIDGET_CLASS);
-      div.setAttribute("data-chatbase-host", "true");
+
+  // 3. Also catch fixed entities that might be the chat bubble
+  const allFixed = document.querySelectorAll('button, div');
+  allFixed.forEach((el) => {
+    if (window.getComputedStyle(el).position === 'fixed') {
+      const isChatbase = el.id?.includes("chatbase") || 
+                         el.className?.toString().includes("chatbase") ||
+                         el.innerHTML?.includes("chatbase");
+      
+      if (isChatbase && !el.classList.contains(CHATBASE_WIDGET_CLASS)) {
+        el.classList.add(CHATBASE_WIDGET_CLASS);
+        el.setAttribute("data-chatbase-host", "true");
+      }
     }
   });
 }

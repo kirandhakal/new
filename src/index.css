@@ -47,17 +47,26 @@ img {
 
 /* AI Chatbase widget: mobile-friendly position, no overlap with bottom nav or content */
 @media (max-width: 767px) {
-  .chatbase-widget-mobile-friendly {
-    bottom: 5.5rem !important; /* above bottom nav (~88px) */
-    right: max(1rem, env(safe-area-inset-right)) !important;
+  .chatbase-widget-mobile-friendly,
+  #chatbase-bubble-button,
+  #chatbase-bubble-window,
+  [data-chatbase-host="true"] {
+    bottom: calc(10.5rem + env(safe-area-inset-bottom, 0px)) !important; /* increased height to clear contact button */
+    right: 1.5rem !important;
     left: auto !important;
     top: auto !important;
-    z-index: 60 !important; /* above bottom nav (z-50) when chat is open */
+    z-index: 100 !important; /* ensure it's above everything */
   }
 
-  .chatbase-widget-mobile-friendly iframe {
-    max-height: calc(100dvh - 8rem) !important; /* leave space for header + nav */
-    border-radius: 1rem 1rem 0 0 !important;
-    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.12) !important;
+  /* Specific handling for the bubble if it's separate */
+  #chatbase-bubble-button {
+    bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .chatbase-widget-mobile-friendly iframe,
+  #chatbase-bubble-window iframe {
+    max-height: calc(100dvh - 20rem) !important; /* leave more space for viewport */
+    border-radius: 1.5rem !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
   }
 }

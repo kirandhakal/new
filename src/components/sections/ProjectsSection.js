@@ -8,7 +8,7 @@ const ProjectsSection = () => {
     {
       title: 'Kanban Board',
       description: 'Streamlined task orchestration platform featuring intuitive drag-and-drop mechanics, real-time state management, and seamless CRUD operations. Built for teams who value visual workflow clarity.',
-      github: 'https://github.com/kirandhakal/projectmanagement',
+      // github: 'https://github.com/kirandhakal/projectmanagement',
       demo: 'https://projectmanagementkanban.vercel.app/',
       icon: Layout,
       gradient: 'from-blue-500 to-cyan-500',
@@ -28,7 +28,7 @@ const ProjectsSection = () => {
       title: 'Code Editor',
       description: 'Browser-based IDE eliminating local compiler setup friction. Write, compile, and execute code instantly across multiple languages. Perfect for rapid prototyping and coding interviews.',
       github: 'https://github.com/kirandhakal/codeeditor',
-      demo: 'https://kirandhakal.github.io/codeeditor/',
+      demo: 'https://codeeditor-rose.vercel.app/',
       icon: Code,
       gradient: 'from-green-500 to-emerald-500',
       tags: ['Web IDE', 'Multi-language', 'Real-time'],
@@ -37,8 +37,8 @@ const ProjectsSection = () => {
     {
       title: 'ShopBuddy',
       description: 'Intelligent shopping companion transforming purchase planning. Create dynamic lists, track spending patterns, discover personalized recommendations, and maintain budget awareness in one unified experience.',
-      github: 'https://github.com/kirandhakal/shopbuddy',
-      demo: 'https://github.com/kirandhakal/shopbuddy',
+      // github: 'https://github.com/kirandhakal/shopbuddy',
+      demo: 'https://fooddelivery-ten-ebon.vercel.app/',
       icon: ShoppingBag,
       gradient: 'from-orange-500 to-amber-500',
       tags: ['E-commerce', 'Budget Tracking', 'UX'],
@@ -57,7 +57,7 @@ const ProjectsSection = () => {
     {
       title: 'Red Panda Hotel',
       description: 'Boutique hospitality management platform delivering seamless reservation experiences, room inventory control, and guest service coordination with elegant interface design.',
-      demo: 'https://github.com/kirandhakal/RedPandaHotelAndLodge',
+      demo: 'https://redpandahotelandlodge.vercel.app/',
       icon: Building,
       gradient: 'from-teal-500 to-cyan-500',
       tags: ['Hospitality', 'Booking System', 'Management'],
@@ -78,7 +78,7 @@ const ProjectsSection = () => {
   };
 
   return (
-    <div className="min-h-screen py-24 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 relative overflow-hidden">
+    <div className="min-h-screen py-12 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-br from-orange-200/20 to-rose-200/20 rounded-full blur-3xl"></div>
       <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-tr from-amber-200/20 to-orange-200/20 rounded-full blur-3xl"></div>
@@ -89,7 +89,7 @@ const ProjectsSection = () => {
         backgroundSize: '24px 24px'
       }}></div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-7xl mx-auto px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-20 space-y-6">
           <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full border border-orange-200/50 shadow-sm mb-4">

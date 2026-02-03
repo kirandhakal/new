@@ -76,7 +76,7 @@ const SkillsSection = () => {
   ];
 
   return (
-    <div className="min-h-screen py-24 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 relative overflow-hidden">
+    <div className="min-h-screen py-12 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 relative overflow-hidden">
       {/* Decorative background */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-orange-200/20 to-rose-200/20 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-amber-200/20 to-orange-200/20 rounded-full blur-3xl"></div>
@@ -87,7 +87,7 @@ const SkillsSection = () => {
         backgroundSize: '24px 24px'
       }}></div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-7xl mx-auto px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-20 space-y-6">
           <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full border border-orange-200/50 shadow-sm mb-4">

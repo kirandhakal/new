@@ -38,7 +38,7 @@ const HomeSection = ({ setActiveSection }) => {
         backgroundSize: '24px 24px'
       }}></div>
 
-      <div className="relative z-10 flex items-center justify-center px-4 sm:px-6 py-8 sm:py-12 md:py-20">
+      <div className="relative z-10 flex items-center justify-center px-8 py-12">
         <div className="max-w-5xl w-full">
           <div className="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Mobile: 1) Greeting + Name + Role  2) Image  3) Rest. Desktop: Image left, content right. */}
