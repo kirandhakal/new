@@ -54,20 +54,20 @@ img {
     z-index: 100 !important;
   }
 
-  /* Bubble button: tuck into bottom-right with safe area */
+  /* Bubble button: tuck into bottom-right with safe area, above mobile nav */
   #chatbase-bubble-button {
-    bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)) !important;
+    bottom: calc(6rem + env(safe-area-inset-bottom, 0px)) !important;
     right: 1.25rem !important;
     left: auto !important;
     top: auto !important;
   }
 
-  /* Popup window: full-width card with margins, no off-screen cutoffs */
+  /* Popup window: full-width card with margins, positioned above nav */
   #chatbase-bubble-window,
   .chatbase-widget-mobile-friendly[data-chatbase-host="true"] {
     left: 1rem !important;
     right: 1rem !important;
-    bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)) !important;
+    bottom: calc(6rem + env(safe-area-inset-bottom, 0px)) !important;
     top: auto !important;
     width: auto !important;
     max-width: none !important;
