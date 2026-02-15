@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import emailjs from '@emailjs/browser';
 import { Facebook, Instagram, Github, Linkedin, Mail, Phone, Send, CheckCircle, MapPin, Twitter ,Youtube } from 'lucide-react';
 
 const ContactSection = () => {
@@ -9,19 +10,66 @@ const ContactSection = () => {
   });
   const [status, setStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // EmailJS configuration - set these in your environment
+  const rawService = process.env.REACT_APP_EMAILJS_SERVICE_ID ;
+  const rawTemplate = process.env.REACT_APP_EMAILJS_TEMPLATE_ID ;
+  const rawPublic = process.env.REACT_APP_EMAILJS_PUBLIC_KEY ;
+
+  const sanitize = (v) => String(v || '').trim().replace(/^['"](.*)['"]$/, '$1');
+
+  const SERVICE_ID = sanitize(rawService);
+  const TEMPLATE_ID = sanitize(rawTemplate);
+  const PUBLIC_KEY = sanitize(rawPublic);
+
+  useEffect(() => {
+    if (PUBLIC_KEY && !PUBLIC_KEY.includes('YOUR')) {
+      try {
+        emailjs.init(PUBLIC_KEY);
+      } catch (e) {
+        console.warn('EmailJS init failed:', e);
+      }
+    }
+  }, [PUBLIC_KEY]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setStatus('success');
+    setStatus('');
+
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      message: formData.message,
+    };
+
+    // If env vars are placeholders, bail early with an explanatory error
+    if (SERVICE_ID.includes('YOUR') || TEMPLATE_ID.includes('YOUR') || PUBLIC_KEY.includes('YOUR')) {
+      const msg = 'EmailJS keys not configured. Please set REACT_APP_EMAILJS_SERVICE_ID, REACT_APP_EMAILJS_TEMPLATE_ID and REACT_APP_EMAILJS_PUBLIC_KEY in your .env (no quotes, no spaces around =).';
+      console.error(msg);
+      setErrorMessage(msg);
+      setStatus('error');
       setIsSubmitting(false);
-      setFormData({ name: '', email: '', message: '' });
-      
-      setTimeout(() => setStatus(''), 5000);
-    }, 1500);
+      return;
+    }
+
+    // Use init'd public key and send without passing key explicitly
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+      .then(() => {
+        setStatus('success');
+        setIsSubmitting(false);
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setStatus(''), 5000);
+      })
+      .catch((error) => {
+        console.error('EmailJS error:', error);
+        const msg = (error && (error.text || error.message)) || JSON.stringify(error) || 'Unknown error from EmailJS';
+        setErrorMessage(msg);
+        setStatus('error');
+        setIsSubmitting(false);
+        setTimeout(() => setStatus(''), 7000);
+      });
   };
 
   const handleChange = (e) => {
@@ -197,6 +245,14 @@ const ContactSection = () => {
                     </p>
                   </div>
                 )}
+                {status === 'error' && (
+                  <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-4 flex flex-col gap-3">
+                    <p className="text-red-800 text-sm font-medium">Oops — something went wrong.</p>
+                    {errorMessage && (
+                      <pre className="text-xs text-red-700 bg-red-25 p-2 rounded break-words">{errorMessage}</pre>
+                    )}
+                  </div>
+                )}
               </form>
             </div>
           </div>
@@ -239,7 +295,7 @@ const ContactSection = () => {
                   </div>
                   <div className="flex-1">
                     <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Location</p>
-                    <p className="text-sm font-bold text-gray-900">Pātan, Nepal</p>
+                    <p className="text-sm font-bold text-gray-900">Kathmandu, Nepal</p>
                   </div>
                 </div>
               </div>
