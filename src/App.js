@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import NavBar from './components/NavBar';
@@ -8,9 +9,11 @@ import ProjectsSection from './components/sections/ProjectsSection';
 import ServicesSection from './components/sections/ServicesSection';
 import ContactSection from './components/sections/ContactSection';
 import ChatbaseWidget from './components/sections/ChatbaseWidget';
+import { ArrowUp } from 'lucide-react';
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('home');
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const sectionRefs = {
     home: useRef(null),
     skills: useRef(null),
@@ -39,6 +42,15 @@ const App = () => {
     handleScroll(); // Check on mount
     
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleScrollPosition = () => {
+      setShowScrollTop(window.scrollY > 500);
+    };
+    
+    window.addEventListener('scroll', handleScrollPosition);
+    return () => window.removeEventListener('scroll', handleScrollPosition);
   }, []);
 
   const scrollToSection = (section) => {
@@ -81,6 +93,23 @@ const App = () => {
       <NavBar activeSection={activeSection} setActiveSection={scrollToSection} />
       <ChatbaseWidget />
       <Footer />
+      
+      {/* Scroll to Top Button */}
+      <motion.button
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ 
+          opacity: showScrollTop ? 1 : 0, 
+          scale: showScrollTop ? 1 : 0,
+          pointerEvents: showScrollTop ? 'auto' : 'none'
+        }}
+        onClick={() => scrollToSection('home')}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        className="fixed bottom-24 md:bottom-8 right-8 z-50 p-4 bg-gradient-to-r from-orange-500 to-rose-500 text-white rounded-full shadow-2xl hover:shadow-orange-500/50 transition-shadow"
+        aria-label="Scroll to top"
+      >
+        <ArrowUp size={24} />
+      </motion.button>
     </div>
   );
 };

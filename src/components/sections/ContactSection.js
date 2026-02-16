@@ -108,7 +108,7 @@ const ContactSection = () => {
             <span className="text-sm font-medium text-gray-700">Get In Touch</span>
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 leading-tight tracking-tight">
-            Let's <span className="text-blue-500">Connect</span>
+            Let's <span className="text-#F54655">Connect</span>
           </h1>
           <div className="flex justify-center">
             <div className="h-1 w-24 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full"></div>

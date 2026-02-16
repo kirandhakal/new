@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Github, ExternalLink, Sparkles, Layout, Heart, Code, ShoppingBag, FileText, Building } from 'lucide-react';
 
 const ProjectsSection = () => {
@@ -78,10 +79,10 @@ const ProjectsSection = () => {
   };
 
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 relative overflow-hidden">
+    <div className="py-20 lg:py-32 min-h-screen relative overflow-hidden flex items-center">
       {/* Decorative elements */}
-      <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-br from-orange-200/20 to-rose-200/20 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-tr from-amber-200/20 to-orange-200/20 rounded-full blur-3xl"></div>
+      <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-br from-orange-200/20 to-rose-200/20 rounded-full blur-3xl animate-float"></div>
+      <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-tr from-amber-200/20 to-orange-200/20 rounded-full blur-3xl animate-float-delayed"></div>
       
       {/* Dot pattern */}
       <div className="absolute inset-0 opacity-[0.015]" style={{
@@ -89,15 +90,21 @@ const ProjectsSection = () => {
         backgroundSize: '24px 24px'
       }}></div>
 
-      <div className="max-w-7xl mx-auto px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 w-full">
         {/* Header */}
-        <div className="text-center mb-20 space-y-6">
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-20 space-y-6"
+        >
           <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full border border-orange-200/50 shadow-sm mb-4">
             <Sparkles size={16} className="text-orange-500" />
             <span className="text-sm font-medium text-gray-700">Featured Work</span>
           </div>
           
-          <h2 className="text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 tracking-tight">
+          <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 tracking-tight">
             My Projects
           </h2>
           
@@ -108,7 +115,7 @@ const ProjectsSection = () => {
           <div className="flex justify-center">
             <div className="h-1 w-24 bg-gradient-to-r from-orange-500 to-rose-500 rounded-full"></div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -117,20 +124,20 @@ const ProjectsSection = () => {
             const isHovered = hoveredProject === index;
             
             return (
-              <div
+              <motion.div
                 key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
                 onMouseEnter={() => setHoveredProject(index)}
                 onMouseLeave={() => setHoveredProject(null)}
                 className="group relative"
-                style={{
-                  animation: `fadeInUp 0.6s ease-out ${index * 0.1}s forwards`,
-                  opacity: 0
-                }}
               >
-                <div className={`relative h-full bg-white/60 backdrop-blur-sm rounded-3xl overflow-hidden border-2 transition-all duration-500 ${
+                <div className={`relative h-full bg-white/70 backdrop-blur-md rounded-3xl overflow-hidden border-2 transition-all duration-500 ${
                   isHovered 
                     ? 'border-orange-300 shadow-2xl -translate-y-3 scale-[1.02]' 
-                    : 'border-orange-100/50 shadow-lg'
+                    : 'border-white shadow-lg'
                 }`}>
                   {/* Pattern Header */}
                   <div className={`relative h-48 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
@@ -213,7 +220,7 @@ const ProjectsSection = () => {
                     isHovered ? 'scale-x-100' : 'scale-x-0'
                   }`}></div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
@@ -245,6 +252,16 @@ const ProjectsSection = () => {
             transform: translateY(0);
           }
         }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) translateX(0px); }
+          50% { transform: translateY(-20px) translateX(10px); }
+        }
+        @keyframes float-delayed {
+          0%, 100% { transform: translateY(0px) translateX(0px); }
+          50% { transform: translateY(20px) translateX(-10px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-float-delayed { animation: float-delayed 7s ease-in-out infinite; }
       `}</style>
     </div>
   );
