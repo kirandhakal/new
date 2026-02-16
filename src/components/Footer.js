@@ -1,57 +1,64 @@
-import React, { useState } from 'react';
-import { Heart, Github, Linkedin, Mail } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from "react";
+import { Heart, Github, Linkedin, Mail } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [hearts, setHearts] = useState([]);
 
   const createHeart = () => {
-    const id = Date.now();
-    const newHeart = {
-      id,
-      left: Math.random() * 40 - 20, 
-      size: Math.random() * 12 + 12,
-    };
+    const id1 = Date.now();
+    const id2 = Date.now() + 1;
 
-    setHearts((prev) => [...prev, newHeart]);
+    const heartPair = [
+      {
+        id: id1,
+        x: -25,
+        size: 18,
+      },
+      {
+        id: id2,
+        x: 25,
+        size: 18,
+      },
+    ];
 
-    // Remove after animation
+    setHearts((prev) => [...prev, ...heartPair]);
+
     setTimeout(() => {
-      setHearts((prev) => prev.filter((h) => h.id !== id));
-    }, 1500);
+      setHearts((prev) =>
+        prev.filter((h) => h.id !== id1 && h.id !== id2)
+      );
+    }, 1200);
   };
 
   return (
     <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white py-12 mt-auto relative overflow-hidden">
       
-      {/* Decorative elements */}
+      {/* Decorative blur */}
       <div className="absolute top-0 left-1/4 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl"></div>
-      
+
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
 
-          {/* Logo and copyright */}
-          <div className="flex flex-col items-center md:items-start gap-2">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-rose-500 rounded-full flex items-center justify-center">
-                <span className="font-black text-lg">K</span>
-              </div>
-              <span className="font-bold text-xl">Kiran Dhakal</span>
-            </div>
+          {/* Left Section */}
+          <div className="flex flex-col items-center md:items-start gap-3">
 
-            <p className="text-gray-100 text-lg relative">
-              © {currentYear} All rights reserved. 
-              
-              {/* Clickable Heart */}
+            {/* Sending Love */}
+            <div className="flex items-center gap-2 text-xl font-medium relative">
+              <span>Sending</span>
+
               <span
                 onClick={createHeart}
-                className="inline-block relative cursor-pointer mx-1"
-              > send  
-                <Heart size={26} className="inline text-rose-500 hover:scale-125 transition-transform duration-200" />
+                className="relative cursor-pointer flex items-center justify-center"
+              >
+                <Heart
+                  size={28}
+                  className="text-rose-500 hover:scale-125 transition-transform duration-200 relative top-[1px]"
+                />
 
-                {/* Animated floating hearts */}
+                {/* Animated Hearts */}
                 <AnimatePresence>
                   {hearts.map((heart) => (
                     <motion.span
@@ -59,14 +66,13 @@ const Footer = () => {
                       initial={{ opacity: 1, y: 0, x: 0, scale: 1 }}
                       animate={{
                         opacity: 0,
-                        y: -60,
-                        x: heart.left,
-                        scale: 1.5,
+                        y: -80,
+                        x: heart.x,
+                        scale: 1.4,
                       }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 1.5, ease: 'easeOut' }}
-                      className="absolute left-1/2"
-                      style={{ marginLeft: -heart.size / 2 }}
+                      transition={{ duration: 1.2, ease: "easeOut" }}
+                      className="absolute"
                     >
                       <Heart
                         size={heart.size}
@@ -77,11 +83,16 @@ const Footer = () => {
                 </AnimatePresence>
               </span>
 
-           love
+              <span>Love</span>
+            </div>
+
+            {/* Copyright */}
+            <p className="text-gray-100 text-lg">
+              © {currentYear} All rights reserved.
             </p>
           </div>
-          
-          {/* Social links */}
+
+          {/* Social Links */}
           <div className="flex items-center gap-4">
             <a
               href="https://github.com/kirandhakal"
@@ -92,6 +103,7 @@ const Footer = () => {
             >
               <Github size={20} />
             </a>
+
             <a
               href="https://www.linkedin.com/in/kirandhakal7/"
               target="_blank"
@@ -101,6 +113,7 @@ const Footer = () => {
             >
               <Linkedin size={20} />
             </a>
+
             <a
               href="mailto:kirandhakal715@gmail.com"
               className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-all hover:scale-110"
