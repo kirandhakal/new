@@ -15,16 +15,10 @@ const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // EmailJS configuration
-  const rawService = typeof process !== 'undefined' ? process.env.REACT_APP_EMAILJS_SERVICE_ID : '';
-  const rawTemplate = typeof process !== 'undefined' ? process.env.REACT_APP_EMAILJS_TEMPLATE_ID : '';
-  const rawPublic = typeof process !== 'undefined' ? process.env.REACT_APP_EMAILJS_PUBLIC_KEY : '';
-
-  const sanitize = (v) => String(v || '').trim().replace(/^['"](.*)['"]$/, '$1');
-
-  const SERVICE_ID = sanitize(rawService);
-  const TEMPLATE_ID = sanitize(rawTemplate);
-  const PUBLIC_KEY = sanitize(rawPublic);
+  // EmailJS configuration - access environment variables directly
+  const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID || '';
+  const TEMPLATE_ID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID || '';
+  const PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY || '';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
