@@ -4,9 +4,10 @@ import { Home, User, Briefcase, Settings, Mail } from 'lucide-react';
 const NavBar = ({ activeSection, setActiveSection }) => {
   const navItems = [
     { key: 'home', icon: Home, label: 'Home' },
+    { key: 'services', icon: Settings, label: 'Services' },
     { key: 'skills', icon: User, label: 'Skills' },
     { key: 'projects', icon: Briefcase, label: 'Projects' },
-    { key: 'services', icon: Settings, label: 'Services' },
+
     { key: 'contact', icon: Mail, label: 'Contact' },
   ];
 

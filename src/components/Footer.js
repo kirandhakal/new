@@ -1,17 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Heart, Github, Linkedin, Mail } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  
+  const [hearts, setHearts] = useState([]);
+
+  const createHeart = () => {
+    const id = Date.now();
+    const newHeart = {
+      id,
+      left: Math.random() * 40 - 20, 
+      size: Math.random() * 12 + 12,
+    };
+
+    setHearts((prev) => [...prev, newHeart]);
+
+    // Remove after animation
+    setTimeout(() => {
+      setHearts((prev) => prev.filter((h) => h.id !== id));
+    }, 1500);
+  };
+
   return (
     <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white py-12 mt-auto relative overflow-hidden">
+      
       {/* Decorative elements */}
       <div className="absolute top-0 left-1/4 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl"></div>
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+
           {/* Logo and copyright */}
           <div className="flex flex-col items-center md:items-start gap-2">
             <div className="flex items-center gap-2">
@@ -20,8 +40,44 @@ const Footer = () => {
               </div>
               <span className="font-bold text-xl">Kiran Dhakal</span>
             </div>
-            <p className="text-gray-400 text-sm">
-              © {currentYear} All rights reserved. Made with <Heart size={14} className="inline text-rose-500 mx-1" /> in Nepal
+
+            <p className="text-gray-100 text-lg relative">
+              © {currentYear} All rights reserved. 
+              
+              {/* Clickable Heart */}
+              <span
+                onClick={createHeart}
+                className="inline-block relative cursor-pointer mx-1"
+              > send  
+                <Heart size={26} className="inline text-rose-500 hover:scale-125 transition-transform duration-200" />
+
+                {/* Animated floating hearts */}
+                <AnimatePresence>
+                  {hearts.map((heart) => (
+                    <motion.span
+                      key={heart.id}
+                      initial={{ opacity: 1, y: 0, x: 0, scale: 1 }}
+                      animate={{
+                        opacity: 0,
+                        y: -60,
+                        x: heart.left,
+                        scale: 1.5,
+                      }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 1.5, ease: 'easeOut' }}
+                      className="absolute left-1/2"
+                      style={{ marginLeft: -heart.size / 2 }}
+                    >
+                      <Heart
+                        size={heart.size}
+                        className="text-rose-500 fill-rose-500"
+                      />
+                    </motion.span>
+                  ))}
+                </AnimatePresence>
+              </span>
+
+           love
             </p>
           </div>
           
@@ -53,6 +109,7 @@ const Footer = () => {
               <Mail size={20} />
             </a>
           </div>
+
         </div>
       </div>
     </footer>

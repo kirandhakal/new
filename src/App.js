@@ -105,7 +105,7 @@ const App = () => {
         onClick={() => scrollToSection('home')}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className="fixed bottom-24 md:bottom-8 right-8 z-50 p-4 bg-gradient-to-r from-orange-500 to-rose-500 text-white rounded-full shadow-2xl hover:shadow-orange-500/50 transition-shadow"
+        className="fixed bottom-54 md:bottom-28 right-8 z-50 p-4 bg-gradient-to-r from-orange-500 to-rose-500 text-white rounded-full shadow-2xl hover:shadow-orange-500/50 transition-shadow"
         aria-label="Scroll to top"
       >
         <ArrowUp size={24} />
