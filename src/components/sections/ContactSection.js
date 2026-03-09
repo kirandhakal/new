@@ -1,9 +1,181 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Facebook, Instagram, Github, Linkedin, Mail, Phone, 
   Send, CheckCircle, MapPin, Twitter, Youtube 
 } from 'lucide-react';
+
+// Move constant data outside component to avoid recreation on every render
+const SOCIAL_LINKS = [
+  { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/kirandhakal715', color: 'bg-blue-600' },
+  { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/dhakalkiran_', color: 'bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500' },
+  { name: 'GitHub', icon: Github, url: 'https://github.com/kirandhakal', color: 'bg-gray-900' },
+  { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/kirandhakal7/', color: 'bg-blue-700' },
+  { name: 'Twitter', icon: Twitter, url: 'https://x.com/dhakaldiary', color: 'bg-sky-500' },
+  { name: 'YouTube', icon: Youtube, url: 'https://www.youtube.com/@kirandhakal715', color: 'bg-red-600' },
+];
+
+const CONTACT_INFO = [
+  { icon: Mail, label: 'Email', value: 'kirandhakal715@gmail.com', href: 'mailto:kirandhakal715@gmail.com' },
+  { icon: Phone, label: 'Phone', value: '+977 9827591616', href: 'tel:+9779827591616' },
+  { icon: MapPin, label: 'Location', value: 'Kathmandu, Nepal', href: '#' },
+];
+
+// Extract complex animation component for reusability
+const EnvelopeAnimation = () => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, scale: 0.8, filter: "blur(20px)" }}
+    className="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
+  >
+    <div className="relative w-48 h-48 flex items-center justify-center">
+      <svg 
+        viewBox="0 0 24 24" 
+        className="w-40 h-40 drop-shadow-[0_0_30px_rgba(59,130,246,0.3)]"
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="1"
+      >
+        <motion.path 
+          d="M3 8L12 13L21 8" 
+          stroke="#3b82f6" 
+          strokeLinecap="round" 
+          strokeLinejoin="round" 
+        />
+        <motion.rect 
+          x="3" y="5" width="18" height="14" rx="2" 
+          stroke="#3b82f6" 
+          strokeLinejoin="round" 
+        />
+        <motion.rect 
+          x="3" y="5" width="18" height="14" rx="2"
+          fill="#dbeafe"
+          initial={{ opacity: 0, clipPath: 'inset(100% 0 0 0)' }}
+          animate={{ opacity: 0.8, clipPath: 'inset(0% 0 0 0)' }}
+          transition={{ duration: 3, ease: "easeInOut" }}
+          className="z-[-1]"
+        />
+      </svg>
+      <motion.div
+        initial={{ opacity: 0, x: -20, y: 20 }}
+        animate={{ opacity: [0, 1, 0], x: 40, y: -40 }}
+        transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
+        className="absolute text-blue-500"
+      >
+        <Send size={24} />
+      </motion.div>
+    </div>
+  </motion.div>
+);
+
+// Success message component
+const SuccessMessage = ({ onReset }) => (
+  <motion.div
+    key="success-message"
+    initial={{ opacity: 0, scale: 0.9 }}
+    animate={{ opacity: 1, scale: 1 }}
+    className="bg-white p-12 rounded-[2.5rem] shadow-sm shadow-blue-100 text-center space-y-6 flex flex-col items-center justify-center min-h-[500px]"
+  >
+    <div className="w-20 h-20 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center border border-blue-100">
+      <CheckCircle size={40} />
+    </div>
+    <div className="space-y-2">
+      <h3 className="text-3xl font-black uppercase italic tracking-tighter text-gray-900">Delivered!</h3>
+      <p className="text-gray-500 text-xl font-medium">Your message is on its way.<br/>I'll be in touch shortly.</p>
+    </div>
+    <button
+      onClick={onReset}
+      className="text-lg font-black uppercase tracking-widest text-gray-400 hover:text-blue-500 transition-colors"
+    >
+      Send Another
+    </button>
+  </motion.div>
+);
+
+const ContactInfoBox = ({ icon: Icon, label, value, href }) => (
+  <a
+    href={href}
+    className="group flex items-center gap-3 p-3 bg-white rounded-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-sm border border-blue-50"
+  >
+    <div className="p-2 bg-blue-100 text-blue-600 rounded-xl group-hover:bg-white/20 group-hover:text-white transition-colors">
+      <Icon size={26} />
+    </div>
+    <div>
+      <p className="text-[15px] font-black uppercase tracking-widest opacity-60">{label}</p>
+      <p className="font-bold text-lg truncate">{value}</p>
+    </div>
+  </a>
+);
+
+ContactInfoBox.propTypes = {
+  icon: PropTypes.elementType.isRequired,
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  href: PropTypes.string.isRequired,
+};
+
+const SocialIconBox = ({ icon: Icon, url, color }) => (
+  <motion.a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    whileHover={{ y: -2, scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    className={`${color} aspect-square rounded-lg flex items-center justify-center text-white shadow-sm transition-all p-1`}
+  >
+    <Icon size={24} />
+  </motion.a>
+);
+
+SocialIconBox.propTypes = {
+  icon: PropTypes.elementType.isRequired,
+  url: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+};
+
+const FormField = ({ label, name, value, onChange, placeholder, type = 'text', required = true, isTextarea = false }) => (
+  <div className="space-y-1">
+    <label className="text-[15px] font-black uppercase tracking-widest text-gray-600 ml-2">{label}</label>
+    {isTextarea ? (
+      <textarea
+        name={name}
+        required={required}
+        rows={4}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className="w-full bg-white/50 border border-gray-100 focus:border-orange-400 focus:bg-white rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all resize-none shadow-sm"
+      />
+    ) : (
+      <input
+        type={type}
+        name={name}
+        required={required}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className="w-full bg-white/50 border border-gray-100 focus:border-orange-400 focus:bg-white rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all shadow-sm"
+      />
+    )}
+  </div>
+);
+
+FormField.propTypes = {
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  required: PropTypes.bool,
+  isTextarea: PropTypes.bool,
+};
+
+SuccessMessage.propTypes = {
+  onReset: PropTypes.func.isRequired,
+};
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -15,16 +187,21 @@ const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // EmailJS configuration
-  const rawService = typeof process !== 'undefined' ? process.env.REACT_APP_EMAILJS_SERVICE_ID : '';
-  const rawTemplate = typeof process !== 'undefined' ? process.env.REACT_APP_EMAILJS_TEMPLATE_ID : '';
-  const rawPublic = typeof process !== 'undefined' ? process.env.REACT_APP_EMAILJS_PUBLIC_KEY : '';
+  // Memoize EmailJS config to avoid recalculation on every render
+  const emailConfig = useMemo(() => {
+    const sanitize = (v) => String(v || '').trim().replace(/^['"](.*)['"]$/, '$1');
+    const rawService = typeof process !== 'undefined' ? process.env.REACT_APP_EMAILJS_SERVICE_ID : '';
+    const rawTemplate = typeof process !== 'undefined' ? process.env.REACT_APP_EMAILJS_TEMPLATE_ID : '';
+    const rawPublic = typeof process !== 'undefined' ? process.env.REACT_APP_EMAILJS_PUBLIC_KEY : '';
+    
+    return {
+      serviceId: sanitize(rawService),
+      templateId: sanitize(rawTemplate),
+      publicKey: sanitize(rawPublic),
+    };
+  }, []);
 
-  const sanitize = (v) => String(v || '').trim().replace(/^['"](.*)['"]$/, '$1');
-
-  const SERVICE_ID = sanitize(rawService);
-  const TEMPLATE_ID = sanitize(rawTemplate);
-  const PUBLIC_KEY = sanitize(rawPublic);
+  const { serviceId: SERVICE_ID, templateId: TEMPLATE_ID, publicKey: PUBLIC_KEY } = emailConfig;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,15 +256,6 @@ const ContactSection = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const socialLinks = [
-    { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/kirandhakal715', color: 'bg-blue-600' },
-    { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/dhakalkiran_', color: 'bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500' },
-    { name: 'GitHub', icon: Github, url: 'https://github.com/kirandhakal', color: 'bg-gray-900' },
-    { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/kirandhakal7/', color: 'bg-blue-700' },
-    { name: 'Twitter', icon: Twitter, url: 'https://x.com/dhakaldiary', color: 'bg-sky-500' },
-    { name: 'YouTube', icon: Youtube, url: 'https://www.youtube.com/@kirandhakal715', color: 'bg-red-600' },
-  ];
-
   return (
     <div className="py-20 bg-gradient-to-br from-amber-50 via-orange-50/40 to-rose-50/60 min-h-screen relative overflow-hidden font-sans">
       
@@ -134,45 +302,29 @@ const ContactSection = () => {
                   className="bg-white/70 backdrop-blur-md p-8 md:p-10 rounded-[2.5rem] shadow-sm shadow-blue-200/20 border border-white h-full relative overflow-hidden"
                 >
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="space-y-1">
-                      <label className="text-[15px] font-black uppercase tracking-widest text-gray-600 ml-2">Your Name</label>
-                      <input
-                        type="text"
-                        name="name"
-                        required
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="John Doe"
-                        className="w-full bg-white/50 border border-gray-100 focus:border-orange-400 focus:bg-white rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all shadow-sm"
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-[15px] font-black uppercase tracking-widest text-gray-600 ml-2">Email Address</label>
-                      <input
-                        type="email"
-                        name="email"
-                        required
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="john@example.com"
-                        className="w-full bg-white/50 border border-gray-100 focus:border-orange-400 focus:bg-white rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all shadow-sm"
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-[15px] font-black uppercase tracking-widest text-gray-600 ml-2">Message</label>
-                      <textarea
-                        name="message"
-                        required
-                        rows={4}
-                        value={formData.message}
-                        onChange={handleChange}
-                        placeholder="Tell me about your project..."
-                        className="w-full bg-white/50 border border-gray-100 focus:border-orange-400 focus:bg-white rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all resize-none shadow-sm"
-                      ></textarea>
-                    </div>
-
+                    <FormField
+                      label="Your Name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="John Doe"
+                    />
+                    <FormField
+                      label="Email Address"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="john@example.com"
+                      type="email"
+                    />
+                    <FormField
+                      label="Message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="Tell me about your project..."
+                      isTextarea={true}
+                    />
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
@@ -183,7 +335,6 @@ const ContactSection = () => {
                         {isSubmitting ? 'Sending...' : 'Send Message'}
                       </span>
                       {!isSubmitting && <Send size={16} className="relative z-10" />}
-                      
                       {/* Animated Progress Loader */}
                       {isSubmitting && (
                         <motion.div 
@@ -194,7 +345,6 @@ const ContactSection = () => {
                         />
                       )}
                     </motion.button>
-
                     {status === 'error' && (
                       <motion.p 
                         initial={{ opacity: 0 }} 
@@ -207,83 +357,13 @@ const ContactSection = () => {
                   </form>
                 </motion.div>
               ) : (
-                <motion.div
-                  key="success-message"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="bg-white p-12 rounded-[2.5rem] shadow-sm shadow-blue-100 text-center space-y-6 flex flex-col items-center justify-center min-h-[500px]"
-                >
-                  <div className="w-20 h-20 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center border border-blue-100">
-                    <CheckCircle size={40} />
-                  </div>
-                  <div className="space-y-2">
-                    <h3 className="text-3xl font-black uppercase italic tracking-tighter text-gray-900">Delivered!</h3>
-                    <p className="text-gray-500 text-xl font-medium">Your message is on its way.<br/>I'll be in touch shortly.</p>
-                  </div>
-                  <button
-                    onClick={() => setStatus('')}
-                    className="text-lg font-black uppercase tracking-widest text-gray-400 hover:text-blue-500 transition-colors"
-                  >
-                    Send Another
-                  </button>
-                </motion.div>
+                <SuccessMessage onReset={() => setStatus('')} />
               )}
             </AnimatePresence>
 
             {/* OVERLAY LETTERBOX ANIMATION */}
             <AnimatePresence>
-              {isSubmitting && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.8, filter: "blur(20px)" }}
-                  className="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
-                >
-                  <div className="relative w-48 h-48 flex items-center justify-center">
-                    {/* The Envelope SVG */}
-                    <svg 
-                      viewBox="0 0 24 24" 
-                      className="w-40 h-40 drop-shadow-[0_0_30px_rgba(59,130,246,0.3)]"
-                      fill="none" 
-                      stroke="currentColor" 
-                      strokeWidth="1"
-                    >
-                      {/* Main Envelope Body */}
-                      <motion.path 
-                        d="M3 8L12 13L21 8" 
-                        stroke="#3b82f6" 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                      />
-                      <motion.rect 
-                        x="3" y="5" width="18" height="14" rx="2" 
-                        stroke="#3b82f6" 
-                        strokeLinejoin="round" 
-                      />
-                      
-                      {/* Light Blue Filling Effect */}
-                      <motion.rect 
-                        x="3" y="5" width="18" height="14" rx="2"
-                        fill="#dbeafe"
-                        initial={{ opacity: 0, clipPath: 'inset(100% 0 0 0)' }}
-                        animate={{ opacity: 0.8, clipPath: 'inset(0% 0 0 0)' }}
-                        transition={{ duration: 3, ease: "easeInOut" }}
-                        className="z-[-1]"
-                      />
-                    </svg>
-                    
-                    {/* Floating Send Icon */}
-                    <motion.div
-                      initial={{ opacity: 0, x: -20, y: 20 }}
-                      animate={{ opacity: [0, 1, 0], x: 40, y: -40 }}
-                      transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
-                      className="absolute text-blue-500"
-                    >
-                      <Send size={24} />
-                    </motion.div>
-                  </div>
-                </motion.div>
-              )}
+              {isSubmitting && <EnvelopeAnimation />}
             </AnimatePresence>
           </div>
 
@@ -291,62 +371,30 @@ const ContactSection = () => {
           <div className="space-y-6 flex flex-col">
             <div className="bg-white/50 backdrop-blur-md p-6 md:p-8 rounded-[2.5rem] border border-white shadow-sm shadow-blue-200/10 space-y-4">
               <h3 className="text-xl font-black uppercase tracking-tighter text-gray-900">Contact Info</h3>
-              
               <div className="grid gap-3">
-                <a 
-                  href="mailto:kirandhakal715@gmail.com" 
-                  className="group flex items-center gap-3 p-3 bg-white rounded-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-sm border border-blue-50"
-                >
-                  <div className="p-2 bg-blue-100 text-blue-600 rounded-xl group-hover:bg-white/20 group-hover:text-white transition-colors">
-                    <Mail size={26} />
-                  </div>
-                  <div>
-                    <p className="text-[15px] font-black uppercase tracking-widest opacity-60">Email</p>
-                    <p className="font-bold text-lg truncate">kirandhakal715@gmail.com</p>
-                  </div>
-                </a>
-
-                <a 
-                  href="tel:+9779827591616" 
-                  className="group flex items-center gap-3 p-3 bg-white rounded-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-sm border border-blue-50"
-                >
-                  <div className="p-2 bg-blue-100 text-blue-600 rounded-xl group-hover:bg-white/20 group-hover:text-white transition-colors">
-                    <Phone size={26} />
-                  </div>
-                  <div>
-                    <p className="text-[15px] font-black uppercase tracking-widest opacity-60">Phone</p>
-                    <p className="font-bold text-lg">+977 9827591616</p>
-                  </div>
-                </a>
-
-                <div className="flex items-center gap-3 p-3 bg-white rounded-2xl shadow-sm border border-blue-50">
-                  <div className="p-2 bg-blue-100 text-blue-600 rounded-xl">
-                    <MapPin size={26} />
-                  </div>
-                  <div>
-                    <p className="text-[15px] font-black uppercase tracking-widest opacity-60">Location</p>
-                    <p className="font-bold text-lg text-gray-800">Kathmandu, Nepal</p>
-                  </div>
-                </div>
+                {CONTACT_INFO.map((info, index) => (
+                  <ContactInfoBox
+                    key={index}
+                    icon={info.icon}
+                    label={info.label}
+                    value={info.value}
+                    href={info.href}
+                  />
+                ))}
               </div>
             </div>
 
             {/* Social Media Grid */}
-            <div className="bg-white/50 backdrop-blur-md p-5 md:p-17 rounded-[2.5rem] border border-white shadow-sm shadow-blue-200/10 flex-1">
+            <div className="bg-white/50 backdrop-blur-md p-2 md:p-4 rounded-xl border border-white shadow-sm shadow-blue-200/10 flex-1">
               <h3 className="text-lg font-black uppercase tracking-tighter text-gray-900 mb-4">Follow Me</h3>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-                {socialLinks.map((social, index) => (
-                  <motion.a
+                {SOCIAL_LINKS.map((social, index) => (
+                  <SocialIconBox
                     key={index}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ y: -2, scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`${social.color} aspect-square rounded-2xl flex items-center justify-center text-white shadow-sm transition-all p-0.2`}
-                  >
-                    <social.icon size={35} />
-                  </motion.a>
+                    icon={social.icon}
+                    url={social.url}
+                    color={social.color}
+                  />
                 ))}
               </div>
             </div>
