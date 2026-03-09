@@ -298,11 +298,11 @@ const ContactSection = () => {
                   className="group flex items-center gap-3 p-3 bg-white rounded-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-sm border border-blue-50"
                 >
                   <div className="p-2 bg-blue-100 text-blue-600 rounded-xl group-hover:bg-white/20 group-hover:text-white transition-colors">
-                    <Mail size={16} />
+                    <Mail size={26} />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-widest opacity-60">Email</p>
-                    <p className="font-bold text-sm truncate">kirandhakal715@gmail.com</p>
+                    <p className="text-[15px] font-black uppercase tracking-widest opacity-60">Email</p>
+                    <p className="font-bold text-lg truncate">kirandhakal715@gmail.com</p>
                   </div>
                 </a>
 
@@ -311,28 +311,28 @@ const ContactSection = () => {
                   className="group flex items-center gap-3 p-3 bg-white rounded-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-sm border border-blue-50"
                 >
                   <div className="p-2 bg-blue-100 text-blue-600 rounded-xl group-hover:bg-white/20 group-hover:text-white transition-colors">
-                    <Phone size={16} />
+                    <Phone size={26} />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-widest opacity-60">Phone</p>
-                    <p className="font-bold text-sm">+977 9827591616</p>
+                    <p className="text-[15px] font-black uppercase tracking-widest opacity-60">Phone</p>
+                    <p className="font-bold text-lg">+977 9827591616</p>
                   </div>
                 </a>
 
                 <div className="flex items-center gap-3 p-3 bg-white rounded-2xl shadow-sm border border-blue-50">
                   <div className="p-2 bg-blue-100 text-blue-600 rounded-xl">
-                    <MapPin size={16} />
+                    <MapPin size={26} />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black uppercase tracking-widest opacity-60">Location</p>
-                    <p className="font-bold text-sm text-gray-800">Kathmandu, Nepal</p>
+                    <p className="text-[15px] font-black uppercase tracking-widest opacity-60">Location</p>
+                    <p className="font-bold text-lg text-gray-800">Kathmandu, Nepal</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Social Media Grid */}
-            <div className="bg-white/50 backdrop-blur-md p-5 md:p-7 rounded-[2.5rem] border border-white shadow-sm shadow-blue-200/10 flex-1">
+            <div className="bg-white/50 backdrop-blur-md p-5 md:p-17 rounded-[2.5rem] border border-white shadow-sm shadow-blue-200/10 flex-1">
               <h3 className="text-lg font-black uppercase tracking-tighter text-gray-900 mb-4">Follow Me</h3>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                 {socialLinks.map((social, index) => (
@@ -343,9 +343,9 @@ const ContactSection = () => {
                     rel="noopener noreferrer"
                     whileHover={{ y: -2, scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`${social.color} aspect-square rounded-2xl flex items-center justify-center text-white shadow-sm transition-all p-2`}
+                    className={`${social.color} aspect-square rounded-2xl flex items-center justify-center text-white shadow-sm transition-all p-0.2`}
                   >
-                    <social.icon size={18} />
+                    <social.icon size={35} />
                   </motion.a>
                 ))}
               </div>
