@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 
 const PortfolioPage = React.lazy(() => import("./PortfolioPage"));
@@ -7,6 +7,7 @@ const ServicesPage = React.lazy(() => import("./ServicesPage"));
 const SkillsPage = React.lazy(() => import("./SkillsPage"));
 const ProjectsPage = React.lazy(() => import("./ProjectsPage"));
 const ContactPage = React.lazy(() => import("./ContactPage"));
+const NotFoundPage = React.lazy(() => import("./NotFoundPage"));
 
 const AppRoutes = () => {
   return (
@@ -18,7 +19,7 @@ const AppRoutes = () => {
         <Route path="/skills" element={<SkillsPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/contact" element={<ContactPage />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </React.Suspense>
   );
