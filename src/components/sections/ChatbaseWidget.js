@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 const CHATBASE_WIDGET_CLASS = "chatbase-widget-mobile-friendly";
+const CHATBASE_EMBED_SCRIPT_ID = "g7aH1d7ivPsHoIu1S3ToV";
 
 function markChatbaseWidgetForMobile() {
   if (typeof document === "undefined") return;
@@ -56,7 +57,17 @@ const ChatbaseWidget = () => {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    if (!window.chatbase || window.chatbase("getState") !== "initialized") {
+    // Chatbase may set `window.chatbase` to a non-function; don't call it unless safe.
+    let isInitialized = false;
+    if (typeof window.chatbase === "function") {
+      try {
+        isInitialized = window.chatbase("getState") === "initialized";
+      } catch {
+        isInitialized = false;
+      }
+    }
+
+    if (!isInitialized) {
       window.chatbase = (...args) => {
         if (!window.chatbase.q) {
           window.chatbase.q = [];
@@ -72,30 +83,41 @@ const ChatbaseWidget = () => {
       });
     }
 
-    const script = document.createElement("script");
-    script.src = "https://www.chatbase.co/embed.min.js";
-    script.id = "g7aH1d7ivPsHoIu1S3ToV";
-    script.setAttribute("domain", "www.chatbase.co");
-    script.async = true;
+    // Avoid double-injecting in React StrictMode / route remounts.
+    let didAppendScript = false;
+    let t1;
+    let t2;
+    const existing = document.getElementById(CHATBASE_EMBED_SCRIPT_ID);
+    if (!existing) {
+      const script = document.createElement("script");
+      script.src = "https://www.chatbase.co/embed.min.js";
+      script.id = CHATBASE_EMBED_SCRIPT_ID;
+      script.setAttribute("domain", "www.chatbase.co");
+      script.async = true;
 
-    script.onload = () => {
-      markChatbaseWidgetForMobile();
-      // Widget may render after a short delay
-      const t1 = setTimeout(markChatbaseWidgetForMobile, 500);
-      const t2 = setTimeout(markChatbaseWidgetForMobile, 1500);
-      return () => {
-        clearTimeout(t1);
-        clearTimeout(t2);
+      script.onload = () => {
+        markChatbaseWidgetForMobile();
+        // Widget may render after a short delay
+        t1 = setTimeout(markChatbaseWidgetForMobile, 500);
+        t2 = setTimeout(markChatbaseWidgetForMobile, 1500);
       };
-    };
 
-    document.body.appendChild(script);
+      document.body.appendChild(script);
+      didAppendScript = true;
+    } else {
+      // Script already present; still try to apply mobile-friendly class.
+      markChatbaseWidgetForMobile();
+      t1 = setTimeout(markChatbaseWidgetForMobile, 500);
+      t2 = setTimeout(markChatbaseWidgetForMobile, 1500);
+    }
 
     const observer = new MutationObserver(() => markChatbaseWidgetForMobile());
     observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
-      document.getElementById("g7aH1d7ivPsHoIu1S3ToV")?.remove();
+      if (t1) clearTimeout(t1);
+      if (t2) clearTimeout(t2);
+      if (didAppendScript) document.getElementById(CHATBASE_EMBED_SCRIPT_ID)?.remove();
       observer.disconnect();
     };
   }, []);

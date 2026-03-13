@@ -7,7 +7,7 @@ const ProjectsSection = () => {
 
   const projects = [
     {
-      title: 'Kanban Board',
+      title: 'project management software',
       description: 'Streamlined task orchestration platform featuring intuitive drag-and-drop mechanics, real-time state management, and seamless CRUD operations. Built for teams who value visual workflow clarity.',
       // github: 'https://github.com/kirandhakal/projectmanagement',
       demo: 'https://projectmanagementkanban.vercel.app/',
@@ -15,6 +15,16 @@ const ProjectsSection = () => {
       gradient: 'from-blue-500 to-cyan-500',
       tags: ['React', 'Drag & Drop', 'Task Management'],
       imagePattern: 'grid'
+    },
+    {
+      title: 'Dynamic CV Maker',
+      description: 'Professional resume generation platform empowering users to craft pixel-perfect CVs through an intuitive interface. Live preview, customizable templates, and instant PDF export.',
+      github: 'https://github.com/kirandhakal/Dynamiccvmaker',
+      demo: 'https://cv.dhakalkiran.com.np',
+      icon: FileText,
+      gradient: 'from-purple-500 to-pink-500',
+      tags: ['PDF Generation', 'Templates', 'Career Tools'],
+      imagePattern: 'waves'
     },
     {
       title: 'Blood Bank Management',
@@ -45,16 +55,7 @@ const ProjectsSection = () => {
       tags: ['E-commerce', 'Budget Tracking', 'UX'],
       imagePattern: 'circles'
     },
-    {
-      title: 'Dynamic CV Maker',
-      description: 'Professional resume generation platform empowering users to craft pixel-perfect CVs through an intuitive interface. Live preview, customizable templates, and instant PDF export.',
-      github: 'https://github.com/kirandhakal/Dynamiccvmaker',
-      demo: 'https://cv.dhakalkiran.com.np',
-      icon: FileText,
-      gradient: 'from-purple-500 to-pink-500',
-      tags: ['PDF Generation', 'Templates', 'Career Tools'],
-      imagePattern: 'waves'
-    },
+   
     {
       title: 'Red Panda Hotel',
       description: 'Boutique hospitality management platform delivering seamless reservation experiences, room inventory control, and guest service coordination with elegant interface design.',
