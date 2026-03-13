@@ -341,7 +341,7 @@ const ContactSection = () => {
                           className="absolute inset-0 bg-blue-600 origin-left"
                           initial={{ scaleX: 0 }}
                           animate={{ scaleX: 1 }}
-                          transition={{ duration: 3.5, ease: "linear" }}
+                          transition={{ duration: 1.5, ease: "linear" }}
                         />
                       )}
                     </motion.button>

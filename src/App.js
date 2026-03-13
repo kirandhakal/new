@@ -20,11 +20,13 @@ const App = () => {
     projects: useRef(null),
     services: useRef(null),
     contact: useRef(null),
+    chatbase: useRef(null),
   };
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'skills', 'projects', 'services', 'contact'];
+      // Keep order aligned with DOM order for predictable active section detection.
+      const sections = ['home', 'services', 'skills', 'projects', 'contact'];
       
       for (const section of sections) {
         const element = sectionRefs[section].current;
@@ -88,6 +90,9 @@ const App = () => {
           <section ref={sectionRefs.contact} id="contact" className="min-h-screen">
             <ContactSection />
           </section>
+
+          {/* Anchor for the Chatbase widget (useful for linking/SEO). */}
+          <section ref={sectionRefs.chatbase} id="chatbase" className="sr-only" aria-hidden="true" />
         </div>
       </main>
       
