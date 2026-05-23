@@ -13,7 +13,7 @@ export interface Project {
 
 export interface Service {
   title: string;
-  icon: React.ComponentType;
+  icon: React.ComponentType<any>;
   description: string;
   gradient: string;
 }
