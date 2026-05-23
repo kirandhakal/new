@@ -1,3 +1,18 @@
+# Next.js migration scaffold
+
+This repository contains a migration scaffold from a Create React App to a Next.js App Router frontend.
+
+Quick start:
+
+```bash
+npm install
+npm run dev
+```
+
+Notes:
+- Incremental TypeScript migration enabled (`allowJs: true`).
+- Tailwind CSS is preconfigured in `tailwind.config.js` and global styles are under `src/styles/globals.css`.
+- App router entry is in `app/` with `layout.tsx` and several pages.
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
