@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -21,6 +21,10 @@ const CONTACT_INFO = [
   { icon: Phone, label: 'Phone', value: '+977 9827591616', href: 'tel:+9779827591616' },
   { icon: MapPin, label: 'Location', value: 'Kathmandu, Nepal', href: '#' },
 ];
+
+const CONTACT_API_URL = (typeof process !== 'undefined' && process.env.REACT_APP_CONTACT_API_URL)
+  || 'http://127.0.0.1:3100/';
+const CONTACT_FORM_KEY = 'frm_EB_IQJGCWArNosokxRhAaRdf';
 
 // Extract complex animation component for reusability
 const EnvelopeAnimation = () => (
@@ -181,70 +185,54 @@ const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     message: '',
   });
   const [status, setStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Memoize EmailJS config to avoid recalculation on every render
-  const emailConfig = useMemo(() => {
-    const sanitize = (v) => String(v || '').trim().replace(/^['"](.*)['"]$/, '$1');
-    const rawService = typeof process !== 'undefined' ? process.env.REACT_APP_EMAILJS_SERVICE_ID : '';
-    const rawTemplate = typeof process !== 'undefined' ? process.env.REACT_APP_EMAILJS_TEMPLATE_ID : '';
-    const rawPublic = typeof process !== 'undefined' ? process.env.REACT_APP_EMAILJS_PUBLIC_KEY : '';
-    
-    return {
-      serviceId: sanitize(rawService),
-      templateId: sanitize(rawTemplate),
-      publicKey: sanitize(rawPublic),
-    };
-  }, []);
-
-  const { serviceId: SERVICE_ID, templateId: TEMPLATE_ID, publicKey: PUBLIC_KEY } = emailConfig;
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setStatus('');
+    setErrorMessage('');
 
-    // If keys are missing, simulate success for preview/demo purposes
-    if (!SERVICE_ID || SERVICE_ID.includes('YOUR') || !PUBLIC_KEY || PUBLIC_KEY.includes('YOUR')) {
-      setTimeout(() => {
-        setStatus('success');
-        setIsSubmitting(false);
-        setFormData({ name: '', email: '', message: '' });
-      }, 3500); // Slightly longer to appreciate the animation
+    if (!CONTACT_FORM_KEY || CONTACT_FORM_KEY.includes('YOUR')) {
+      setErrorMessage('Contact form is not configured yet. Add REACT_APP_CONTACT_FORM_KEY before deploying.');
+      setStatus('error');
+      setIsSubmitting(false);
       return;
     }
 
-    const data = {
-      service_id: SERVICE_ID,
-      template_id: TEMPLATE_ID,
-      user_id: PUBLIC_KEY,
-      template_params: {
-        from_name: formData.name,
-        from_email: formData.email,
-        message: formData.message,
-      },
-    };
-
     try {
-      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `${CONTACT_API_URL.replace(/\/$/, '')}/v1/forms/${encodeURIComponent(CONTACT_FORM_KEY)}/submissions`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Idempotency-Key': `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+          },
+          body: JSON.stringify(formData),
+        },
+      );
 
       if (response.ok) {
         setStatus('success');
-        setFormData({ name: '', email: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', message: '' });
       } else {
-        const errorText = await response.text();
-        throw new Error(errorText || 'Failed to send message');
+        let errorText = 'Failed to send message';
+        try {
+          const errorBody = await response.json();
+          errorText = errorBody.message || errorBody.error || errorText;
+        } catch {
+          // Keep the generic message when the API does not return JSON.
+        }
+        throw new Error(errorText);
       }
     } catch (error) {
-      console.error('EmailJS error:', error);
+      console.error('Contact form error:', error);
       setErrorMessage(error.message || 'Submission failed');
       setStatus('error');
     } finally {
@@ -316,6 +304,14 @@ const ContactSection = () => {
                       onChange={handleChange}
                       placeholder="john@example.com"
                       type="email"
+                    />
+                    <FormField
+                      label="Phone Number"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+977 98XXXXXXXX"
+                      type="tel"
                     />
                     <FormField
                       label="Message"

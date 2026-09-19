@@ -68,3 +68,21 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Contact form configuration
+
+Copy `.env.example` to `.env.local` and set the public form key created by the contact backend:
+
+```env
+REACT_APP_CONTACT_API_URL=https://contact.kirandhakal.me
+REACT_APP_CONTACT_FORM_KEY=your-public-form-key
+```
+
+The contact form submits `name`, `email`, `phone`, and `message`. The registered backend form schema must include `phone` as a string field. Keep the admin API key private.
+
+To view submitted contact data, use the admin key from a private terminal:
+
+```bash
+curl "https://contact.kirandhakal.me/v1/admin/forms/YOUR_PUBLIC_FORM_KEY/submissions" \
+  -H "Authorization: Bearer YOUR_ADMIN_API_KEY"
+```
