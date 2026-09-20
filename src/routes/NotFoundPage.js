@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Home, Mail, Briefcase, Settings, User } from "lucide-react";
 import PageShell from "./PageShell";

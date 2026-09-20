@@ -23,8 +23,9 @@ const CONTACT_INFO = [
 ];
 
 const CONTACT_API_URL = (typeof process !== 'undefined' && process.env.REACT_APP_CONTACT_API_URL)
-  || 'http://127.0.0.1:3100/';
-const CONTACT_FORM_KEY = 'frm_EB_IQJGCWArNosokxRhAaRdf';
+  || 'https://contact.kirandhakal.me/';
+const CONTACT_FORM_KEY = (typeof process !== 'undefined' && process.env.REACT_APP_CONTACT_FORM_KEY)
+  || 'frm_VUGuth6Rs2FM2f21OFLYu8qg';
 
 // Extract complex animation component for reusability
 const EnvelopeAnimation = () => (

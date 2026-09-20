@@ -80,6 +80,8 @@ REACT_APP_CONTACT_FORM_KEY=your-public-form-key
 
 The contact form submits `name`, `email`, `phone`, and `message`. The registered backend form schema must include `phone` as a string field. Keep the admin API key private.
 
+After a successful submission, the frontend displays a confirmation message. Visitors cannot read submitted data. Site admins use the hosted contact service dashboard at `https://contact.kirandhakal.me/admin` with individual accounts. The dashboard shows only the forms belonging to their site.
+
 To view submitted contact data, use the admin key from a private terminal:
 
 ```bash
