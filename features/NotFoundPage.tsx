@@ -262,8 +262,7 @@ const NotFoundPage = () => {
       `}</style>
 
       <PageShell activeSection="home">
-        <section className="min-h-[calc(100vh-72px)] flex items-center px-4 sm:px-8 py-12"
-          style={{ background: "linear-gradient(135deg, #fafafa 0%, #fff7ed 50%, #fafafa 100%)" }}>
+        <section className="min-h-[calc(100vh-72px)] flex items-center px-4 sm:px-8 py-12 bg-stone-50">
           <div className="w-full max-w-5xl mx-auto">
 
             {/* Main card */}

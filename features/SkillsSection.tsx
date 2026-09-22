@@ -30,10 +30,6 @@ const SkillsSection = () => {
 
   return (
     <div className="py-20 lg:py-32 min-h-screen relative overflow-hidden flex items-center">
-      {/* Decorative background */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-orange-200/20 to-rose-200/20 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-amber-200/20 to-orange-200/20 rounded-full blur-3xl animate-float-delayed"></div>
-      
       {/* Dot pattern */}
       <div className="absolute inset-0 opacity-[0.015]" style={{
         backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
@@ -54,7 +50,7 @@ const SkillsSection = () => {
             <span className="text-sm font-medium text-gray-700">{content.eyebrow}</span>
           </div>
           
-          <H2 className="text-4xl sm:text-5xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900">{content.title}</H2>
+          <H2 className="text-4xl sm:text-5xl md:text-7xl text-gray-950">{content.title}</H2>
           
           <P className="text-xl max-w-2xl mx-auto">{content.description}</P>
           

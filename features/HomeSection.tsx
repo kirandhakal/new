@@ -30,10 +30,7 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
   }, []);
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 min-h-screen flex items-center">
-      {/* Decorative elements */}
-      <div className="absolute top-20 right-20 w-72 h-72 bg-gradient-to-br from-orange-200/30 to-rose-200/30 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-20 left-20 w-96 h-96 bg-gradient-to-tr from-amber-200/30 to-orange-200/30 rounded-full blur-3xl animate-float-delayed"></div>
+    <div className="relative overflow-hidden bg-stone-50 min-h-screen flex items-center">
       
       {/* Dot pattern overlay */}
       <div className="absolute inset-0 opacity-[0.015]" style={{
@@ -52,7 +49,7 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
                 <span className="text-sm sm:text-lg font-medium text-gray-700">{hero.greeting}</span>
               </div>
               <div className="space-y-3 md:space-y-4">
-                <H1 className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 leading-tight">
+                <H1 className="text-gray-950 leading-tight">
                   {hero.name}
                 </H1>
                 <div className="flex items-center gap-3 justify-center md:justify-start">
@@ -73,8 +70,6 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
             {/* Block 2: Image — right below "I'm Kiran Dhakal" on mobile; desktop: col 1, span 2 rows */}
             <div className="flex justify-center md:justify-end order-2 w-full md:col-start-1 md:row-start-1 md:row-span-2">
               <div className="relative group">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-400 to-rose-400 opacity-20 animate-ping-slow"></div>
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 opacity-30 blur-xl group-hover:opacity-50 transition-opacity duration-500"></div>
                 <div className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full overflow-hidden border-4 md:border-8 border-white shadow-2xl group-hover:scale-105 transition-transform duration-500">
                   <img
                     src={hero.image}
@@ -82,8 +77,6 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-gradient-to-br from-orange-400 to-rose-400 rounded-full blur-2xl opacity-60"></div>
-                <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-400 rounded-full blur-2xl opacity-60"></div>
               </div>
             </div>
 
@@ -95,7 +88,7 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
               <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-md mx-auto md:mx-0">
                 {hero.stats.map((stat) => (
                   <div key={stat.label} className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-orange-100/50 shadow-sm">
-                    <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-rose-600">{stat.value}</div>
+                    <div className="text-3xl font-black text-orange-700">{stat.value}</div>
                     <div className="text-xs text-gray-600 font-medium mt-1">{stat.label}</div>
                   </div>
                 ))}
@@ -106,7 +99,7 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
                 <a
                   href={hero.download.href}
                   download={hero.download.filename}
-                  className="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white px-8 py-4 rounded-2xl font-bold transition-all transform hover:scale-105 hover:shadow-2xl overflow-hidden"
+                  className="group relative inline-flex items-center justify-center gap-3 bg-gray-950 hover:bg-gray-800 text-white px-8 py-4 rounded-2xl font-bold transition-all transform hover:scale-105 hover:shadow-2xl overflow-hidden"
                   aria-label="Download Kiran Dhakal's CV"
                 >
                   <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></span>

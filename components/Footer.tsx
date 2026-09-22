@@ -39,7 +39,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white py-12 mt-auto relative overflow-hidden">
+    <footer className="bg-gray-950 text-white py-12 mt-auto relative overflow-hidden">
       
       {/* Decorative blur */}
       <div className="absolute top-0 left-1/4 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl"></div>

@@ -241,7 +241,7 @@ const ContactSection = () => {
   };
 
   return (
-    <div className="py-20 bg-gradient-to-br from-amber-50 via-orange-50/40 to-rose-50/60 min-h-screen relative overflow-hidden font-sans">
+    <div className="py-20 bg-stone-50 min-h-screen relative overflow-hidden font-sans">
       
       {/* Decorative Backgrounds */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-200/10 rounded-full blur-[120px] -z-10"></div>
@@ -263,7 +263,7 @@ const ContactSection = () => {
           {/* <h2 className="text-6xl md:text-8xl font-black tracking-tighter uppercase italic leading-none text-gray-900">
             Let's <span className="text-blue-500">Connect</span>
           </h2> */}
-          <H1 className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 leading-tight">
+          <H1 className="text-gray-950 leading-tight">
             {content.titleBefore} <span>{content.titleAccent}</span>
           </H1>
           

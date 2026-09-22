@@ -13,5 +13,5 @@
   "download": { "label": "Download CV", "href": "/Kiran%20Dhakal%20.pdf", "filename": "Kiran-Dhakal-CV.pdf" },
   "contactLabel": "Let's Talk",
   "techLabel": "Working with",
-  "technologies": ["React", "Next js", "Node.js", "TypeScript", "Tailwind", "MongoDB", "Postgress"]
+  "technologies": ["React", "Next js", "Node.js","Nest js" ,"TypeScript", "Tailwind", "MongoDB", "Postgress"]
 }

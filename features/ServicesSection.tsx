@@ -14,10 +14,6 @@ const icons: Record<string, LucideIcon> = { Globe, Smartphone, Palette, Code, Da
 const ServicesSection = () => {
   return (
     <div className="py-20 lg:py-32 relative overflow-hidden min-h-screen flex items-center">
-      {/* Decorative elements - matching HomeSection */}
-      <div className="absolute top-20 right-20 w-72 h-72 bg-gradient-to-br from-orange-200/30 to-rose-200/30 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-20 left-20 w-96 h-96 bg-gradient-to-tr from-amber-200/30 to-orange-200/30 rounded-full blur-3xl animate-float-delayed"></div>
-      
       {/* Dot pattern overlay */}
       <div className="absolute inset-0 opacity-[0.015]" style={{
         backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
@@ -37,7 +33,7 @@ const ServicesSection = () => {
             <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
             <span className="text-sm font-medium text-gray-700">{services.eyebrow}</span>
           </div>
-          <H1 className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 leading-tight mb-4">{services.title}</H1>
+          <H1 className="text-gray-950 leading-tight mb-4">{services.title}</H1>
           <div className="flex justify-center">
             <div className="h-1 w-24 bg-gradient-to-r from-orange-500 to-rose-500 rounded-full"></div>
           </div>
