@@ -13,7 +13,7 @@ export function AccordionItem({ label, className, children, ...props }: Accordio
   return (
     <details className={cn("group py-4", className)} {...props}>
       <summary className="cursor-pointer list-none font-semibold">{label}</summary>
-      <div className="pt-3 text-gray-600">{children}</div>
+      <div className="pt-3 text-muted-foreground">{children}</div>
     </details>
   );
 }

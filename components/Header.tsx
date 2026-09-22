@@ -11,7 +11,7 @@ const Header = ({ onHomeClick }: HeaderProps) => {
   const { currentTime, formatDate } = useCurrentTime();
 
   return (
-    <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-b border-gray-200 z-40 px-3 sm:px-4 py-2 sm:py-3 pt-[env(safe-area-inset-top)]">
+    <header className="fixed top-0 left-0 right-0 bg-card/80 backdrop-blur-sm border-b border-border z-40 px-3 sm:px-4 py-2 sm:py-3 pt-[env(safe-area-inset-top)]">
       <div className="max-w-6xl mx-auto flex justify-between items-center gap-2 min-h-[56px] sm:min-h-0">
         <button
           type="button"
@@ -22,9 +22,9 @@ const Header = ({ onHomeClick }: HeaderProps) => {
           <div className="flex-shrink-0 w-10 h-10 sm:w-14 sm:h-14 bg-gradient-to-br from-orange-500 to-pink-600 rounded-full flex items-center justify-center overflow-hidden">
             <img className="w-6 h-5 sm:w-10 sm:h-8" src="/kd.png" alt="Kiran Dhakal" />
           </div>
-          <span className="font-bold text-gray-800 text-lg sm:text-2xl md:text-3xl truncate">Kiran Dhakal</span>
+          <span className="font-bold text-foreground text-lg sm:text-2xl md:text-3xl truncate">Kiran Dhakal</span>
         </button>
-        <div className="flex-shrink-0 text-gray-800 text-xs sm:text-base md:text-lg tabular-nums">
+        <div className="flex-shrink-0 text-foreground text-xs sm:text-base md:text-lg tabular-nums">
           <div className="hidden sm:block">{formatDate(currentTime)}</div>
           <div>{currentTime.toLocaleTimeString('en-US', { hour12: false })}</div>
         </div>

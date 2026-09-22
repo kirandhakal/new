@@ -1,3 +1,5 @@
+const { designTokens } = require("./styles/design-tokens");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -7,6 +9,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: designTokens.colors,
+      fontFamily: designTokens.fontFamily,
+      fontSize: designTokens.fontSize,
+      borderRadius: designTokens.borderRadius,
+      boxShadow: designTokens.boxShadow,
       animation: {
         'spin-slow': 'spin 6s linear infinite',
         'spin-slower': 'spin 12s linear infinite',

@@ -10,9 +10,9 @@ export function FormField({ className, ...props }: HTMLAttributes<HTMLDivElement
 }
 
 export function FormLabel({ className, ...props }: LabelHTMLAttributes<HTMLLabelElement>) {
-  return <label className={cn("text-sm font-semibold text-gray-700", className)} {...props} />;
+  return <label className={cn("text-sm font-semibold text-foreground", className)} {...props} />;
 }
 
 export function FormMessage({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) {
-  return <p className={cn("text-sm text-red-500", className)} {...props} />;
+  return <p className={cn("text-sm text-danger", className)} {...props} />;
 }

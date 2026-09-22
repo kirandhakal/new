@@ -30,7 +30,7 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
   }, []);
 
   return (
-    <div className="relative overflow-hidden bg-stone-50 min-h-screen flex items-center">
+    <div className="relative overflow-hidden bg-background text-foreground min-h-screen flex items-center">
       
       {/* Dot pattern overlay */}
       <div className="absolute inset-0 opacity-[0.015]" style={{
@@ -44,19 +44,19 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
             {/* Mobile: 1) Greeting + Name + Role  2) Image  3) Rest. Desktop: Image left, content right. */}
             {/* Block 1: Greeting + "I'm Kiran Dhakal" + role (mobile order 1); desktop: col 2 row 1 */}
             <div className="flex flex-col items-center md:items-start text-center md:text-left order-1 w-full md:col-start-2 md:row-start-1 space-y-4 md:space-y-0">
-              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-orange-200/50 shadow-sm">
-                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span className="text-sm sm:text-lg font-medium text-gray-700">{hero.greeting}</span>
+              <div className="inline-flex items-center gap-2 bg-card/80 backdrop-blur-sm px-4 py-2 rounded-full border border-border shadow-sm">
+                <span className="w-2 h-2 bg-success rounded-full animate-pulse"></span>
+                <span className="text-sm sm:text-lg font-medium text-muted-foreground">{hero.greeting}</span>
               </div>
               <div className="space-y-3 md:space-y-4">
-                <H1 className="text-gray-950 leading-tight">
+                <H1 className="leading-tight">
                   {hero.name}
                 </H1>
                 <div className="flex items-center gap-3 justify-center md:justify-start">
                   <div className="h-1 w-10 sm:w-12 bg-gradient-to-r from-orange-500 to-rose-500 rounded-full"></div>
                   <div className="relative h-10 sm:h-12 overflow-hidden">
                     <p
-                      className={`text-xl sm:text-2xl md:text-3xl font-bold text-orange-700 transition-all duration-500 ${
+                      className={`text-xl sm:text-2xl md:text-3xl font-bold text-accent transition-all duration-500 ${
                         isAnimating ? 'opacity-0 translate-y-8' : 'opacity-100 translate-y-0'
                       }`}
                     >
@@ -87,9 +87,9 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
               {/* Stats */}
               <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-md mx-auto md:mx-0">
                 {hero.stats.map((stat) => (
-                  <div key={stat.label} className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-orange-100/50 shadow-sm">
-                    <div className="text-3xl font-black text-orange-700">{stat.value}</div>
-                    <div className="text-xs text-gray-600 font-medium mt-1">{stat.label}</div>
+                  <div key={stat.label} className="bg-card/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-border shadow-sm">
+                    <div className="text-3xl font-black text-accent">{stat.value}</div>
+                    <div className="text-xs text-muted-foreground font-medium mt-1">{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -99,7 +99,7 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
                 <a
                   href={hero.download.href}
                   download={hero.download.filename}
-                  className="group relative inline-flex items-center justify-center gap-3 bg-gray-950 hover:bg-gray-800 text-white px-8 py-4 rounded-2xl font-bold transition-all transform hover:scale-105 hover:shadow-2xl overflow-hidden"
+                  className="group relative inline-flex items-center justify-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 rounded-2xl font-bold transition-all transform hover:scale-105 hover:shadow-lifted overflow-hidden"
                   aria-label="Download Kiran Dhakal's CV"
                 >
                   <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></span>
@@ -110,7 +110,7 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
                 
                 <button
                   onClick={() => setActiveSection && setActiveSection("contact")}
-                  className="group inline-flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-gray-800 px-8 py-4 rounded-2xl font-bold transition-all transform hover:scale-105 border-2 border-gray-200 hover:border-orange-300 shadow-lg hover:shadow-xl"
+                  className="group inline-flex items-center justify-center gap-3 bg-card hover:bg-secondary text-card-foreground px-8 py-4 rounded-2xl font-bold transition-all transform hover:scale-105 border-2 border-border hover:border-ring shadow-soft hover:shadow-lifted"
                   aria-label="Navigate to contact section"
                 >
                   <MessageCircle size={20} />
@@ -121,12 +121,12 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
 
               {/* Tech stack preview */}
               <div className="pt-4">
-                <p className="text-sm text-gray-500 font-medium mb-3">{hero.techLabel}</p>
+                <p className="text-sm text-muted-foreground font-medium mb-3">{hero.techLabel}</p>
                 <div className="flex flex-wrap gap-3 justify-center md:justify-start">
                   {hero.technologies.map((tech) => (
                     <span 
                       key={tech}
-                      className="px-4 py-2 bg-white/60 backdrop-blur-sm rounded-full text-sm font-semibold text-gray-700 border border-orange-100/50 shadow-sm hover:shadow-md hover:scale-105 transition-all cursor-default"
+                      className="px-4 py-2 bg-card/60 backdrop-blur-sm rounded-full text-sm font-semibold text-muted-foreground border border-border shadow-sm hover:shadow-soft hover:scale-105 transition-all cursor-default"
                     >
                       {tech}
                     </span>

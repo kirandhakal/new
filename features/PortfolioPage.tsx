@@ -104,7 +104,7 @@ const PortfolioPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-background text-foreground">
       <Header onHomeClick={() => scrollToSection("home")} />
 
       <main className="pt-[72px] md:pt-20">
@@ -159,7 +159,7 @@ const PortfolioPage = () => {
         onClick={() => scrollToSection("home")}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className="fixed bottom-54 md:bottom-28 right-8 z-50 p-4 bg-gradient-to-r from-orange-500 to-rose-500 text-white rounded-full shadow-2xl hover:shadow-orange-500/50 transition-shadow"
+        className="fixed bottom-54 md:bottom-28 right-8 z-50 p-4 bg-accent text-accent-foreground rounded-full shadow-lifted transition-shadow hover:bg-accent/90"
         aria-label="Scroll to top"
       >
         <ArrowUp size={24} />

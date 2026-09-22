@@ -7,9 +7,9 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variants = {
-  default: "bg-gray-900 text-white hover:bg-gray-800",
-  outline: "border border-gray-200 bg-white text-gray-800 hover:bg-gray-50",
-  ghost: "text-gray-700 hover:bg-gray-100",
+  default: "bg-primary text-primary-foreground hover:bg-primary/90",
+  outline: "border border-border bg-card text-card-foreground hover:bg-secondary",
+  ghost: "text-foreground hover:bg-secondary",
 };
 
 const sizes = {

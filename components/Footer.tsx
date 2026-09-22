@@ -39,11 +39,11 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-gray-950 text-white py-12 mt-auto relative overflow-hidden">
+    <footer className="bg-primary text-primary-foreground py-12 mt-auto relative overflow-hidden">
       
       {/* Decorative blur */}
-      <div className="absolute top-0 left-1/4 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute top-0 left-1/4 w-64 h-64 bg-accent/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-accent/10 rounded-full blur-3xl"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
@@ -93,7 +93,7 @@ const Footer = () => {
             </div>
 
             {/* Copyright */}
-            <p className="text-gray-100 text-lg">
+            <p className="text-primary-foreground/90 text-lg">
               © {currentYear} {footerJson.copyright}
             </p>
           </div>
