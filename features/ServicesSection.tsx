@@ -29,11 +29,11 @@ const ServicesSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full border border-orange-200/50 shadow-sm mb-6">
-            <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
-            <span className="text-sm font-medium text-gray-700">{services.eyebrow}</span>
+          <div className="inline-flex items-center gap-2 bg-card/80 backdrop-blur-sm px-5 py-2 rounded-full border border-border shadow-sm mb-6">
+            <span className="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
+            <span className="text-sm font-medium text-muted-foreground">{services.eyebrow}</span>
           </div>
-          <H1 className="text-gray-950 leading-tight mb-4">{services.title}</H1>
+          <H1 className="leading-tight mb-4">{services.title}</H1>
           <div className="flex justify-center">
             <div className="h-1 w-24 bg-gradient-to-r from-orange-500 to-rose-500 rounded-full"></div>
           </div>
@@ -52,15 +52,15 @@ const ServicesSection = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
               whileHover={{ y: -8, scale: 1.02 }}
-              className="group bg-white/70 backdrop-blur-md p-8 rounded-[2.5rem] border border-white shadow-lg shadow-orange-200/20 hover:shadow-2xl transition-all duration-300"
+              className="group bg-card/70 text-card-foreground backdrop-blur-md p-8 rounded-2xl border border-border shadow-soft hover:shadow-lifted transition-all duration-300"
             >
               <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${service.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
                 <Icon size={32} className="text-white" strokeWidth={2} />
               </div>
-              <h3 className="text-2xl font-black text-gray-900 mb-4 leading-tight tracking-tight group-hover:text-orange-600 transition-colors">
+              <h3 className="text-2xl font-black text-foreground mb-4 leading-tight tracking-tight group-hover:text-accent transition-colors">
                 {service.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed font-medium">
+              <p className="text-muted-foreground leading-relaxed font-medium">
                 {service.description}
               </p>
               <div className={`mt-6 h-1 w-16 bg-gradient-to-r ${service.gradient} rounded-full group-hover:w-full transition-all duration-300`}></div>

@@ -44,7 +44,7 @@ function useIsNearViewport(ref: React.RefObject<HTMLElement | null>, rootMargin 
 
 const SectionFallback = ({ label }: { label: string }) => (
   <div className="py-20 lg:py-32 min-h-screen flex items-center justify-center">
-    <div className="text-gray-500 font-medium">{label}</div>
+    <div className="text-muted-foreground font-medium">{label}</div>
   </div>
 );
 

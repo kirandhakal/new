@@ -45,12 +45,12 @@ const SkillsSection = () => {
           viewport={{ once: true }}
           className="text-center mb-20 space-y-6"
         >
-          <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full border border-orange-200/50 shadow-sm mb-4">
-            <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
-            <span className="text-sm font-medium text-gray-700">{content.eyebrow}</span>
+          <div className="inline-flex items-center gap-2 bg-card/80 backdrop-blur-sm px-5 py-2 rounded-full border border-border shadow-sm mb-4">
+            <span className="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
+            <span className="text-sm font-medium text-muted-foreground">{content.eyebrow}</span>
           </div>
           
-          <H2 className="text-4xl sm:text-5xl md:text-7xl text-gray-950">{content.title}</H2>
+          <H2 className="text-4xl sm:text-5xl md:text-7xl">{content.title}</H2>
           
           <P className="text-xl max-w-2xl mx-auto">{content.description}</P>
           
@@ -75,7 +75,7 @@ const SkillsSection = () => {
                 onMouseLeave={() => setActiveSkill(null)}
                 className={`group relative bg-white/70 backdrop-blur-md rounded-3xl p-6 border-2 transition-all duration-500 cursor-pointer ${
                   isActive 
-                    ? 'border-orange-300 shadow-2xl -translate-y-2 scale-[1.02]' 
+                    ? 'border-ring shadow-lifted -translate-y-2 scale-[1.02]' 
                     : 'border-white shadow-lg hover:shadow-xl'
                 }`}
               >
@@ -94,10 +94,10 @@ const SkillsSection = () => {
 
                     {/* Title and description */}
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-2xl font-bold text-gray-900 mb-1 tracking-tight">
+                      <h3 className="text-2xl font-bold text-foreground mb-1 tracking-tight">
                         {skill.name}
                       </h3>
-                      <p className="text-sm text-gray-600 font-medium">
+                      <p className="text-sm text-muted-foreground font-medium">
                         {skill.description}
                       </p>
                     </div>
@@ -110,7 +110,7 @@ const SkillsSection = () => {
                       <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                       <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                       <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      <span className="text-gray-500 text-xs ml-2 font-mono">
+                      <span className="text-muted-foreground text-xs ml-2 font-mono">
                         {skill.name.toLowerCase().replace(/[^a-z]/g, '')}.
                         {skill.name.includes('HTML') ? 'html' :
                          skill.name.includes('React') ? 'jsx' :
@@ -127,7 +127,7 @@ const SkillsSection = () => {
                       <code className="font-mono">
                         {skill.code.split('\n').map((line, i) => (
                           <div key={i} className="group/line hover:bg-white/5 px-2 -mx-2 rounded transition-colors">
-                            <span className="text-gray-600 select-none inline-block w-6 text-right mr-4">
+                            <span className="text-muted-foreground select-none inline-block w-6 text-right mr-4">
                               {i + 1}
                             </span>
                             <span className="text-emerald-400">
@@ -141,10 +141,10 @@ const SkillsSection = () => {
 
                   {/* Hover indicator */}
                   <div className={`mt-4 flex items-center gap-2 text-sm font-semibold transition-all duration-300 ${
-                    isActive ? 'text-orange-600' : 'text-gray-400'
+                    isActive ? 'text-accent' : 'text-muted-foreground/70'
                   }`}>
                     <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      isActive ? 'bg-orange-500 animate-pulse' : 'bg-gray-300'
+                      isActive ? 'bg-accent animate-pulse' : 'bg-muted'
                     }`}></div>
                     <span>{isActive ? 'Viewing code' : 'Hover to explore'}</span>
                   </div>
@@ -158,7 +158,7 @@ const SkillsSection = () => {
         <div className="mt-20 flex justify-center">
           <div className="flex items-center gap-4">
             <div className="h-px w-16 bg-gradient-to-r from-transparent to-orange-300"></div>
-            <div className="text-sm text-gray-500 font-medium">{content.footer}</div>
+            <div className="text-sm text-muted-foreground font-medium">{content.footer}</div>
             <div className="h-px w-16 bg-gradient-to-l from-transparent to-orange-300"></div>
           </div>
         </div>

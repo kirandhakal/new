@@ -104,18 +104,18 @@ const SuccessMessage = ({ onReset }: SuccessMessageProps) => (
     key="success-message"
     initial={{ opacity: 0, scale: 0.9 }}
     animate={{ opacity: 1, scale: 1 }}
-    className="bg-white p-12 rounded-[2.5rem] shadow-sm shadow-blue-100 text-center space-y-6 flex flex-col items-center justify-center min-h-[500px]"
+    className="bg-card p-12 rounded-2xl shadow-soft text-center space-y-6 flex flex-col items-center justify-center min-h-[500px]"
   >
     <div className="w-20 h-20 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center border border-blue-100">
       <CheckCircle size={40} />
     </div>
     <div className="space-y-2">
-      <h3 className="text-3xl font-black uppercase italic tracking-tighter text-gray-900">{content.successTitle}</h3>
-      <p className="text-gray-500 text-xl font-medium">{content.successMessage}</p>
+      <h3 className="text-3xl font-black uppercase italic tracking-tighter text-foreground">{content.successTitle}</h3>
+      <p className="text-muted-foreground text-xl font-medium">{content.successMessage}</p>
     </div>
     <button
       onClick={onReset}
-      className="text-lg font-black uppercase tracking-widest text-gray-400 hover:text-blue-500 transition-colors"
+      className="text-lg font-black uppercase tracking-widest text-muted-foreground hover:text-accent transition-colors"
     >
       {content.resetLabel}
     </button>
@@ -152,7 +152,7 @@ const SocialIconBox = ({ icon: Icon, url, color }: SocialIconBoxProps) => (
 
 const FormField = ({ label, name, value, onChange, placeholder, type = 'text', required = true, isTextarea = false }: FormFieldProps) => (
   <FormFieldContainer>
-    <FormLabel className="text-[15px] font-black uppercase tracking-widest text-gray-600 ml-2">{label}</FormLabel>
+  <FormLabel className="text-[15px] font-black uppercase tracking-widest text-muted-foreground ml-2">{label}</FormLabel>
     {isTextarea ? (
       <Textarea
         name={name}
@@ -161,7 +161,7 @@ const FormField = ({ label, name, value, onChange, placeholder, type = 'text', r
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full bg-white/50 border border-gray-100 focus:border-orange-400 focus:bg-white rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all resize-none shadow-sm"
+        className="w-full bg-card/50 border border-input focus:border-ring focus:bg-card rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all resize-none shadow-sm"
       />
     ) : (
       <Input
@@ -171,7 +171,7 @@ const FormField = ({ label, name, value, onChange, placeholder, type = 'text', r
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full bg-white/50 border border-gray-100 focus:border-orange-400 focus:bg-white rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all shadow-sm"
+        className="w-full bg-card/50 border border-input focus:border-ring focus:bg-card rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all shadow-sm"
       />
     )}
   </FormFieldContainer>
@@ -241,11 +241,11 @@ const ContactSection = () => {
   };
 
   return (
-    <div className="py-20 bg-stone-50 min-h-screen relative overflow-hidden font-sans">
+    <div className="py-20 bg-background text-foreground min-h-screen relative overflow-hidden font-sans">
       
       {/* Decorative Backgrounds */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-200/10 rounded-full blur-[120px] -z-10"></div>
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-200/10 rounded-full blur-[120px] -z-10"></div>
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[120px] -z-10"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
@@ -254,7 +254,7 @@ const ContactSection = () => {
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/80 backdrop-blur-sm text-blue-600 border border-blue-100 shadow-sm font-bold text-[10px] uppercase tracking-widest"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-card/80 backdrop-blur-sm text-accent border border-border shadow-sm font-bold text-[10px] uppercase tracking-widest"
           >
             <Mail size={14} className="text-blue-500" />
             <span>{content.eyebrow}</span>
@@ -263,11 +263,11 @@ const ContactSection = () => {
           {/* <h2 className="text-6xl md:text-8xl font-black tracking-tighter uppercase italic leading-none text-gray-900">
             Let's <span className="text-blue-500">Connect</span>
           </h2> */}
-          <H1 className="text-gray-950 leading-tight">
+          <H1 className="leading-tight">
             {content.titleBefore} <span>{content.titleAccent}</span>
           </H1>
           
-          <p className="text-lg text-gray-600 max-w-xl mx-auto font-medium">
+          <p className="text-lg text-muted-foreground max-w-xl mx-auto font-medium">
             {content.description}
           </p>
         </div>
@@ -283,7 +283,7 @@ const ContactSection = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="bg-white/70 backdrop-blur-md p-8 md:p-10 rounded-[2.5rem] shadow-sm shadow-blue-200/20 border border-white h-full relative overflow-hidden"
+                  className="bg-card/70 backdrop-blur-md p-8 md:p-10 rounded-2xl shadow-soft border border-border h-full relative overflow-hidden"
                 >
                   <Form onSubmit={handleSubmit}>
                     {content.fields.map((field) => (
@@ -302,7 +302,7 @@ const ContactSection = () => {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       disabled={isSubmitting}
-                      className="w-full py-5 bg-black text-white rounded-2xl font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 relative overflow-hidden transition-colors disabled:bg-gray-800"
+                      className="w-full py-5 bg-primary text-primary-foreground rounded-2xl font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 relative overflow-hidden transition-colors disabled:bg-primary/70"
                     >
                       <span className="relative z-10">
                         {isSubmitting ? content.submittingLabel : content.submitLabel}
@@ -342,8 +342,8 @@ const ContactSection = () => {
 
           {/* Contact Details Side */}
           <div className="space-y-6 flex flex-col">
-            <div className="bg-white/50 backdrop-blur-md p-6 md:p-8 rounded-[2.5rem] border border-white shadow-sm shadow-blue-200/10 space-y-4">
-              <h3 className="text-xl font-black uppercase tracking-tighter text-gray-900">{content.contactInfoTitle}</h3>
+            <div className="bg-card/50 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-border shadow-soft space-y-4">
+              <h3 className="text-xl font-black uppercase tracking-tighter text-foreground">{content.contactInfoTitle}</h3>
               <div className="grid gap-3">
                 {content.contactInfo.map((info) => (
                   <ContactInfoBox
@@ -359,7 +359,7 @@ const ContactSection = () => {
 
             {/* Social Media Grid */}
             <div className="bg-white/50 backdrop-blur-md p-2 md:p-4 rounded-xl border border-white shadow-sm shadow-blue-200/10 flex-1">
-              <h3 className="text-lg font-black uppercase tracking-tighter text-gray-900 mb-4">{content.socialTitle}</h3>
+              <h3 className="text-lg font-black uppercase tracking-tighter text-foreground mb-4">{content.socialTitle}</h3>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                 {content.socialLinks.map((social) => (
                   <SocialIconBox
@@ -376,7 +376,7 @@ const ContactSection = () => {
 
         {/* Footer */}
         {/* <div className="mt-20 pt-8 border-t border-blue-100 text-center">
-          <p className="text-gray-600 text-[20px] font-black uppercase tracking-[0.4em]">
+          <p className="text-muted-foreground text-[20px] font-black uppercase tracking-[0.4em]">
             Available for new opportunities
           </p>
         </div> */}

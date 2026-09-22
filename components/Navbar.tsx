@@ -30,8 +30,8 @@ const Navbar = ({ activeSection, setActiveSection }: NavBarProps) => {
       {/* Mobile: bottom nav bar */}
       <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden safe-area-pb">
         <div className="relative mx-3 mb-3">
-          <div className="absolute inset-0 bg-orange-500/15 rounded-2xl blur-xl animate-pulse-slow"></div>
-          <div className="relative bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border-2 border-orange-100/50 px-2 py-2">
+          <div className="absolute inset-0 bg-accent/15 rounded-2xl blur-xl animate-pulse-slow"></div>
+          <div className="relative bg-card/90 backdrop-blur-md rounded-2xl shadow-lifted border-2 border-border px-2 py-2">
             <div className="flex justify-around items-center gap-1">
               {navItems.map(({ key, icon: Icon, label }) => (
                 <button
@@ -39,8 +39,8 @@ const Navbar = ({ activeSection, setActiveSection }: NavBarProps) => {
                   onClick={() => setActiveSection(key)}
                   className={`relative flex flex-col items-center gap-0.5 p-2.5 rounded-xl min-w-[52px] transition-all duration-300 ${
                     activeSection === key
-                      ? 'bg-gray-950 text-white shadow-lg'
-                      : 'text-gray-600 active:bg-orange-50'
+                      ? 'bg-primary text-primary-foreground shadow-lg'
+                      : 'text-muted-foreground active:bg-accent/10'
                   }`}
                   title={label}
                   aria-label={label}
@@ -60,30 +60,30 @@ const Navbar = ({ activeSection, setActiveSection }: NavBarProps) => {
       {/* Desktop: right side nav */}
       <nav className="hidden md:block fixed right-8 top-1/2 -translate-y-1/2 z-50">
         <div className="relative">
-          <div className="absolute inset-0 bg-orange-500/15 rounded-full blur-xl animate-pulse-slow"></div>
-          <div className="relative bg-white/80 backdrop-blur-md rounded-full shadow-2xl border-2 border-orange-100/50 p-3 animate-float-subtle">
+          <div className="absolute inset-0 bg-accent/15 rounded-full blur-xl animate-pulse-slow"></div>
+          <div className="relative bg-card/80 backdrop-blur-md rounded-full shadow-lifted border-2 border-border p-3 animate-float-subtle">
             <div className="flex flex-col gap-2">
               {navItems.map(({ key, icon: Icon, label }, index) => (
                 <div key={key} className="relative group">
                   <div className={`absolute -left-5 top-1/2 -translate-y-1/2 transition-all duration-500 ${
-                    activeSection === key ? 'w-3 h-3 bg-orange-500 rounded-full opacity-100' : 'w-0 h-0 opacity-0'
+                    activeSection === key ? 'w-3 h-3 bg-accent rounded-full opacity-100' : 'w-0 h-0 opacity-0'
                   }`}></div>
                   <button
                     onClick={() => setActiveSection(key)}
                     className={`relative p-3.5 rounded-full transition-all duration-500 transform ${
                       activeSection === key
-                        ? 'bg-gray-950 text-white shadow-lg scale-110 rotate-0'
-                        : 'bg-white/50 text-gray-700 hover:bg-orange-50 hover:scale-110 hover:text-orange-600 hover:rotate-12'
+                        ? 'bg-primary text-primary-foreground shadow-lg scale-110 rotate-0'
+                        : 'bg-card/50 text-muted-foreground hover:bg-accent/10 hover:scale-110 hover:text-accent hover:rotate-12'
                     }`}
                     title={label}
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <Icon size={20} strokeWidth={2.5} />
                     {activeSection === key && (
-                      <div className="absolute inset-0 rounded-full bg-orange-500 animate-ping opacity-75"></div>
+                      <div className="absolute inset-0 rounded-full bg-accent animate-ping opacity-75"></div>
                     )}
                   </button>
-                  <div className={`absolute right-full mr-4 top-1/2 -translate-y-1/2 px-4 py-2.5 bg-gray-900 text-white text-sm font-bold rounded-xl whitespace-nowrap shadow-xl transition-all duration-300 ${
+                  <div className={`absolute right-full mr-4 top-1/2 -translate-y-1/2 px-4 py-2.5 bg-primary text-primary-foreground text-sm font-bold rounded-xl whitespace-nowrap shadow-lifted transition-all duration-300 ${
                     activeSection === key ? 'opacity-0 translate-x-2 pointer-events-none' : 'opacity-0 group-hover:opacity-100 group-hover:translate-x-0 pointer-events-none'
                   }`}>
                     {label}
@@ -93,8 +93,8 @@ const Navbar = ({ activeSection, setActiveSection }: NavBarProps) => {
                     <div className="flex justify-center py-1">
                       <div className={`w-1 h-1 rounded-full transition-all duration-500 ${
                         activeSection === navItems[index].key || activeSection === navItems[index + 1].key
-                          ? 'bg-orange-400 opacity-100'
-                          : 'bg-gray-300 opacity-40'
+                          ? 'bg-accent opacity-100'
+                          : 'bg-muted opacity-40'
                       }`}></div>
                     </div>
                   )}
@@ -102,7 +102,7 @@ const Navbar = ({ activeSection, setActiveSection }: NavBarProps) => {
               ))}
             </div>
           </div>
-          <div className="absolute -top-2 -right-2 w-2 h-2 bg-orange-400 rounded-full animate-float-particle-1 opacity-60"></div>
+          <div className="absolute -top-2 -right-2 w-2 h-2 bg-accent rounded-full animate-float-particle-1 opacity-60"></div>
           <div className="absolute -bottom-2 -left-2 w-2 h-2 bg-rose-400 rounded-full animate-float-particle-2 opacity-60"></div>
         </div>
       </nav>

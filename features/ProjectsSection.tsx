@@ -28,14 +28,14 @@ export default function ProjectsSection() {
     : content.items.filter((project) => project.category === activeCategory);
 
   return (
-    <div className="min-h-screen bg-[#faf9f7] py-20 lg:py-28">
+    <div className="min-h-screen bg-background py-20 lg:py-28">
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
         <div className="mb-12 text-center">
-          <div className="mb-5 inline-flex items-center gap-2 text-orange-600">
-            <Sparkles size={16} className="text-orange-500" />
+          <div className="mb-5 inline-flex items-center gap-2 text-accent">
+            <Sparkles size={16} className="text-accent" />
             <span className="text-xs font-bold uppercase tracking-[0.2em]">{content.eyebrow}</span>
           </div>
-          <H2 className="mx-auto max-w-3xl text-4xl text-gray-950 sm:text-5xl md:text-6xl">{content.title}</H2>
+          <H2 className="mx-auto max-w-3xl text-4xl sm:text-5xl md:text-6xl">{content.title}</H2>
           <div className="mx-auto mt-5 h-1 w-24 rounded-full bg-gradient-to-r from-orange-500 to-rose-500" />
           <P className="mx-auto mt-6 max-w-2xl text-lg">{content.description}</P>
         </div>
@@ -52,10 +52,10 @@ export default function ProjectsSection() {
                 type="button"
                 aria-pressed={isActive}
                 onClick={() => setActiveCategory(category.key)}
-                className={`rounded-lg border px-4 py-2.5 text-sm font-semibold sm:px-5 ${isActive ? "border-gray-900 bg-gray-900 text-white" : "border-gray-200 bg-white text-gray-600 hover:border-gray-400 hover:text-gray-900"}`}
+                className={`rounded-lg border px-4 py-2.5 text-sm font-semibold sm:px-5 ${isActive ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-muted-foreground hover:border-ring hover:text-foreground"}`}
               >
                 {category.label}
-                <span className={`ml-2 text-xs ${isActive ? "text-gray-300" : "text-gray-400"}`}>{count}</span>
+                <span className={`ml-2 text-xs ${isActive ? "text-primary-foreground/70" : "text-muted-foreground/70"}`}>{count}</span>
               </button>
             );
           })}
@@ -67,30 +67,30 @@ export default function ProjectsSection() {
             return (
               <Card
                 key={`${activeCategory}-${project.title}`}
-                className="project-card-enter flex h-full flex-col rounded-2xl p-6 hover:border-orange-200 hover:shadow-md"
+                className="project-card-enter flex h-full flex-col rounded-2xl p-6 hover:border-ring hover:shadow-soft"
                 style={{ animationDelay: `${Math.min(index, 5) * 45}ms` }}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex min-w-0 items-center gap-3">
-                    <div className="flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-orange-50 text-orange-600 ring-1 ring-orange-100">
+                    <div className="flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-accent/10 text-accent ring-1 ring-accent/20">
                       <Icon size={22} aria-hidden="true" />
                     </div>
-                    <span className="truncate text-[11px] font-bold uppercase tracking-[0.12em] text-orange-600">{categoryNames[project.category]}</span>
+                    <span className="truncate text-[11px] font-bold uppercase tracking-[0.12em] text-accent">{categoryNames[project.category]}</span>
                   </div>
-                  <span className="flex flex-none items-center gap-1.5 text-xs font-medium text-gray-500"><span className="h-2 w-2 rounded-full bg-emerald-500" /> Live</span>
+                  <span className="flex flex-none items-center gap-1.5 text-xs font-medium text-muted-foreground"><span className="h-2 w-2 rounded-full bg-success" /> Live</span>
                 </div>
-                <h3 className="mt-6 text-xl font-bold tracking-tight text-gray-950">{project.title}</h3>
-                <p className="mt-3 flex-1 text-sm leading-6 text-gray-600">{project.description}</p>
+                <h3 className="mt-6 text-xl font-bold tracking-tight text-foreground">{project.title}</h3>
+                <p className="mt-3 flex-1 text-sm leading-6 text-muted-foreground">{project.description}</p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {project.tags.map((tag) => <Badge key={tag}>{tag}</Badge>)}
                 </div>
-                <div className="mt-6 flex gap-3 border-t border-gray-100 pt-5">
+                <div className="mt-6 flex gap-3 border-t border-border pt-5">
                   {project.github && (
-                    <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} source code`} className="flex items-center justify-center gap-2 rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:border-gray-400 hover:text-gray-950">
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.title} source code`} className="flex items-center justify-center gap-2 rounded-lg border border-border px-4 py-2.5 text-sm font-semibold text-muted-foreground hover:border-ring hover:text-foreground">
                       <Github size={16} /> Code
                     </a>
                   )}
-                  <a href={project.demo} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.title}`} className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-orange-600">
+                  <a href={project.demo} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${project.title}`} className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-accent">
                     View project <ExternalLink size={16} />
                   </a>
                 </div>
@@ -99,9 +99,9 @@ export default function ProjectsSection() {
           })}
         </div>
 
-        <div className="mt-14 border-t border-gray-200 pt-10 text-center">
-          <p className="mb-4 font-medium text-gray-500">{content.githubPrompt}</p>
-          <a href={content.githubUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-6 py-3 font-semibold text-gray-900 hover:border-gray-900">
+        <div className="mt-14 border-t border-border pt-10 text-center">
+          <p className="mb-4 font-medium text-muted-foreground">{content.githubPrompt}</p>
+          <a href={content.githubUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 rounded-lg border border-border bg-card px-6 py-3 font-semibold text-foreground hover:border-ring">
             <Github size={19} />{content.githubLabel}<ExternalLink size={16} />
           </a>
         </div>
