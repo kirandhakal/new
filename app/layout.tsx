@@ -5,10 +5,7 @@ import { siteConfig } from "@/lib/seo";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: {
-    default: "Kiran Dhakal - Full Stack Developer | React & Node.js Expert",
-    template: "%s | Kiran Dhakal",
-  },
+  title: "Kiran Dhakal - Full Stack Developer | React & Node.js Expert",
   description:
     "Full-stack web developer specializing in React, Node.js, and modern web technologies.",
   icons: { icon: "/favicon.ico" },

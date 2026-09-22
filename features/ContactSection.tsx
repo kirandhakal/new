@@ -209,7 +209,7 @@ const ContactSection = () => {
     setErrorMessage('');
 
     if (!CONTACT_FORM_KEY || CONTACT_FORM_KEY.includes('YOUR')) {
-      setErrorMessage('Contact form is not configured yet. Add REACT_APP_CONTACT_FORM_KEY before deploying.');
+      setErrorMessage('Contact form is not configured yet. Add NEXT_PUBLIC_CONTACT_FORM_KEY before deploying.');
       setStatus('error');
       setIsSubmitting(false);
       return;

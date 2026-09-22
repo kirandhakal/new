@@ -1,1 +1,0 @@
-"use strict";exports.id=596,exports.ids=[596],exports.modules={5596:(a,b,c)=>{c.r(b),c.d(b,{default:()=>e});var d=c(8301);let e=()=>((0,d.useEffect)(()=>{},[]),null)}};
