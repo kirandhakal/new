@@ -14,6 +14,7 @@ import {
   Sparkles,
   Store,
   Utensils,
+  Wrench,
 } from "lucide-react";
 
 const categories = [
@@ -146,6 +147,16 @@ const projects = [
     gradient: "from-pink-600 to-blue-600",
     tags: ["Next.js", "Digital Portfolio", "Interactive UI"],
   },
+  {
+    title: "Dwarika Engineering",
+    category: "creative",
+    description:
+      "A polished engineering-company website that presents its services, capabilities, and project work through a clear, professional digital experience.",
+    demo: "https://dwarikaengineering.com/",
+    icon: Wrench,
+    gradient: "from-slate-600 to-cyan-500",
+    tags: ["Web Design", "Company Profile", "Responsive UI"],
+  },
 ];
 
 const categoryNames = Object.fromEntries(
@@ -163,15 +174,16 @@ const ProjectsSection = () => {
   return (
     <div className="min-h-screen bg-[#faf9f7] py-20 lg:py-28">
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
-        <div className="mb-12 border-b border-gray-200 pb-10">
+        <div className="mb-12 text-center">
           <div className="mb-5 inline-flex items-center gap-2 text-orange-600">
             <Sparkles size={16} className="text-orange-500" />
             <span className="text-xs font-bold uppercase tracking-[0.2em]">Selected work</span>
           </div>
-          <h2 className="max-w-3xl text-4xl font-black tracking-tight text-gray-950 sm:text-5xl md:text-6xl">
+          <h2 className="mx-auto max-w-3xl text-4xl font-black tracking-tight text-gray-950 sm:text-5xl md:text-6xl">
             Projects with purpose
           </h2>
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-gray-600">
+          <div className="mx-auto mt-5 h-1 w-24 rounded-full bg-gradient-to-r from-orange-500 to-rose-500" />
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-600">
             Production platforms and independent builds across civic technology, SaaS,
             commerce, hospitality, and creative experiences.
           </p>
