@@ -262,12 +262,11 @@ const NotFoundPage = () => {
       `}</style>
 
       <PageShell activeSection="home">
-        <section className="min-h-[calc(100vh-72px)] flex items-center px-4 sm:px-8 py-12 bg-stone-50">
+        <section className="min-h-[calc(100vh-72px)] flex items-center px-4 sm:px-8 py-12 bg-background">
           <div className="w-full max-w-5xl mx-auto">
 
             {/* Main card */}
-            <div className="relative rounded-3xl overflow-hidden border border-orange-100"
-              style={{ background: "rgba(255,255,255,0.85)", backdropFilter: "blur(16px)" }}>
+            <div className="relative rounded-2xl overflow-hidden border border-border bg-card/85 backdrop-blur-md">
 
               {/* Scanline overlay */}
               <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-3xl opacity-[0.03]">
@@ -279,9 +278,9 @@ const NotFoundPage = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
 
                 {/* Left: Graph visualization */}
-                <div className="fade-up relative flex flex-col items-center justify-center p-8 lg:p-10 lg:border-r border-orange-100"
+                <div className="fade-up relative flex flex-col items-center justify-center p-8 lg:p-10 lg:border-r border-border"
                   style={{ minHeight: "380px" }}>
-                  <div className="text-lg font-mono text-orange-600 mb-4 tracking-widest uppercase opacity-70">
+                  <div className="text-lg font-mono text-accent mb-4 tracking-widest uppercase opacity-70">
                     {notFoundJson.graphLabel}
                   </div>
                   <div className="w-full" style={{ maxWidth: "360px", animation: "float 4s ease-in-out infinite" }}>
@@ -333,15 +332,13 @@ const NotFoundPage = () => {
                   <div className="fade-up-4 flex gap-3">
                     <button
                       onClick={() => router.back()}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-mono text-sm font-semibold border transition-all hover:bg-gray-50"
-                      style={{ borderColor: "#d1d5db", color: "#374151" }}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-mono text-sm font-semibold border border-border text-muted-foreground transition-all hover:bg-secondary"
                     >
                       <ArrowLeft size={15} /> back
                     </button>
                     <Link
                       href="/"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-mono text-sm font-bold text-white transition-all hover:opacity-90"
-                      style={{ background: "linear-gradient(135deg, #f97316, #be123c)" }}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent font-mono text-sm font-bold text-accent-foreground transition-all hover:bg-accent/90"
                     >
                       <Home size={15} /> home
                     </Link>
@@ -350,8 +347,8 @@ const NotFoundPage = () => {
               </div>
 
               {/* Bottom nav strip */}
-              <div className="border-t border-orange-100 px-8 py-5">
-                <div className="text-xs font-mono text-gray-400 mb-4 uppercase tracking-widest">{notFoundJson.navTitle}</div>
+              <div className="border-t border-border px-8 py-5">
+                <div className="text-xs font-mono text-muted-foreground mb-4 uppercase tracking-widest">{notFoundJson.navTitle}</div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {notFoundJson.navLinks.map((link) => {
                     const Icon = iconMap[link.icon];
@@ -364,8 +361,8 @@ const NotFoundPage = () => {
                     >
                       <div className="shrink-0" style={{ color: link.accent }}><Icon size={16} /></div>
                       <div>
-                        <div className="font-mono font-bold text-gray-900 text-sm leading-none mb-0.5">{link.label}</div>
-                        <div className="text-xs text-gray-500">{link.sub}</div>
+                        <div className="font-mono font-bold text-foreground text-sm leading-none mb-0.5">{link.label}</div>
+                        <div className="text-xs text-muted-foreground">{link.sub}</div>
                       </div>
                     </Link>
                     );
