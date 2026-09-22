@@ -3,6 +3,28 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Subtle entrance used by project cards on load and when changing filters. */
+@keyframes project-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-card-enter {
+  animation: project-card-enter 350ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card-enter {
+    animation: none;
+  }
+}
+
 /* Custom animation for the outer circle pulse */
 @keyframes pulse-slow {
   0%, 100% { transform: scale(1); }

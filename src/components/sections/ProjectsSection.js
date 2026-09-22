@@ -1,269 +1,294 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Github, ExternalLink, Sparkles, Layout, Heart, Code, ShoppingBag, FileText, Building } from 'lucide-react';
+import React, { useState } from "react";
+import {
+  BellRing,
+  ExternalLink,
+  FileText,
+  Github,
+  GraduationCap,
+  Hotel,
+  Landmark,
+  MessageSquare,
+  Palette,
+  PanelsTopLeft,
+  ShoppingBag,
+  Sparkles,
+  Store,
+  Utensils,
+} from "lucide-react";
+
+const categories = [
+  { key: "all", label: "All work" },
+  { key: "govtech", label: "GovTech" },
+  { key: "saas", label: "SaaS & automation" },
+  { key: "commerce", label: "Commerce & hospitality" },
+  { key: "creative", label: "Creative" },
+];
+
+const projects = [
+  {
+    title: "Dhangadhi Service Bus",
+    category: "govtech",
+    description:
+      "Municipal e-Governance platform with role-based workflows, e-KYC and migration services, Sifarish, appointments, and online payments.",
+    demo: "https://dhangadhi.palikaportal.com/",
+    icon: Landmark,
+    gradient: "from-blue-600 to-cyan-500",
+    tags: ["Next.js", "NestJS", "GraphQL", "PostgreSQL"],
+  },
+  {
+    title: "Hello Palika",
+    category: "govtech",
+    description:
+      "Municipal SaaS platform connecting citizens and local government through notices, complaints, public decisions, and direct communication.",
+    demo: "https://hellopalika.cliffbyte.com/",
+    icon: MessageSquare,
+    gradient: "from-sky-600 to-indigo-500",
+    tags: ["React", "Node.js", "PostgreSQL"],
+  },
+  {
+    title: "Vibe College",
+    category: "saas",
+    description:
+      "Drag-and-drop form builder for student enrollment, intake management, and automated offer-letter workflows.",
+    demo: "https://www.vibecollege.edu.au/",
+    icon: GraduationCap,
+    gradient: "from-violet-600 to-fuchsia-500",
+    tags: ["Next.js", "Node.js", "PostgreSQL"],
+  },
+  {
+    title: "CTF School Management",
+    category: "saas",
+    description:
+      "Academic management system that automates report-card and transcript generation for schools.",
+    demo: "https://ctfnepal.com/",
+    icon: FileText,
+    gradient: "from-indigo-600 to-violet-500",
+    tags: ["React", "Node.js", "PostgreSQL"],
+  },
+  {
+    title: "Connect Kisan",
+    category: "saas",
+    description:
+      "Notification management module powered by a RabbitMQ service bus for dependable asynchronous message delivery.",
+    demo: "https://connectkisan.com/en",
+    icon: BellRing,
+    gradient: "from-emerald-600 to-teal-500",
+    tags: ["Next.js", "Node.js", "RabbitMQ", "PostgreSQL"],
+  },
+  {
+    title: "PMS SaaS Tool",
+    category: "saas",
+    description:
+      "A collaboration workspace for development teams with role-based access, project visibility, and sprint tracking.",
+    demo: "https://pms.dhakalkiran.com.np/",
+    icon: PanelsTopLeft,
+    gradient: "from-blue-600 to-violet-500",
+    tags: ["SaaS", "RBAC", "Sprint Planning"],
+  },
+  {
+    title: "Dynamic CV Maker",
+    category: "saas",
+    description:
+      "ATS-friendly résumé builder with real-time preview, flexible content editing, and polished PDF export.",
+    github: "https://github.com/kirandhakal/Dynamiccvmaker",
+    demo: "https://cv.dhakalkiran.com.np/",
+    icon: FileText,
+    gradient: "from-purple-600 to-pink-500",
+    tags: ["React", "Live Preview", "PDF Export"],
+  },
+  {
+    title: "Syanko POS",
+    category: "commerce",
+    description:
+      "Restaurant point-of-sale system with Kitchen Order Ticket routing and automated billing workflows.",
+    demo: "https://syanko-test.dashboard.cliffbyte.com/en",
+    icon: Utensils,
+    gradient: "from-orange-600 to-amber-500",
+    tags: ["Next.js", "NestJS", "PostgreSQL"],
+  },
+  {
+    title: "Churika",
+    category: "commerce",
+    description:
+      "Headless eCommerce CMS for managing storefront banners, product collections, and featured merchandise.",
+    demo: "https://chiurika.com/",
+    icon: Store,
+    gradient: "from-rose-600 to-orange-500",
+    tags: ["React", "Node.js", "GraphQL"],
+  },
+  {
+    title: "Red Panda Hotel",
+    category: "commerce",
+    description:
+      "Hospitality platform with room reservations, live inventory, and custom guest checkout flows.",
+    demo: "https://pandanest.vercel.app/",
+    icon: Hotel,
+    gradient: "from-teal-600 to-cyan-500",
+    tags: ["Hospitality", "Reservations", "Checkout"],
+  },
+  {
+    title: "Food Delivery AI",
+    category: "commerce",
+    description:
+      "Food ordering experience enhanced with collaborative-filtering recommendations for more relevant discovery.",
+    demo: "https://fooddelivery-ten-ebon.vercel.app/",
+    icon: ShoppingBag,
+    gradient: "from-amber-600 to-red-500",
+    tags: ["Food Ordering", "Recommendations", "AI"],
+  },
+  {
+    title: "Gourav Studio",
+    category: "creative",
+    description:
+      "Immersive digital-art portfolio for Gourav Pangeni, showcasing character studies, curated collections, creative process, and client inquiries.",
+    demo: "https://admirationseeker.vercel.app/",
+    icon: Palette,
+    gradient: "from-pink-600 to-blue-600",
+    tags: ["Next.js", "Digital Portfolio", "Interactive UI"],
+  },
+];
+
+const categoryNames = Object.fromEntries(
+  categories.filter(({ key }) => key !== "all").map(({ key, label }) => [key, label])
+);
 
 const ProjectsSection = () => {
-  const [hoveredProject, setHoveredProject] = useState(null);
+  const [activeCategory, setActiveCategory] = useState("all");
 
-  const projects = [
-    {
-      title: 'project management software',
-      description: 'Streamlined task orchestration platform featuring intuitive drag-and-drop mechanics, real-time state management, and seamless CRUD operations. Built for teams who value visual workflow clarity.',
-      // github: 'https://github.com/kirandhakal/projectmanagement',
-      demo: 'https://projectmanagementkanban.vercel.app/',
-      icon: Layout,
-      gradient: 'from-blue-500 to-cyan-500',
-      tags: ['React', 'Drag & Drop', 'Task Management'],
-      imagePattern: 'grid'
-    },
-    {
-      title: 'Dynamic CV Maker',
-      description: 'Professional resume generation platform empowering users to craft pixel-perfect CVs through an intuitive interface. Live preview, customizable templates, and instant PDF export.',
-      github: 'https://github.com/kirandhakal/Dynamiccvmaker',
-      demo: 'https://cv.dhakalkiran.com.np',
-      icon: FileText,
-      gradient: 'from-purple-500 to-pink-500',
-      tags: ['PDF Generation', 'Templates', 'Career Tools'],
-      imagePattern: 'waves'
-    },
-    {
-      title: 'Blood Bank Management',
-      description: 'Comprehensive healthcare solution orchestrating the entire lifecycle of blood donation—from donor registration and inventory tracking to distribution logistics and real-time availability.',
-      github: 'https://github.com/kirandhakal/bloodbankmanagementsystem',
-      icon: Heart,
-      gradient: 'from-red-500 to-rose-500',
-      tags: ['Healthcare', 'Database', 'Full Stack'],
-      imagePattern: 'dots'
-    },
-    {
-      title: 'Code Editor',
-      description: 'Browser-based IDE eliminating local compiler setup friction. Write, compile, and execute code instantly across multiple languages. Perfect for rapid prototyping and coding interviews.',
-      github: 'https://github.com/kirandhakal/codeeditor',
-      demo: 'https://codeeditor-rose.vercel.app/',
-      icon: Code,
-      gradient: 'from-green-500 to-emerald-500',
-      tags: ['Web IDE', 'Multi-language', 'Real-time'],
-      imagePattern: 'lines'
-    },
-    {
-      title: 'ShopBuddy',
-      description: 'Intelligent shopping companion transforming purchase planning. Create dynamic lists, track spending patterns, discover personalized recommendations, and maintain budget awareness in one unified experience.',
-      // github: 'https://github.com/kirandhakal/shopbuddy',
-      demo: 'https://fooddelivery-ten-ebon.vercel.app/',
-      icon: ShoppingBag,
-      gradient: 'from-orange-500 to-amber-500',
-      tags: ['E-commerce', 'Budget Tracking', 'UX'],
-      imagePattern: 'circles'
-    },
-   
-    {
-      title: 'Red Panda Hotel',
-      description: 'Boutique hospitality management platform delivering seamless reservation experiences, room inventory control, and guest service coordination with elegant interface design.',
-      demo: 'https://redpandahotelandlodge.vercel.app/',
-      icon: Building,
-      gradient: 'from-teal-500 to-cyan-500',
-      tags: ['Hospitality', 'Booking System', 'Management'],
-      imagePattern: 'hexagons'
-    },
-  ];
-
-  const getPatternSVG = (pattern) => {
-    const patterns = {
-      grid: '<pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.3"/></pattern>',
-      dots: '<pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="currentColor" opacity="0.3"/></pattern>',
-      lines: '<pattern id="lines" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M0,0 L20,20" stroke="currentColor" stroke-width="0.5" opacity="0.3"/></pattern>',
-      circles: '<pattern id="circles" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="15" cy="15" r="8" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.2"/></pattern>',
-      waves: '<pattern id="waves" width="40" height="20" patternUnits="userSpaceOnUse"><path d="M0,10 Q10,0 20,10 T40,10" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.3"/></pattern>',
-      hexagons: '<pattern id="hexagons" width="30" height="26" patternUnits="userSpaceOnUse"><path d="M15,0 L30,8 L30,18 L15,26 L0,18 L0,8 Z" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.2"/></pattern>'
-    };
-    return patterns[pattern] || patterns.grid;
-  };
+  const visibleProjects =
+    activeCategory === "all"
+      ? projects
+      : projects.filter((project) => project.category === activeCategory);
 
   return (
-    <div className="py-20 lg:py-32 min-h-screen relative overflow-hidden flex items-center">
-      {/* Decorative elements */}
-      <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-br from-orange-200/20 to-rose-200/20 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-tr from-amber-200/20 to-orange-200/20 rounded-full blur-3xl animate-float-delayed"></div>
-      
-      {/* Dot pattern */}
-      <div className="absolute inset-0 opacity-[0.015]" style={{
-        backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
-        backgroundSize: '24px 24px'
-      }}></div>
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 w-full">
-        {/* Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-20 space-y-6"
-        >
-          <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full border border-orange-200/50 shadow-sm mb-4">
+    <div className="min-h-screen bg-[#faf9f7] py-20 lg:py-28">
+      <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
+        <div className="mb-12 border-b border-gray-200 pb-10">
+          <div className="mb-5 inline-flex items-center gap-2 text-orange-600">
             <Sparkles size={16} className="text-orange-500" />
-            <span className="text-sm font-medium text-gray-700">Featured Work</span>
+            <span className="text-xs font-bold uppercase tracking-[0.2em]">Selected work</span>
           </div>
-          
-          <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 tracking-tight">
-            My Projects
+          <h2 className="max-w-3xl text-4xl font-black tracking-tight text-gray-950 sm:text-5xl md:text-6xl">
+            Projects with purpose
           </h2>
-          
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            A curated collection showcasing innovation, craftsmanship, and technical excellence
+          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-gray-600">
+            Production platforms and independent builds across civic technology, SaaS,
+            commerce, hospitality, and creative experiences.
           </p>
-          
-          <div className="flex justify-center">
-            <div className="h-1 w-24 bg-gradient-to-r from-orange-500 to-rose-500 rounded-full"></div>
-          </div>
-        </motion.div>
+        </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => {
-            const Icon = project.icon;
-            const isHovered = hoveredProject === index;
-            
+        <div
+          className="mb-10 flex flex-wrap gap-2"
+          role="group"
+          aria-label="Filter projects by category"
+        >
+          {categories.map((category) => {
+            const isActive = activeCategory === category.key;
+            const count =
+              category.key === "all"
+                ? projects.length
+                : projects.filter((project) => project.category === category.key).length;
+
             return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                onMouseEnter={() => setHoveredProject(index)}
-                onMouseLeave={() => setHoveredProject(null)}
-                className="group relative"
+              <button
+                key={category.key}
+                type="button"
+                aria-pressed={isActive}
+                onClick={() => setActiveCategory(category.key)}
+                className={`rounded-lg border px-4 py-2.5 text-sm font-semibold sm:px-5 ${
+                  isActive
+                    ? "border-gray-900 bg-gray-900 text-white"
+                    : "border-gray-200 bg-white text-gray-600 hover:border-gray-400 hover:text-gray-900"
+                }`}
               >
-                <div className={`relative h-full bg-white/70 backdrop-blur-md rounded-3xl overflow-hidden border-2 transition-all duration-500 ${
-                  isHovered 
-                    ? 'border-orange-300 shadow-2xl -translate-y-3 scale-[1.02]' 
-                    : 'border-white shadow-lg'
-                }`}>
-                  {/* Pattern Header */}
-                  <div className={`relative h-48 bg-gradient-to-br ${project.gradient} overflow-hidden`}>
-                    <svg className="absolute inset-0 w-full h-full text-white">
-                      <defs dangerouslySetInnerHTML={{ __html: getPatternSVG(project.imagePattern) }} />
-                      <rect width="100%" height="100%" fill={`url(#${project.imagePattern})`} />
-                    </svg>
-                    
-                    {/* Icon */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className={`p-6 bg-white/20 backdrop-blur-md rounded-3xl border border-white/30 shadow-2xl transform transition-all duration-500 ${
-                        isHovered ? 'scale-110 rotate-6' : 'scale-100 rotate-0'
-                      }`}>
-                        <Icon size={48} className="text-white" />
-                      </div>
-                    </div>
-
-                    {/* Floating badge */}
-                    {project.demo && (
-                      <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-bold text-gray-700 shadow-lg flex items-center gap-1">
-                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        Live
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6 space-y-4">
-                    {/* Title */}
-                    <h3 className="text-2xl font-bold text-gray-900 tracking-tight">
-                      {project.title}
-                    </h3>
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag, tagIndex) => (
-                        <span 
-                          key={tagIndex}
-                          className="px-3 py-1 bg-gradient-to-r from-orange-100 to-rose-100 text-orange-700 rounded-full text-xs font-semibold border border-orange-200/50"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-gray-600 leading-relaxed text-sm">
-                      {project.description}
-                    </p>
-
-                    {/* Actions */}
-                    <div className="flex gap-3 pt-4">
-                      {project.github && (
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-900 hover:bg-gray-800 text-white rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg group/btn"
-                        >
-                          <Github size={18} className="group-hover/btn:rotate-12 transition-transform" />
-                          <span className="text-sm">Code</span>
-                        </a>
-                      )}
-                      {project.demo && (
-                        <a
-                          href={project.demo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r ${project.gradient} text-white rounded-xl font-semibold transition-all duration-300 hover:scale-105 shadow-lg group/btn`}
-                        >
-                          <ExternalLink size={18} className="group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
-                          <span className="text-sm">Demo</span>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Bottom accent */}
-                  <div className={`h-1 w-full bg-gradient-to-r ${project.gradient} transform origin-left transition-transform duration-500 ${
-                    isHovered ? 'scale-x-100' : 'scale-x-0'
-                  }`}></div>
-                </div>
-              </motion.div>
+                {category.label}
+                <span className={`ml-2 text-xs ${isActive ? "text-gray-300" : "text-gray-400"}`}>
+                  {count}
+                </span>
+              </button>
             );
           })}
         </div>
 
-        {/* Bottom decoration */}
-        <div className="mt-20 text-center">
-          <p className="text-gray-500 font-medium mb-4">Want to see more?</p>
-          <a 
-            href="https://github.com/kirandhakal" 
-            target="_blank" 
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {visibleProjects.map((project, index) => {
+            const Icon = project.icon;
+
+            return (
+              <article
+                key={`${activeCategory}-${project.title}`}
+                className="project-card-enter flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-6 hover:border-orange-200 hover:shadow-md"
+                style={{ animationDelay: `${Math.min(index, 5) * 45}ms` }}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex min-w-0 items-center gap-3">
+                    <div className="flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-orange-50 text-orange-600 ring-1 ring-orange-100">
+                      <Icon size={22} aria-hidden="true" />
+                    </div>
+                    <span className="truncate text-[11px] font-bold uppercase tracking-[0.12em] text-orange-600">
+                      {categoryNames[project.category]}
+                    </span>
+                  </div>
+                  <span className="flex flex-none items-center gap-1.5 text-xs font-medium text-gray-500">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500" /> Live
+                  </span>
+                </div>
+
+                <h3 className="mt-6 text-xl font-bold tracking-tight text-gray-950">{project.title}</h3>
+                <p className="mt-3 flex-1 text-sm leading-6 text-gray-600">{project.description}</p>
+
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-md bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-6 flex gap-3 border-t border-gray-100 pt-5">
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`View ${project.title} source code`}
+                      className="flex items-center justify-center gap-2 rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700 hover:border-gray-400 hover:text-gray-950"
+                    >
+                      <Github size={16} /> Code
+                    </a>
+                  )}
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Visit ${project.title}`}
+                    className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-orange-600"
+                  >
+                    View project <ExternalLink size={16} />
+                  </a>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
+        <div className="mt-14 border-t border-gray-200 pt-10 text-center">
+          <p className="mb-4 font-medium text-gray-500">Explore the code behind more experiments.</p>
+          <a
+            href="https://github.com/kirandhakal"
+            target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-white/80 backdrop-blur-sm hover:bg-white text-gray-900 rounded-2xl font-bold border-2 border-orange-200/50 hover:border-orange-300 shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+            className="inline-flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-6 py-3 font-semibold text-gray-900 hover:border-gray-900"
           >
-            <Github size={20} />
-            <span>View All Projects on GitHub</span>
-            <ExternalLink size={18} />
+            <Github size={19} />
+            View GitHub profile
+            <ExternalLink size={16} />
           </a>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) translateX(0px); }
-          50% { transform: translateY(-20px) translateX(10px); }
-        }
-        @keyframes float-delayed {
-          0%, 100% { transform: translateY(0px) translateX(0px); }
-          50% { transform: translateY(20px) translateX(-10px); }
-        }
-        .animate-float { animation: float 6s ease-in-out infinite; }
-        .animate-float-delayed { animation: float-delayed 7s ease-in-out infinite; }
-      `}</style>
     </div>
   );
 };
