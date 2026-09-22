@@ -4,7 +4,7 @@ import React, { Suspense, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import NavBar from "@/components/NavBar";
+import Navbar from "@/components/Navbar";
 import { ArrowUp } from "lucide-react";
 import type { SectionKey } from "@/types/navigation";
 
@@ -143,7 +143,7 @@ const PortfolioPage = () => {
         </div>
       </main>
 
-      <NavBar activeSection={activeSection} setActiveSection={scrollToSection} />
+      <Navbar activeSection={activeSection} setActiveSection={scrollToSection} />
       <Suspense fallback={null}>
         <ChatbaseWidget />
       </Suspense>

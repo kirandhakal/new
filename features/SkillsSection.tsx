@@ -3,6 +3,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Code2, Braces } from 'lucide-react';
+import skillsJson from '@/data/landing-page/home-skills.json';
+import type { SkillContent } from '@/types/content';
+import { H2, P } from '@/components/typography';
 
 // SVG Icon Components
 const NodeIcon = () => <img src="/images/node.svg" alt="Node.js Icon" className="w-12 h-12" />;
@@ -11,67 +14,19 @@ const GitIcon = () => <img src="/images/git.svg" alt="Git Icon" className="w-12 
 const GitHubIcon = () => <img src="/images/github.svg" alt="GitHub Icon" className="w-12 h-12" />;
 const FigmaIcon = () => <img src="/images/figma.svg" alt="Figma Icon" className="w-12 h-12" />;
 
+const content = skillsJson as SkillContent;
+const skillIcons: Record<string, React.ReactNode> = {
+  Code2: <Code2 size={48} />,
+  Braces: <Braces size={48} />,
+  Node: <NodeIcon />,
+  Figma: <FigmaIcon />,
+  Git: <GitIcon />,
+  GitHub: <GitHubIcon />,
+  Docker: <DockerIcon />,
+};
+
 const SkillsSection = () => {
   const [activeSkill, setActiveSkill] = useState<number | null>(null);
-
-  const skills = [
-    { 
-      name: 'HTML, CSS & JavaScript', 
-      icon: <Code2 size={48} />,
-      description: 'Modern web fundamentals',
-      code: '<div className="hero">\n  <h1>Hello World!</h1>\n  <p>Building the web</p>\n</div>',
-      color: 'from-orange-400 to-rose-400',
-      bgColor: 'bg-orange-50'
-    },
-    { 
-      name: 'React', 
-      icon: <Braces size={48} />,
-      description: 'Component-based UI library',
-      code: 'const App = () => {\n  const [count, setCount] = useState(0)\n  return (\n    <button onClick={() => setCount(count + 1)}>\n      Clicked {count} times\n    </button>\n  )\n}',
-      color: 'from-cyan-400 to-blue-400',
-      bgColor: 'bg-cyan-50'
-    },
-    { 
-      name: 'Node.js', 
-      icon: <NodeIcon />,
-      description: 'JavaScript runtime environment',
-      code: 'const express = require("express")\nconst app = express()\n\napp.get("/api", (req, res) => {\n  res.json({ message: "Hello!" })\n})\n\napp.listen(3000)',
-      color: 'from-green-400 to-emerald-400',
-      bgColor: 'bg-green-50'
-    },
-    { 
-      name: 'Figma', 
-      icon: <FigmaIcon />,
-      description: 'UI/UX design platform',
-      code: '/* Design System */\n:root {\n  --primary: #FF6B6B;\n  --radius: 12px;\n  --spacing: 16px;\n}\n\n.button {\n  border-radius: var(--radius);\n  padding: var(--spacing);\n}',
-      color: 'from-purple-400 to-pink-400',
-      bgColor: 'bg-purple-50'
-    },
-    { 
-      name: 'Git', 
-      icon: <GitIcon />,
-      description: 'Distributed version control',
-      code: 'git checkout -b feature/new-component\ngit add .\ngit commit -m "feat: add hero section"\ngit push origin feature/new-component\n# Create pull request',
-      color: 'from-red-400 to-orange-400',
-      bgColor: 'bg-red-50'
-    },
-    { 
-      name: 'GitHub', 
-      icon: <GitHubIcon />,
-      description: 'Code hosting & collaboration',
-      code: 'name: Deploy to Production\n\non:\n  push:\n    branches: [main]\n\njobs:\n  deploy:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v2\n      - run: npm install && npm run build',
-      color: 'from-gray-600 to-gray-800',
-      bgColor: 'bg-gray-50'
-    },
-    { 
-      name: 'Docker', 
-      icon: <DockerIcon />,
-      description: 'Container platform',
-      code: 'FROM node:18-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\nCOPY . .\nEXPOSE 3000\nCMD ["node", "server.js"]',
-      color: 'from-blue-400 to-cyan-400',
-      bgColor: 'bg-blue-50'
-    },
-  ];
 
   return (
     <div className="py-20 lg:py-32 min-h-screen relative overflow-hidden flex items-center">
@@ -96,16 +51,12 @@ const SkillsSection = () => {
         >
           <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full border border-orange-200/50 shadow-sm mb-4">
             <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
-            <span className="text-sm font-medium text-gray-700">My Expertise</span>
+            <span className="text-sm font-medium text-gray-700">{content.eyebrow}</span>
           </div>
           
-          <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 tracking-tight">
-            Skills & Tools
-          </h2>
+          <H2 className="text-4xl sm:text-5xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900">{content.title}</H2>
           
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Technologies I use to bring ideas to life
-          </p>
+          <P className="text-xl max-w-2xl mx-auto">{content.description}</P>
           
           <div className="flex justify-center">
             <div className="h-1 w-24 bg-gradient-to-r from-orange-500 to-rose-500 rounded-full"></div>
@@ -114,7 +65,7 @@ const SkillsSection = () => {
 
         {/* Skills Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
-          {skills.map((skill, index) => {
+          {content.items.map((skill, index) => {
             const isActive = activeSkill === index;
             
             return (
@@ -141,7 +92,7 @@ const SkillsSection = () => {
                     {/* Icon */}
                     <div className={`flex-shrink-0 p-4 rounded-2xl bg-gradient-to-br ${skill.color} shadow-lg transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3`}>
                       <div className="text-white flex items-center justify-center">
-                        {skill.icon}
+                        {skillIcons[skill.icon]}
                       </div>
                     </div>
 
@@ -211,7 +162,7 @@ const SkillsSection = () => {
         <div className="mt-20 flex justify-center">
           <div className="flex items-center gap-4">
             <div className="h-px w-16 bg-gradient-to-r from-transparent to-orange-300"></div>
-            <div className="text-sm text-gray-500 font-medium">Always learning, always growing</div>
+            <div className="text-sm text-gray-500 font-medium">{content.footer}</div>
             <div className="h-px w-16 bg-gradient-to-l from-transparent to-orange-300"></div>
           </div>
         </div>

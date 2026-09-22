@@ -1,0 +1,15 @@
+{
+  "eyebrow": "My Expertise",
+  "title": "Skills & Tools",
+  "description": "Technologies I use to bring ideas to life",
+  "footer": "Always learning, always growing",
+  "items": [
+    { "name": "HTML, CSS & JavaScript", "icon": "Code2", "description": "Modern web fundamentals", "code": "<div className=\"hero\">\n  <h1>Hello World!</h1>\n  <p>Building the web</p>\n</div>", "color": "from-orange-400 to-rose-400", "bgColor": "bg-orange-50" },
+    { "name": "React", "icon": "Braces", "description": "Component-based UI library", "code": "const App = () => {\n  const [count, setCount] = useState(0)\n  return (\n    <button onClick={() => setCount(count + 1)}>\n      Clicked {count} times\n    </button>\n  )\n}", "color": "from-cyan-400 to-blue-400", "bgColor": "bg-cyan-50" },
+    { "name": "Node.js", "icon": "Node", "description": "JavaScript runtime environment", "code": "const express = require(\"express\")\nconst app = express()\n\napp.get(\"/api\", (req, res) => {\n  res.json({ message: \"Hello!\" })\n})\n\napp.listen(3000)", "color": "from-green-400 to-emerald-400", "bgColor": "bg-green-50" },
+    { "name": "Figma", "icon": "Figma", "description": "UI/UX design platform", "code": "/* Design System */\n:root {\n  --primary: #FF6B6B;\n  --radius: 12px;\n  --spacing: 16px;\n}\n\n.button {\n  border-radius: var(--radius);\n  padding: var(--spacing);\n}", "color": "from-purple-400 to-pink-400", "bgColor": "bg-purple-50" },
+    { "name": "Git", "icon": "Git", "description": "Distributed version control", "code": "git checkout -b feature/new-component\ngit add .\ngit commit -m \"feat: add hero section\"\ngit push origin feature/new-component\n# Create pull request", "color": "from-red-400 to-orange-400", "bgColor": "bg-red-50" },
+    { "name": "GitHub", "icon": "GitHub", "description": "Code hosting & collaboration", "code": "name: Deploy to Production\n\non:\n  push:\n    branches: [main]\n\njobs:\n  deploy:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v2\n      - run: npm install && npm run build", "color": "from-gray-600 to-gray-800", "bgColor": "bg-gray-50" },
+    { "name": "Docker", "icon": "Docker", "description": "Container platform", "code": "FROM node:18-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\nCOPY . .\nEXPOSE 3000\nCMD [\"node\", \"server.js\"]", "color": "from-blue-400 to-cyan-400", "bgColor": "bg-blue-50" }
+  ]
+}

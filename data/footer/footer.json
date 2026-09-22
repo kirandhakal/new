@@ -1,0 +1,10 @@
+{
+  "messageBefore": "Sending",
+  "messageAfter": "Love",
+  "copyright": "All rights reserved.",
+  "socialLinks": [
+    { "label": "GitHub", "icon": "Github", "href": "https://github.com/kirandhakal" },
+    { "label": "LinkedIn", "icon": "Linkedin", "href": "https://www.linkedin.com/in/kirandhakal7/" },
+    { "label": "Email", "icon": "Mail", "href": "mailto:kirandhakal715@gmail.com" }
+  ]
+}

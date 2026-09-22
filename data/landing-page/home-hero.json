@@ -1,0 +1,17 @@
+{
+  "greeting": "Hey there! Welcome to my portfolio",
+  "name": "I'm Kiran Dhakal",
+  "image": "/images/kiran1.jpg",
+  "imageAlt": "Kiran Dhakal - Web Developer",
+  "roles": ["Web Developer", "Full Stack Developer", "Computer Engineer", "AI Enthusiast"],
+  "description": "Crafting exceptional digital experiences through clean code and thoughtful design. I transform ideas into responsive, interactive web applications that users love.",
+  "stats": [
+    { "value": "3+", "label": "Years Exp" },
+    { "value": "20+", "label": "Projects" },
+    { "value": "10+", "label": "Happy Clients" }
+  ],
+  "download": { "label": "Download CV", "href": "/Kiran%20Dhakal%20.pdf", "filename": "Kiran-Dhakal-CV.pdf" },
+  "contactLabel": "Let's Talk",
+  "techLabel": "Working with",
+  "technologies": ["React", "Next js", "Node.js", "TypeScript", "Tailwind", "MongoDB", "Postgress"]
+}

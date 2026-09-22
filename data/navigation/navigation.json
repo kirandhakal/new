@@ -1,0 +1,7 @@
+[
+  { "key": "home", "icon": "Home", "label": "Home" },
+  { "key": "services", "icon": "Settings", "label": "Services" },
+  { "key": "skills", "icon": "User", "label": "Skills" },
+  { "key": "projects", "icon": "Briefcase", "label": "Projects" },
+  { "key": "contact", "icon": "Mail", "label": "Contact" }
+]

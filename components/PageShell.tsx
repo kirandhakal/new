@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import Header from "./Header";
 import Footer from "./Footer";
-import NavBar from "./NavBar";
+import Navbar from "./Navbar";
 import type { SectionKey } from "@/types/navigation";
 
 const ChatbaseWidget = React.lazy(() => import("@/features/ChatbaseWidget"));
@@ -28,7 +28,7 @@ const PageShell = ({ activeSection, children }: PageShellProps) => {
         <div className="max-w-7xl mx-auto">{children}</div>
       </main>
 
-      <NavBar activeSection={activeSection} setActiveSection={onNavigate} />
+      <Navbar activeSection={activeSection} setActiveSection={onNavigate} />
       <React.Suspense fallback={null}>
         <ChatbaseWidget />
       </React.Suspense>

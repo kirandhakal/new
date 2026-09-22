@@ -7,6 +7,15 @@ import {
   Send, CheckCircle, MapPin, Twitter, Youtube 
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import contactJson from '@/data/contact-form/contact.json';
+import type { ContactFormData } from '@/types/content';
+import { Form, FormField as FormFieldContainer, FormLabel, Input, Textarea } from '@/components/ui';
+import { H1 } from '@/components/typography';
+
+const content = contactJson;
+const icons: Record<string, LucideIcon> = {
+  Facebook, Instagram, Github, Linkedin, Mail, Phone, MapPin, Twitter, Youtube,
+};
 
 interface SuccessMessageProps {
   onReset: () => void;
@@ -35,29 +44,6 @@ interface FormFieldProps {
   required?: boolean;
   isTextarea?: boolean;
 }
-
-interface ContactFormData {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-}
-
-// Move constant data outside component to avoid recreation on every render
-const SOCIAL_LINKS = [
-  { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/kirandhakal715', color: 'bg-blue-600' },
-  { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/dhakalkiran_', color: 'bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500' },
-  { name: 'GitHub', icon: Github, url: 'https://github.com/kirandhakal', color: 'bg-gray-900' },
-  { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/kirandhakal7/', color: 'bg-blue-700' },
-  { name: 'Twitter', icon: Twitter, url: 'https://x.com/dhakaldiary', color: 'bg-sky-500' },
-  { name: 'YouTube', icon: Youtube, url: 'https://www.youtube.com/@kirandhakal715', color: 'bg-red-600' },
-];
-
-const CONTACT_INFO = [
-  { icon: Mail, label: 'Email', value: 'kirandhakal715@gmail.com', href: 'mailto:kirandhakal715@gmail.com' },
-  { icon: Phone, label: 'Phone', value: '+977 9827591616', href: 'tel:+9779827591616' },
-  { icon: MapPin, label: 'Location', value: 'Kathmandu, Nepal', href: '#' },
-];
 
 const CONTACT_API_URL = process.env.NEXT_PUBLIC_CONTACT_API_URL
   || 'https://contact.kirandhakal.me/';
@@ -124,14 +110,14 @@ const SuccessMessage = ({ onReset }: SuccessMessageProps) => (
       <CheckCircle size={40} />
     </div>
     <div className="space-y-2">
-      <h3 className="text-3xl font-black uppercase italic tracking-tighter text-gray-900">Delivered!</h3>
-      <p className="text-gray-500 text-xl font-medium">Your message is on its way.<br/>I'll be in touch shortly.</p>
+      <h3 className="text-3xl font-black uppercase italic tracking-tighter text-gray-900">{content.successTitle}</h3>
+      <p className="text-gray-500 text-xl font-medium">{content.successMessage}</p>
     </div>
     <button
       onClick={onReset}
       className="text-lg font-black uppercase tracking-widest text-gray-400 hover:text-blue-500 transition-colors"
     >
-      Send Another
+      {content.resetLabel}
     </button>
   </motion.div>
 );
@@ -165,10 +151,10 @@ const SocialIconBox = ({ icon: Icon, url, color }: SocialIconBoxProps) => (
 );
 
 const FormField = ({ label, name, value, onChange, placeholder, type = 'text', required = true, isTextarea = false }: FormFieldProps) => (
-  <div className="space-y-1">
-    <label className="text-[15px] font-black uppercase tracking-widest text-gray-600 ml-2">{label}</label>
+  <FormFieldContainer>
+    <FormLabel className="text-[15px] font-black uppercase tracking-widest text-gray-600 ml-2">{label}</FormLabel>
     {isTextarea ? (
-      <textarea
+      <Textarea
         name={name}
         required={required}
         rows={4}
@@ -178,7 +164,7 @@ const FormField = ({ label, name, value, onChange, placeholder, type = 'text', r
         className="w-full bg-white/50 border border-gray-100 focus:border-orange-400 focus:bg-white rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all resize-none shadow-sm"
       />
     ) : (
-      <input
+      <Input
         type={type}
         name={name}
         required={required}
@@ -188,7 +174,7 @@ const FormField = ({ label, name, value, onChange, placeholder, type = 'text', r
         className="w-full bg-white/50 border border-gray-100 focus:border-orange-400 focus:bg-white rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all shadow-sm"
       />
     )}
-  </div>
+  </FormFieldContainer>
 );
 
 const ContactSection = () => {
@@ -271,18 +257,18 @@ const ContactSection = () => {
             className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/80 backdrop-blur-sm text-blue-600 border border-blue-100 shadow-sm font-bold text-[10px] uppercase tracking-widest"
           >
             <Mail size={14} className="text-blue-500" />
-            <span>Get In Touch</span>
+            <span>{content.eyebrow}</span>
           </motion.div>
           
           {/* <h2 className="text-6xl md:text-8xl font-black tracking-tighter uppercase italic leading-none text-gray-900">
             Let's <span className="text-blue-500">Connect</span>
           </h2> */}
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 leading-tight tracking-tight">
-               Let's <span >Connect</span>
-                </h1>
+          <H1 className="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 leading-tight">
+            {content.titleBefore} <span>{content.titleAccent}</span>
+          </H1>
           
           <p className="text-lg text-gray-600 max-w-xl mx-auto font-medium">
-            Have a project in mind? Drop me a line below.
+            {content.description}
           </p>
         </div>
 
@@ -299,38 +285,19 @@ const ContactSection = () => {
                   exit={{ opacity: 0, scale: 0.95 }}
                   className="bg-white/70 backdrop-blur-md p-8 md:p-10 rounded-[2.5rem] shadow-sm shadow-blue-200/20 border border-white h-full relative overflow-hidden"
                 >
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <FormField
-                      label="Your Name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="John Doe"
-                    />
-                    <FormField
-                      label="Email Address"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="john@example.com"
-                      type="email"
-                    />
-                    <FormField
-                      label="Phone Number"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="+977 98XXXXXXXX"
-                      type="tel"
-                    />
-                    <FormField
-                      label="Message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="Tell me about your project..."
-                      isTextarea={true}
-                    />
+                  <Form onSubmit={handleSubmit}>
+                    {content.fields.map((field) => (
+                      <FormField
+                        key={field.name}
+                        label={field.label}
+                        name={field.name as keyof ContactFormData}
+                        value={formData[field.name as keyof ContactFormData]}
+                        onChange={handleChange}
+                        placeholder={field.placeholder}
+                        type={field.type === 'textarea' ? 'text' : field.type}
+                        isTextarea={field.type === 'textarea'}
+                      />
+                    ))}
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
@@ -338,7 +305,7 @@ const ContactSection = () => {
                       className="w-full py-5 bg-black text-white rounded-2xl font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 relative overflow-hidden transition-colors disabled:bg-gray-800"
                     >
                       <span className="relative z-10">
-                        {isSubmitting ? 'Sending...' : 'Send Message'}
+                        {isSubmitting ? content.submittingLabel : content.submitLabel}
                       </span>
                       {!isSubmitting && <Send size={16} className="relative z-10" />}
                       {/* Animated Progress Loader */}
@@ -360,7 +327,7 @@ const ContactSection = () => {
                         {errorMessage || "Submission failed."}
                       </motion.p>
                     )}
-                  </form>
+                  </Form>
                 </motion.div>
               ) : (
                 <SuccessMessage onReset={() => setStatus('')} />
@@ -376,12 +343,12 @@ const ContactSection = () => {
           {/* Contact Details Side */}
           <div className="space-y-6 flex flex-col">
             <div className="bg-white/50 backdrop-blur-md p-6 md:p-8 rounded-[2.5rem] border border-white shadow-sm shadow-blue-200/10 space-y-4">
-              <h3 className="text-xl font-black uppercase tracking-tighter text-gray-900">Contact Info</h3>
+              <h3 className="text-xl font-black uppercase tracking-tighter text-gray-900">{content.contactInfoTitle}</h3>
               <div className="grid gap-3">
-                {CONTACT_INFO.map((info, index) => (
+                {content.contactInfo.map((info) => (
                   <ContactInfoBox
-                    key={index}
-                    icon={info.icon}
+                    key={info.label}
+                    icon={icons[info.icon]}
                     label={info.label}
                     value={info.value}
                     href={info.href}
@@ -392,12 +359,12 @@ const ContactSection = () => {
 
             {/* Social Media Grid */}
             <div className="bg-white/50 backdrop-blur-md p-2 md:p-4 rounded-xl border border-white shadow-sm shadow-blue-200/10 flex-1">
-              <h3 className="text-lg font-black uppercase tracking-tighter text-gray-900 mb-4">Follow Me</h3>
+              <h3 className="text-lg font-black uppercase tracking-tighter text-gray-900 mb-4">{content.socialTitle}</h3>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-                {SOCIAL_LINKS.map((social, index) => (
+                {content.socialLinks.map((social) => (
                   <SocialIconBox
-                    key={index}
-                    icon={social.icon}
+                    key={social.name}
+                    icon={icons[social.icon]}
                     url={social.url}
                     color={social.color}
                   />

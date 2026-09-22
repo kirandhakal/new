@@ -1,0 +1,13 @@
+{
+  "eyebrow": "What I Offer",
+  "title": "My Services",
+  "description": "Delivering comprehensive digital solutions tailored to bring your vision to life",
+  "items": [
+    { "title": "Web Development", "icon": "Globe", "description": "I specialize in crafting exceptional web experiences using React JS and Next.js. This powerful JavaScript library allows me to build dynamic, user-friendly, and high-performing websites.", "gradient": "from-orange-400 to-rose-400" },
+    { "title": "App Development", "icon": "Smartphone", "description": "I craft exceptional mobile apps using Flutter, building beautiful and high-performing apps for both iOS and Android with a single codebase.", "gradient": "from-amber-400 to-orange-400" },
+    { "title": "UI/UX Design", "icon": "Palette", "description": "As a skilled front-end developer and UX/UI enthusiast, I bridge the gap between code and creativity, crafting seamless user experiences.", "gradient": "from-rose-400 to-pink-400" },
+    { "title": "Backend Development", "icon": "Database", "description": "Building robust and scalable server-side applications with Node.js, Express, and modern database technologies like MongoDB and PostgreSQL.", "gradient": "from-blue-400 to-cyan-400" },
+    { "title": "Cloud & DevOps", "icon": "Cloud", "description": "Deploying and managing applications on cloud platforms with modern DevOps practices, CI/CD pipelines, and containerization.", "gradient": "from-purple-400 to-indigo-400" },
+    { "title": "Clean Code", "icon": "Code", "description": "Writing maintainable, scalable, and well-documented code following best practices and design patterns for long-term project success.", "gradient": "from-emerald-400 to-teal-400" }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "graphLabel": "routing packets",
+  "code": "404",
+  "message": "lost in the web",
+  "terminalTitle": "traceroute",
+  "terminalLines": [
+    { "text": "$ traceroute mystery.url", "delay": 300, "color": "#9ca3af" },
+    { "text": "  1  router.local (10.0.0.1)   1ms", "delay": 900, "color": "#9ca3af" },
+    { "text": "  2  isp.gateway (203.x.x.1)  12ms", "delay": 1400, "color": "#9ca3af" },
+    { "text": "  3  * * * request timed out", "delay": 1900, "color": "#fbbf24" },
+    { "text": "  4  * * * request timed out", "delay": 2500, "color": "#fbbf24" },
+    { "text": "  → destination host unreachable", "delay": 3100, "color": "#f87171" },
+    { "text": "  ✓ known routes: /, /services, /projects...", "delay": 3800, "color": "#86efac" }
+  ],
+  "nodes": [
+    { "id": 0, "x": 15, "y": 20, "label": "google.com" },
+    { "id": 1, "x": 75, "y": 10, "label": "github.com" },
+    { "id": 2, "x": 88, "y": 55, "label": "reddit.com" },
+    { "id": 3, "x": 60, "y": 85, "label": "twitter.com" },
+    { "id": 4, "x": 20, "y": 78, "label": "wikipedia.org" },
+    { "id": 5, "x": 45, "y": 30, "label": "404 ?" },
+    { "id": 6, "x": 10, "y": 50, "label": "youtube.com" },
+    { "id": 7, "x": 80, "y": 30, "label": "npm.js" },
+    { "id": 8, "x": 35, "y": 65, "label": "stack overflow" }
+  ],
+  "edges": [[0,5],[1,5],[2,5],[3,5],[4,5],[6,5],[7,5],[8,5],[0,6],[1,7],[2,3],[3,8],[4,8],[0,4]],
+  "packets": [
+    { "from": 0, "to": 5, "color": "#f97316", "delay": 0, "duration": 2.4 },
+    { "from": 1, "to": 5, "color": "#fb923c", "delay": 0.6, "duration": 2.1 },
+    { "from": 2, "to": 5, "color": "#fbbf24", "delay": 1.2, "duration": 2.8 },
+    { "from": 3, "to": 5, "color": "#f97316", "delay": 0.3, "duration": 2.5 },
+    { "from": 6, "to": 5, "color": "#fb923c", "delay": 1.8, "duration": 2.2 },
+    { "from": 7, "to": 5, "color": "#fbbf24", "delay": 0.9, "duration": 1.9 },
+    { "from": 4, "to": 5, "color": "#f97316", "delay": 1.5, "duration": 2.6 },
+    { "from": 8, "to": 5, "color": "#fb923c", "delay": 0.1, "duration": 2.3 }
+  ],
+  "navTitle": "known endpoints",
+  "navLinks": [
+    { "to": "/services", "icon": "Settings", "label": "Services", "sub": "What I offer", "accent": "#f97316", "bg": "#fff7ed" },
+    { "to": "/skills", "icon": "User", "label": "Skills", "sub": "Tools & stack", "accent": "#d97706", "bg": "#fffbeb" },
+    { "to": "/projects", "icon": "Briefcase", "label": "Projects", "sub": "Selected work", "accent": "#be123c", "bg": "#fff1f2" },
+    { "to": "/contact", "icon": "Mail", "label": "Contact", "sub": "Let's talk", "accent": "#0e7490", "bg": "#ecfeff" }
+  ]
+}

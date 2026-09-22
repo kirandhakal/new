@@ -4,6 +4,7 @@ import React from 'react';
 import { Home, User, Briefcase, Settings, Mail } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import type { SectionKey } from '@/types/navigation';
+import navigationJson from '@/data/navigation/navigation.json';
 
 interface NavItem {
   key: SectionKey;
@@ -16,15 +17,13 @@ interface NavBarProps {
   setActiveSection: (section: SectionKey) => void;
 }
 
-const NavBar = ({ activeSection, setActiveSection }: NavBarProps) => {
-  const navItems: NavItem[] = [
-    { key: 'home', icon: Home, label: 'Home' },
-    { key: 'services', icon: Settings, label: 'Services' },
-    { key: 'skills', icon: User, label: 'Skills' },
-    { key: 'projects', icon: Briefcase, label: 'Projects' },
-
-    { key: 'contact', icon: Mail, label: 'Contact' },
-  ];
+const Navbar = ({ activeSection, setActiveSection }: NavBarProps) => {
+  const iconMap: Record<string, LucideIcon> = { Home, Settings, User, Briefcase, Mail };
+  const navItems: NavItem[] = navigationJson.map((item) => ({
+    ...item,
+    key: item.key as SectionKey,
+    icon: iconMap[item.icon],
+  }));
 
   return (
     <>
@@ -146,4 +145,4 @@ const NavBar = ({ activeSection, setActiveSection }: NavBarProps) => {
   );
 };
 
-export default NavBar;
+export default Navbar;
