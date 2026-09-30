@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   title: "Kiran Dhakal - Full Stack Developer | React & Node.js Expert",
   description:
     "Full-stack web developer specializing in React, Node.js, and modern web technologies.",
-  icons: { icon: "/favicon.ico" },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
