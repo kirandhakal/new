@@ -61,8 +61,8 @@ const CONTACT_INFO = [
 
 const CONTACT_API_URL = process.env.NEXT_PUBLIC_CONTACT_API_URL
   || 'https://contact.kirandhakal.me/';
-const CONTACT_FORM_KEY = (typeof process !== 'undefined' && process.env.REACT_APP_CONTACT_FORM_KEY)
-  || 'frm_VUGuth6Rs2FM2f21OFLYu8qg';
+const CONTACT_FORM_KEY = process.env.NEXT_PUBLIC_CONTACT_FORM_KEY
+  || 'frm_I-Sn9KqEu3BrCwky2xQMZxQK'; 
 
 // Extract complex animation component for reusability
 const EnvelopeAnimation = () => (
