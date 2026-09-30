@@ -1,7 +1,5 @@
 {
-  "framework": "create-react-app",
+  "framework": "nextjs",
   "buildCommand": "npm run build",
-  "outputDirectory": "build",
-  "installCommand": "npm install --force",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "installCommand": "npm install"
 }
