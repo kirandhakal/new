@@ -110,6 +110,16 @@ const projects = [
     tags: ["Next.js", "NestJS", "PostgreSQL"],
   },
   {
+    title: "Syangja Khaja Ghar",
+    category: "commerce",
+    description:
+      "Restaurant website for an authentic Nepali eatery in Kawasoti, Nawalpur, showcasing the menu, traditional dishes, and hospitality.",
+    demo: "https://syangjakhajaghar.com.np/",
+    icon: Utensils,
+    gradient: "from-red-600 to-orange-500",
+    tags: ["Restaurant", "Menu", "Hospitality"],
+  },
+  {
     title: "Churika",
     category: "commerce",
     description:
