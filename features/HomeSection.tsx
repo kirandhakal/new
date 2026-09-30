@@ -115,7 +115,7 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <a
-                  href="/Kiran%20Dhakal%20.pdf"
+                  href="/Kiran-Dhakal-CV.pdf"
                   download="Kiran-Dhakal-CV.pdf"
                   className="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white px-8 py-4 rounded-2xl font-bold transition-all transform hover:scale-105 hover:shadow-2xl overflow-hidden"
                   aria-label="Download Kiran Dhakal's CV"
