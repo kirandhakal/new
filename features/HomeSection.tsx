@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Download, MessageCircle, ArrowRight } from "lucide-react";
+import { Download, MessageCircle, ArrowRight, Hand } from "lucide-react";
+import { animate, useInView } from "framer-motion";
 import type { SectionKey } from "@/types/navigation";
 
 interface HomeSectionProps {
@@ -14,6 +15,28 @@ const roles = [
   "Computer Engineer",
   "AI Enthusiast"
 ];
+
+const AnimatedNumber = ({ to, suffix = "+" }: { to: number; suffix?: string }) => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true });
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    const controls = animate(0, to, {
+      duration: 2,
+      ease: "easeOut",
+      onUpdate: (v) => setValue(Math.round(v)),
+    });
+    return () => controls.stop();
+  }, [inView, to]);
+
+  return (
+    <div ref={ref} className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-rose-600">
+      {value}{suffix}
+    </div>
+  );
+};
 
 const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
@@ -48,7 +71,7 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
             {/* Block 1: Greeting + "I'm Kiran Dhakal" + role (mobile order 1); desktop: col 2 row 1 */}
             <div className="flex flex-col items-center md:items-start text-center md:text-left order-1 w-full md:col-start-2 md:row-start-1 space-y-4 md:space-y-0">
               <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-orange-200/50 shadow-sm">
-                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <Hand size={18} className="text-orange-500 origin-[70%_70%] animate-[wave_2s_ease-in-out_infinite]" />
                 <span className="text-sm sm:text-lg font-medium text-gray-700">Hey there! Welcome to my portfolio</span>
               </div>
               <div className="space-y-3 md:space-y-4">
@@ -97,15 +120,15 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
               {/* Stats */}
               <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-md mx-auto md:mx-0">
                 <div className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-orange-100/50 shadow-sm">
-                  <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-rose-600">3+</div>
+                  <AnimatedNumber to={3} />
                   <div className="text-xs text-gray-600 font-medium mt-1">Years Exp</div>
                 </div>
                 <div className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-orange-100/50 shadow-sm">
-                  <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-rose-600">20+</div>
+                  <AnimatedNumber to={20} />
                   <div className="text-xs text-gray-600 font-medium mt-1">Projects</div>
                 </div>
                 <div className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-orange-100/50 shadow-sm">
-                  <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-rose-600">10+</div>
+                  <AnimatedNumber to={10} />
                   <div className="text-xs text-gray-600 font-medium mt-1">Happy Clients</div>
                 </div>
               </div>

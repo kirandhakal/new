@@ -13,7 +13,7 @@ import {
   Palette,
   PanelsTopLeft,
   ShoppingBag,
-  Sparkles,
+  FolderKanban,
   Store,
   Utensils,
   Wrench,
@@ -188,7 +188,7 @@ const ProjectsSection = () => {
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
         <div className="mb-12 text-center">
           <div className="mb-5 inline-flex items-center gap-2 text-orange-600">
-            <Sparkles size={16} className="text-orange-500" />
+            <FolderKanban size={16} className="text-orange-500" />
             <span className="text-xs font-bold uppercase tracking-[0.2em]">Selected work</span>
           </div>
           <h2 className="mx-auto max-w-3xl text-4xl font-black tracking-tight text-gray-950 sm:text-5xl md:text-6xl">

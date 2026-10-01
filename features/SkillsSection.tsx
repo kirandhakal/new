@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Code2, Braces } from 'lucide-react';
+import { Code2, Braces, Wrench } from 'lucide-react';
 
 // SVG Icon Components
 const NodeIcon = () => <img src="/images/node.svg" alt="Node.js Icon" className="w-12 h-12" />;
@@ -93,7 +93,7 @@ const SkillsSection = () => {
           className="text-center mb-20 space-y-6"
         >
           <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full border border-orange-200/50 shadow-sm mb-4">
-            <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
+            <Wrench size={16} className="text-orange-500" />
             <span className="text-sm font-medium text-gray-700">My Expertise</span>
           </div>
           

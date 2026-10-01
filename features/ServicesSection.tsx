@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Globe, Smartphone, Palette, Code, Database, Cloud } from 'lucide-react';
+import { Briefcase, Globe, Smartphone, Palette, Code, Database, Cloud } from 'lucide-react';
 
 const ServicesSection = () => {
   const services = [
@@ -70,7 +70,7 @@ const ServicesSection = () => {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full border border-orange-200/50 shadow-sm mb-6">
-            <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
+            <Briefcase size={16} className="text-orange-500" />
             <span className="text-sm font-medium text-gray-700">What I Offer</span>
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 leading-tight tracking-tight mb-4">
