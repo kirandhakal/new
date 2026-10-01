@@ -75,25 +75,25 @@ const EnvelopeAnimation = () => (
     <div className="relative w-48 h-48 flex items-center justify-center">
       <svg 
         viewBox="0 0 24 24" 
-        className="w-40 h-40 drop-shadow-[0_0_30px_rgba(59,130,246,0.3)]"
+        className="w-40 h-40 drop-shadow-[0_0_30px_rgba(249,115,22,0.3)]"
         fill="none" 
         stroke="currentColor" 
         strokeWidth="1"
       >
         <motion.path 
           d="M3 8L12 13L21 8" 
-          stroke="#3b82f6" 
+          stroke="#f97316" 
           strokeLinecap="round" 
           strokeLinejoin="round" 
         />
         <motion.rect 
           x="3" y="5" width="18" height="14" rx="2" 
-          stroke="#3b82f6" 
+          stroke="#f97316" 
           strokeLinejoin="round" 
         />
         <motion.rect 
           x="3" y="5" width="18" height="14" rx="2"
-          fill="#dbeafe"
+          fill="#ffedd5"
           initial={{ opacity: 0, clipPath: 'inset(100% 0 0 0)' }}
           animate={{ opacity: 0.8, clipPath: 'inset(0% 0 0 0)' }}
           transition={{ duration: 3, ease: "easeInOut" }}
@@ -104,7 +104,7 @@ const EnvelopeAnimation = () => (
         initial={{ opacity: 0, x: -20, y: 20 }}
         animate={{ opacity: [0, 1, 0], x: 40, y: -40 }}
         transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
-        className="absolute text-blue-500"
+        className="absolute text-orange-500"
       >
         <Send size={24} />
       </motion.div>
@@ -118,9 +118,9 @@ const SuccessMessage = ({ onReset }: SuccessMessageProps) => (
     key="success-message"
     initial={{ opacity: 0, scale: 0.9 }}
     animate={{ opacity: 1, scale: 1 }}
-    className="bg-white p-12 rounded-[2.5rem] shadow-sm shadow-blue-100 text-center space-y-6 flex flex-col items-center justify-center min-h-[500px]"
+    className="bg-white p-12 rounded-[2.5rem] shadow-sm shadow-orange-100 text-center space-y-6 flex flex-col items-center justify-center min-h-[500px]"
   >
-    <div className="w-20 h-20 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center border border-blue-100">
+    <div className="w-20 h-20 bg-orange-50 text-orange-500 rounded-full flex items-center justify-center border border-orange-100">
       <CheckCircle size={40} />
     </div>
     <div className="space-y-2">
@@ -129,7 +129,7 @@ const SuccessMessage = ({ onReset }: SuccessMessageProps) => (
     </div>
     <button
       onClick={onReset}
-      className="text-lg font-black uppercase tracking-widest text-gray-400 hover:text-blue-500 transition-colors"
+      className="text-lg font-black uppercase tracking-widest text-gray-400 hover:text-orange-500 transition-colors"
     >
       Send Another
     </button>
@@ -139,9 +139,9 @@ const SuccessMessage = ({ onReset }: SuccessMessageProps) => (
 const ContactInfoBox = ({ icon: Icon, label, value, href }: IconBoxProps) => (
   <a
     href={href}
-    className="group flex items-center gap-3 p-3 bg-white rounded-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-sm border border-blue-50"
+    className="group flex items-center gap-3 p-3 bg-white rounded-2xl hover:bg-orange-600 hover:text-white transition-all duration-300 shadow-sm border border-orange-50"
   >
-    <div className="p-2 bg-blue-100 text-blue-600 rounded-xl group-hover:bg-white/20 group-hover:text-white transition-colors">
+    <div className="p-2 bg-orange-100 text-orange-600 rounded-xl group-hover:bg-white/20 group-hover:text-white transition-colors">
       <Icon size={26} />
     </div>
     <div>
@@ -258,7 +258,7 @@ const ContactSection = () => {
     <div className="py-20 bg-gradient-to-br from-amber-50 via-orange-50/40 to-rose-50/60 min-h-screen relative overflow-hidden font-sans">
       
       {/* Decorative Backgrounds */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-200/10 rounded-full blur-[120px] -z-10"></div>
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-200/10 rounded-full blur-[120px] -z-10"></div>
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-200/10 rounded-full blur-[120px] -z-10"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -268,14 +268,14 @@ const ContactSection = () => {
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/80 backdrop-blur-sm text-blue-600 border border-blue-100 shadow-sm font-bold text-[10px] uppercase tracking-widest"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/80 backdrop-blur-sm text-orange-600 border border-orange-100 shadow-sm font-bold text-[10px] uppercase tracking-widest"
           >
-            <Mail size={14} className="text-blue-500" />
+            <Mail size={14} className="text-orange-500" />
             <span>Get In Touch</span>
           </motion.div>
           
           {/* <h2 className="text-6xl md:text-8xl font-black tracking-tighter uppercase italic leading-none text-gray-900">
-            Let's <span className="text-blue-500">Connect</span>
+            Let's <span className="text-orange-500">Connect</span>
           </h2> */}
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 leading-tight tracking-tight">
                Let's <span >Connect</span>
@@ -297,7 +297,7 @@ const ContactSection = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="bg-white/70 backdrop-blur-md p-8 md:p-10 rounded-[2.5rem] shadow-sm shadow-blue-200/20 border border-white h-full relative overflow-hidden"
+                  className="bg-white/70 backdrop-blur-md p-8 md:p-10 rounded-[2.5rem] shadow-sm shadow-orange-200/20 border border-white h-full relative overflow-hidden"
                 >
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <FormField
@@ -344,7 +344,7 @@ const ContactSection = () => {
                       {/* Animated Progress Loader */}
                       {isSubmitting && (
                         <motion.div 
-                          className="absolute inset-0 bg-blue-600 origin-left"
+                          className="absolute inset-0 bg-orange-600 origin-left"
                           initial={{ scaleX: 0 }}
                           animate={{ scaleX: 1 }}
                           transition={{ duration: 1.5, ease: "linear" }}
@@ -375,7 +375,7 @@ const ContactSection = () => {
 
           {/* Contact Details Side */}
           <div className="space-y-6 flex flex-col">
-            <div className="bg-white/50 backdrop-blur-md p-6 md:p-8 rounded-[2.5rem] border border-white shadow-sm shadow-blue-200/10 space-y-4">
+            <div className="bg-white/50 backdrop-blur-md p-6 md:p-8 rounded-[2.5rem] border border-white shadow-sm shadow-orange-200/10 space-y-4">
               <h3 className="text-xl font-black uppercase tracking-tighter text-gray-900">Contact Info</h3>
               <div className="grid gap-3">
                 {CONTACT_INFO.map((info, index) => (
@@ -391,7 +391,7 @@ const ContactSection = () => {
             </div>
 
             {/* Social Media Grid */}
-            <div className="bg-white/50 backdrop-blur-md p-2 md:p-4 rounded-xl border border-white shadow-sm shadow-blue-200/10 flex-1">
+            <div className="bg-white/50 backdrop-blur-md p-2 md:p-4 rounded-xl border border-white shadow-sm shadow-orange-200/10 flex-1">
               <h3 className="text-lg font-black uppercase tracking-tighter text-gray-900 mb-4">Follow Me</h3>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                 {SOCIAL_LINKS.map((social, index) => (
@@ -408,7 +408,7 @@ const ContactSection = () => {
         </div>
 
         {/* Footer */}
-        {/* <div className="mt-20 pt-8 border-t border-blue-100 text-center">
+        {/* <div className="mt-20 pt-8 border-t border-orange-100 text-center">
           <p className="text-gray-600 text-[20px] font-black uppercase tracking-[0.4em]">
             Available for new opportunities
           </p>
