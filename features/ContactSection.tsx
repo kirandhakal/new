@@ -257,11 +257,9 @@ const ContactSection = () => {
   };
 
   return (
-    <div className="py-20 bg-gradient-to-br from-amber-50 via-orange-50/40 to-rose-50/60 min-h-screen relative overflow-hidden font-sans">
+    <div className="py-20 min-h-screen relative overflow-hidden font-sans">
       
       {/* Decorative Backgrounds */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-200/10 rounded-full blur-[120px] -z-10"></div>
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-200/10 rounded-full blur-[120px] -z-10"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         

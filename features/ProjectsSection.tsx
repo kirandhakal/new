@@ -184,7 +184,7 @@ const ProjectsSection = () => {
       : projects.filter((project) => project.category === activeCategory);
 
   return (
-    <div className="min-h-screen bg-[#faf9f7] py-20 lg:py-28">
+    <div className="min-h-screen py-20 lg:py-28">
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
         <div className="mb-12 text-center">
           <div className="mb-5 inline-flex items-center gap-2 text-orange-600">

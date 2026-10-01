@@ -104,39 +104,49 @@ const PortfolioPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50">
+    <div className="min-h-screen bg-white">
       <Header onHomeClick={() => scrollToSection("home")} />
 
       <main className="pt-[72px] md:pt-20">
-        <div className="max-w-7xl mx-auto">
-          <section ref={sectionRefs.home} id="home" className="min-h-screen">
+        <div>
+          <section ref={sectionRefs.home} id="home" className="min-h-screen bg-white">
+            <div className="max-w-7xl mx-auto">
             <Suspense fallback={<SectionFallback label="Loading home..." />}>
               {isHomeNear ? <HomeSection setActiveSection={scrollToSection} /> : null}
             </Suspense>
+            </div>
           </section>
 
-          <section ref={sectionRefs.services} id="services" className="min-h-screen">
+          <section ref={sectionRefs.services} id="services" className="min-h-screen bg-[#fdf8ef]">
+            <div className="max-w-7xl mx-auto">
             <Suspense fallback={<SectionFallback label="Loading services..." />}>
               {isServicesNear ? <ServicesSection /> : null}
             </Suspense>
+            </div>
           </section>
 
-          <section ref={sectionRefs.skills} id="skills" className="min-h-screen">
+          <section ref={sectionRefs.skills} id="skills" className="min-h-screen bg-white">
+            <div className="max-w-7xl mx-auto">
             <Suspense fallback={<SectionFallback label="Loading skills..." />}>
               {isSkillsNear ? <SkillsSection /> : null}
             </Suspense>
+            </div>
           </section>
 
-          <section ref={sectionRefs.projects} id="projects" className="min-h-screen">
+          <section ref={sectionRefs.projects} id="projects" className="min-h-screen bg-[#fdf8ef]">
+            <div className="max-w-7xl mx-auto">
             <Suspense fallback={<SectionFallback label="Loading projects..." />}>
               {isProjectsNear ? <ProjectsSection /> : null}
             </Suspense>
+            </div>
           </section>
 
-          <section ref={sectionRefs.contact} id="contact" className="min-h-screen">
+          <section ref={sectionRefs.contact} id="contact" className="min-h-screen bg-white">
+            <div className="max-w-7xl mx-auto">
             <Suspense fallback={<SectionFallback label="Loading contact..." />}>
               {isContactNear ? <ContactSection /> : null}
             </Suspense>
+            </div>
           </section>
 
           <section ref={sectionRefs.chatbase} id="chatbase" className="sr-only" aria-hidden="true" />

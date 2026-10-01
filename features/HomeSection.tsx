@@ -32,10 +32,8 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
   }, []);
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 min-h-screen flex items-center">
+    <div className="relative overflow-hidden min-h-screen flex items-center">
       {/* Decorative elements */}
-      <div className="absolute top-20 right-20 w-72 h-72 bg-gradient-to-br from-orange-200/30 to-rose-200/30 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-20 left-20 w-96 h-96 bg-gradient-to-tr from-amber-200/30 to-orange-200/30 rounded-full blur-3xl animate-float-delayed"></div>
       
       {/* Dot pattern overlay */}
       <div className="absolute inset-0 opacity-[0.015]" style={{

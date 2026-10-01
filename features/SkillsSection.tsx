@@ -76,8 +76,6 @@ const SkillsSection = () => {
   return (
     <div className="py-20 lg:py-32 min-h-screen relative overflow-hidden flex items-center">
       {/* Decorative background */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-orange-200/20 to-rose-200/20 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-amber-200/20 to-orange-200/20 rounded-full blur-3xl animate-float-delayed"></div>
       
       {/* Dot pattern */}
       <div className="absolute inset-0 opacity-[0.015]" style={{
