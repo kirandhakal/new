@@ -22,7 +22,7 @@ interface IconBoxProps {
 interface SocialIconBoxProps {
   icon: LucideIcon;
   url: string;
-  color: string;
+  name: string;
 }
 
 interface FormFieldProps {
@@ -45,12 +45,12 @@ interface ContactFormData {
 
 // Move constant data outside component to avoid recreation on every render
 const SOCIAL_LINKS = [
-  { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/kirandhakal715', color: 'bg-blue-600' },
-  { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/dhakalkiran_', color: 'bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500' },
-  { name: 'GitHub', icon: Github, url: 'https://github.com/kirandhakal', color: 'bg-gray-900' },
-  { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/kirandhakal7/', color: 'bg-blue-700' },
-  { name: 'Twitter', icon: Twitter, url: 'https://x.com/dhakaldiary', color: 'bg-sky-500' },
-  { name: 'YouTube', icon: Youtube, url: 'https://www.youtube.com/@kirandhakal715', color: 'bg-red-600' },
+  { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/kirandhakal715' },
+  { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/dhakalkiran_' },
+  { name: 'GitHub', icon: Github, url: 'https://github.com/kirandhakal' },
+  { name: 'LinkedIn', icon: Linkedin, url: 'https://www.linkedin.com/in/kirandhakal7/' },
+  { name: 'Twitter', icon: Twitter, url: 'https://x.com/dhakaldiary' },
+  { name: 'YouTube', icon: Youtube, url: 'https://www.youtube.com/@kirandhakal715' },
 ];
 
 const CONTACT_INFO = [
@@ -151,16 +151,18 @@ const ContactInfoBox = ({ icon: Icon, label, value, href }: IconBoxProps) => (
   </a>
 );
 
-const SocialIconBox = ({ icon: Icon, url, color }: SocialIconBoxProps) => (
+const SocialIconBox = ({ icon: Icon, url, name }: SocialIconBoxProps) => (
   <motion.a
     href={url}
     target="_blank"
     rel="noopener noreferrer"
-    whileHover={{ y: -2, scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-    className={`${color} aspect-square rounded-lg flex items-center justify-center text-white shadow-sm transition-all p-1`}
+    aria-label={name}
+    whileHover={{ y: -2 }}
+    whileTap={{ scale: 0.97 }}
+    className="group flex flex-col items-center justify-center gap-2 py-4 rounded-2xl bg-white border border-orange-100 text-gray-600 shadow-sm hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-colors"
   >
-    <Icon size={24} />
+    <Icon size={22} />
+    <span className="text-xs font-semibold">{name}</span>
   </motion.a>
 );
 
@@ -391,15 +393,15 @@ const ContactSection = () => {
             </div>
 
             {/* Social Media Grid */}
-            <div className="bg-white/50 backdrop-blur-md p-2 md:p-4 rounded-xl border border-white shadow-sm shadow-orange-200/10 flex-1">
-              <h3 className="text-lg font-black uppercase tracking-tighter text-gray-900 mb-4">Follow Me</h3>
-              <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+            <div className="bg-white/50 backdrop-blur-md p-6 md:p-8 rounded-[2.5rem] border border-white shadow-sm shadow-orange-200/10 flex-1">
+              <h3 className="text-xl font-black uppercase tracking-tighter text-gray-900 mb-4">Follow Me</h3>
+              <div className="grid grid-cols-3 gap-3">
                 {SOCIAL_LINKS.map((social, index) => (
                   <SocialIconBox
                     key={index}
                     icon={social.icon}
                     url={social.url}
-                    color={social.color}
+                    name={social.name}
                   />
                 ))}
               </div>
