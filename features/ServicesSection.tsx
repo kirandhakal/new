@@ -3,6 +3,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, Globe, Smartphone, Palette, Code, Database, Cloud } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import servicesJson from '@/data/landing-page/home-service.json';
+import type { ServiceContent } from '@/types/content';
+import { H1, P } from '@/components/typography';
 
 const services = servicesJson as ServiceContent;
 const icons: Record<string, LucideIcon> = { Globe, Smartphone, Palette, Code, Database, Cloud };

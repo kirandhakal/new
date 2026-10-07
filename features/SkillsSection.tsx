@@ -3,6 +3,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Code2, Braces, Wrench } from 'lucide-react';
+import skillsJson from '@/data/landing-page/home-skills.json';
+import type { SkillContent } from '@/types/content';
+import { H2, P } from '@/components/typography';
 
 // SVG Icon Components
 const NodeIcon = () => <img src="/images/node.svg" alt="Node.js Icon" className="w-12 h-12" />;
