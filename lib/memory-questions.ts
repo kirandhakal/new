@@ -47,6 +47,29 @@ export function formatExamDate(isoDate: string): string {
   return `${month}/${day}/${year}`;
 }
 
+export const NEC_SUBJECTS = [
+  "Computer Engineering",
+  "Civil Engineering",
+  "Electrical Engineering",
+  "Electronics and Communication Engineering",
+  "Mechanical Engineering",
+  "Architecture Engineering",
+  "Information Technology Engineering",
+  "Software Engineering",
+  "Electrical and Electronics Engineering",
+  "Geomatics Engineering",
+  "Agricultural Engineering",
+  "Civil and Rural Engineering",
+  "Biomedical Engineering",
+  "Automobile Engineering",
+  "Industrial Engineering",
+  "Environmental Engineering",
+  "Aerospace Engineering",
+  "Chemical Engineering",
+] as const;
+
+export type NecSubject = (typeof NEC_SUBJECTS)[number];
+
 export function subjectsFromSubmissions(submissions: MemorySubmission[]): string[] {
   const seen = new Set<string>();
   const subjects: string[] = [];
@@ -61,11 +84,15 @@ export function subjectsFromSubmissions(submissions: MemorySubmission[]): string
 
 type RawSubmissionRecord = {
   id?: string;
+  status?: string;
   payload?: Record<string, unknown>;
   data?: Record<string, unknown>;
 };
 
 export function parseSubmissionRecord(record: RawSubmissionRecord, index: number): MemorySubmission | null {
+  if (record.status && record.status !== "accepted") {
+    return null;
+  }
   const payload = (record.payload ?? record.data ?? record) as Record<string, unknown>;
   const subject = typeof payload.subject === "string" ? payload.subject.trim() : "";
   const rawQuestions = payload.questions;

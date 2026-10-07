@@ -17,6 +17,7 @@ import {
   defaultExamTime,
   emptyQuestion,
   formatExamDate,
+  NEC_SUBJECTS,
   subjectsFromSubmissions,
   type MemoryQuestion,
   type MemorySubmission,
@@ -43,13 +44,19 @@ export default function MemoryQuestionsPage() {
   const [addOpen, setAddOpen] = useState(false);
   const [addStep, setAddStep] = useState<AddStep>("meta");
   const [contributor, setContributor] = useState("");
-  const [subject, setSubject] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState<string>(NEC_SUBJECTS[0]);
+  const [customSubject, setCustomSubject] = useState("");
   const [examDate, setExamDate] = useState(defaultExamDate);
   const [examTime, setExamTime] = useState(defaultExamTime);
   const [questions, setQuestions] = useState<MemoryQuestion[]>([emptyQuestion()]);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
+
+  const activeSubjectValue = useMemo(() => {
+    if (selectedSubject === "Other") return customSubject.trim();
+    return selectedSubject.trim();
+  }, [selectedSubject, customSubject]);
 
   const loadSubmissions = useCallback(async () => {
     setLoadingList(true);
@@ -101,7 +108,16 @@ export default function MemoryQuestionsPage() {
   const resetAddFlow = () => {
     setAddStep("meta");
     setContributor("");
-    setSubject(activeSubject || "");
+    if (activeSubject && (NEC_SUBJECTS as readonly string[]).includes(activeSubject)) {
+      setSelectedSubject(activeSubject);
+      setCustomSubject("");
+    } else if (activeSubject) {
+      setSelectedSubject("Other");
+      setCustomSubject(activeSubject);
+    } else {
+      setSelectedSubject(NEC_SUBJECTS[0]);
+      setCustomSubject("");
+    }
     setExamDate(defaultExamDate);
     setExamTime(defaultExamTime);
     setQuestions([emptyQuestion()]);
@@ -111,7 +127,6 @@ export default function MemoryQuestionsPage() {
 
   const openAddModal = () => {
     resetAddFlow();
-    setSubject((current) => current || activeSubject);
     setAddOpen(true);
   };
 
@@ -122,8 +137,9 @@ export default function MemoryQuestionsPage() {
 
   const continueFromMeta = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!subject.trim()) {
-      setMessage("Subject is required.");
+    const finalSubject = selectedSubject === "Other" ? customSubject.trim() : selectedSubject.trim();
+    if (!finalSubject) {
+      setMessage("Please select or specify a subject.");
       return;
     }
     setMessage("");
@@ -163,7 +179,7 @@ export default function MemoryQuestionsPage() {
       return;
     }
 
-    const trimmedSubject = subject.trim();
+    const trimmedSubject = selectedSubject === "Other" ? customSubject.trim() : selectedSubject.trim();
 
     try {
       const response = await fetch(
@@ -180,7 +196,17 @@ export default function MemoryQuestionsPage() {
           }),
         },
       );
-      if (!response.ok) throw new Error("The questions could not be submitted. Please try again.");
+      if (!response.ok) {
+        let errMessage = "The questions could not be submitted. Please check the form settings.";
+        try {
+          const errData = (await response.json()) as { detail?: string; title?: string };
+          if (errData.detail) errMessage = errData.detail;
+          else if (errData.title) errMessage = errData.title;
+        } catch {
+          // ignore
+        }
+        throw new Error(errMessage);
+      }
 
       setSubmitted(true);
       setSubmissions((current) => [
@@ -378,7 +404,7 @@ export default function MemoryQuestionsPage() {
               <div className="px-6 py-10 text-center">
                 <CheckCircle2 className="mx-auto text-emerald-600" size={44} />
                 <p className="mt-4 font-semibold text-slate-800">Thanks for sharing!</p>
-                <p className="mt-1 text-sm text-slate-600">Your questions are now listed under {subject.trim()}.</p>
+                <p className="mt-1 text-sm text-slate-600">Your questions are now submitted under {activeSubjectValue}.</p>
                 <button
                   type="button"
                   onClick={closeAddModal}
@@ -402,16 +428,34 @@ export default function MemoryQuestionsPage() {
                   />
                 </label>
                 <label className="block text-sm font-semibold text-slate-700">
-                  Subject
-                  <input
+                  Subject (Nepal Engineering Council Discipline)
+                  <select
                     required
-                    value={subject}
-                    onChange={(event) => setSubject(event.target.value)}
-                    maxLength={120}
-                    placeholder="e.g. Computer Engineering"
-                    className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 font-normal outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
-                  />
+                    value={selectedSubject}
+                    onChange={(event) => setSelectedSubject(event.target.value)}
+                    className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 font-normal outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
+                  >
+                    {NEC_SUBJECTS.map((subj) => (
+                      <option key={subj} value={subj}>
+                        {subj}
+                      </option>
+                    ))}
+                    <option value="Other">Other (Custom Subject)</option>
+                  </select>
                 </label>
+                {selectedSubject === "Other" && (
+                  <label className="block text-sm font-semibold text-slate-700">
+                    Custom Subject Name
+                    <input
+                      required
+                      value={customSubject}
+                      onChange={(event) => setCustomSubject(event.target.value)}
+                      maxLength={120}
+                      placeholder="e.g. Aeronautical Engineering"
+                      className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 font-normal outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
+                    />
+                  </label>
+                )}
                 <label className="block text-sm font-semibold text-slate-700">
                   Exam date
                   <input
@@ -448,7 +492,7 @@ export default function MemoryQuestionsPage() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5 px-6 py-6">
                 <div className="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600">
-                  <p className="font-semibold text-slate-800">{subject.trim()}</p>
+                  <p className="font-semibold text-slate-800">{activeSubjectValue}</p>
                   <p className="mt-1">
                     {formatExamDate(examDate)}
                     {" · "}

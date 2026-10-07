@@ -16,7 +16,7 @@ export async function GET() {
 
   try {
     const response = await fetch(
-      `${CONTACT_API_URL.replace(/\/$/, "")}/v1/admin/forms/${encodeURIComponent(CONTACT_FORM_KEY)}/submissions?limit=200`,
+      `${CONTACT_API_URL.replace(/\/$/, "")}/v1/admin/forms/${encodeURIComponent(CONTACT_FORM_KEY)}/submissions?limit=200&status=accepted`,
       {
         headers: { Authorization: `Bearer ${CONTACT_ADMIN_API_KEY}` },
         next: { revalidate: 30 },
@@ -29,9 +29,11 @@ export async function GET() {
     const body = (await response.json()) as unknown;
     const rows = Array.isArray(body)
       ? body
-      : body && typeof body === "object" && Array.isArray((body as { items?: unknown[] }).items)
-        ? (body as { items: unknown[] }).items
-        : [];
+      : body && typeof body === "object" && Array.isArray((body as { submissions?: unknown[] }).submissions)
+        ? (body as { submissions: unknown[] }).submissions
+        : body && typeof body === "object" && Array.isArray((body as { items?: unknown[] }).items)
+          ? (body as { items: unknown[] }).items
+          : [];
 
     const fromApi = rows
       .map((row, index) => parseSubmissionRecord(row as Record<string, unknown>, index))
