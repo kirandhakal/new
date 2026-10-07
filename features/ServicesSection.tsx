@@ -2,11 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Globe, Smartphone, Palette, Code, Database, Cloud } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
-import servicesJson from '@/data/landing-page/home-service.json';
-import type { ServiceContent } from '@/types/content';
-import { H1, P } from '@/components/typography';
+import { Briefcase, Globe, Smartphone, Palette, Code, Database, Cloud } from 'lucide-react';
 
 const services = servicesJson as ServiceContent;
 const icons: Record<string, LucideIcon> = { Globe, Smartphone, Palette, Code, Database, Cloud };
@@ -14,6 +10,8 @@ const icons: Record<string, LucideIcon> = { Globe, Smartphone, Palette, Code, Da
 const ServicesSection = () => {
   return (
     <div className="py-20 lg:py-32 relative overflow-hidden min-h-screen flex items-center">
+      {/* Decorative elements - matching HomeSection */}
+      
       {/* Dot pattern overlay */}
       <div className="absolute inset-0 opacity-[0.015]" style={{
         backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
@@ -29,9 +27,9 @@ const ServicesSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 bg-card/80 backdrop-blur-sm px-5 py-2 rounded-full border border-border shadow-sm mb-6">
-            <span className="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
-            <span className="text-sm font-medium text-muted-foreground">{services.eyebrow}</span>
+          <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full border border-orange-200/50 shadow-sm mb-6">
+            <Briefcase size={16} className="text-orange-500" />
+            <span className="text-sm font-medium text-gray-700">What I Offer</span>
           </div>
           <H1 className="leading-tight mb-4">{services.title}</H1>
           <div className="flex justify-center">

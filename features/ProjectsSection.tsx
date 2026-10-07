@@ -2,21 +2,175 @@
 
 import { useState } from "react";
 import {
-  BellRing, ExternalLink, FileText, Github, GraduationCap, Hotel, Landmark,
-  MessageSquare, Palette, PanelsTopLeft, ShoppingBag, Sparkles, Store, Utensils, Wrench,
+  BellRing,
+  ExternalLink,
+  FileText,
+  Github,
+  GraduationCap,
+  Hotel,
+  Landmark,
+  MessageSquare,
+  Palette,
+  PanelsTopLeft,
+  ShoppingBag,
+  FolderKanban,
+  Store,
+  Utensils,
+  Wrench,
 } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
-import projectsJson from "@/data/landing-page/home-project.json";
-import type { ProjectContent } from "@/types/content";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { H2, P } from "@/components/typography";
 
-const content = projectsJson as ProjectContent;
-const icons: Record<string, LucideIcon> = {
-  BellRing, FileText, GraduationCap, Hotel, Landmark, MessageSquare, Palette,
-  PanelsTopLeft, ShoppingBag, Store, Utensils, Wrench,
-};
+const categories = [
+  { key: "all", label: "All work" },
+  { key: "govtech", label: "GovTech" },
+  { key: "saas", label: "SaaS & automation" },
+  { key: "commerce", label: "Commerce & hospitality" },
+  { key: "creative", label: "Creative" },
+];
+
+const projects = [
+  {
+    title: "Dhangadhi Service Bus",
+    category: "govtech",
+    description:
+      "Municipal e-Governance platform with role-based workflows, e-KYC and migration services, Sifarish, appointments, and online payments.",
+    demo: "https://dhangadhi.palikaportal.com/",
+    icon: Landmark,
+    gradient: "from-blue-600 to-cyan-500",
+    tags: ["Next.js", "NestJS", "GraphQL", "PostgreSQL"],
+  },
+  {
+    title: "Hello Palika",
+    category: "govtech",
+    description:
+      "Municipal SaaS platform connecting citizens and local government through notices, complaints, public decisions, and direct communication.",
+    demo: "https://hellopalika.cliffbyte.com/",
+    icon: MessageSquare,
+    gradient: "from-sky-600 to-indigo-500",
+    tags: ["React", "Node.js", "PostgreSQL"],
+  },
+  {
+    title: "Vibe College",
+    category: "saas",
+    description:
+      "Drag-and-drop form builder for student enrollment, intake management, and automated offer-letter workflows.",
+    demo: "https://www.vibecollege.edu.au/",
+    icon: GraduationCap,
+    gradient: "from-violet-600 to-fuchsia-500",
+    tags: ["Next.js", "Node.js", "PostgreSQL"],
+  },
+  {
+    title: "CTF School Management",
+    category: "saas",
+    description:
+      "Academic management system that automates report-card and transcript generation for schools.",
+    demo: "https://ctfnepal.com/",
+    icon: FileText,
+    gradient: "from-indigo-600 to-violet-500",
+    tags: ["React", "Node.js", "PostgreSQL"],
+  },
+  {
+    title: "Connect Kisan",
+    category: "saas",
+    description:
+      "Notification management module powered by a RabbitMQ service bus for dependable asynchronous message delivery.",
+    demo: "https://connectkisan.com/en",
+    icon: BellRing,
+    gradient: "from-emerald-600 to-teal-500",
+    tags: ["Next.js", "Node.js", "RabbitMQ", "PostgreSQL"],
+  },
+  {
+    title: "PMS SaaS Tool",
+    category: "saas",
+    description:
+      "A collaboration workspace for development teams with role-based access, project visibility, and sprint tracking.",
+    demo: "https://pms.dhakalkiran.com.np/",
+    icon: PanelsTopLeft,
+    gradient: "from-blue-600 to-violet-500",
+    tags: ["SaaS", "RBAC", "Sprint Planning"],
+  },
+  {
+    title: "Dynamic CV Maker",
+    category: "saas",
+    description:
+      "ATS-friendly résumé builder with real-time preview, flexible content editing, and polished PDF export.",
+    github: "https://github.com/kirandhakal/Dynamiccvmaker",
+    demo: "https://cv.dhakalkiran.com.np/",
+    icon: FileText,
+    gradient: "from-purple-600 to-pink-500",
+    tags: ["React", "Live Preview", "PDF Export"],
+  },
+  {
+    title: "Syanko POS",
+    category: "commerce",
+    description:
+      "Restaurant point-of-sale system with Kitchen Order Ticket routing and automated billing workflows.",
+    demo: "https://syanko-test.dashboard.cliffbyte.com/en",
+    icon: Utensils,
+    gradient: "from-orange-600 to-amber-500",
+    tags: ["Next.js", "NestJS", "PostgreSQL"],
+  },
+  {
+    title: "Syangja Khaja Ghar",
+    category: "commerce",
+    description:
+      "Restaurant website for an authentic Nepali eatery in Kawasoti, Nawalpur, showcasing the menu, traditional dishes, and hospitality.",
+    demo: "https://syangjakhajaghar.com.np/",
+    icon: Utensils,
+    gradient: "from-red-600 to-orange-500",
+    tags: ["Restaurant", "Menu", "Hospitality"],
+  },
+  {
+    title: "Churika",
+    category: "commerce",
+    description:
+      "Headless eCommerce CMS for managing storefront banners, product collections, and featured merchandise.",
+    demo: "https://chiurika.com/",
+    icon: Store,
+    gradient: "from-rose-600 to-orange-500",
+    tags: ["React", "Node.js", "GraphQL"],
+  },
+  {
+    title: "Red Panda Hotel",
+    category: "commerce",
+    description:
+      "Hospitality platform with room reservations, live inventory, and custom guest checkout flows.",
+    demo: "https://pandanest.vercel.app/",
+    icon: Hotel,
+    gradient: "from-teal-600 to-cyan-500",
+    tags: ["Hospitality", "Reservations", "Checkout"],
+  },
+  {
+    title: "Food Delivery AI",
+    category: "commerce",
+    description:
+      "Food ordering experience enhanced with collaborative-filtering recommendations for more relevant discovery.",
+    demo: "https://fooddelivery-ten-ebon.vercel.app/",
+    icon: ShoppingBag,
+    gradient: "from-amber-600 to-red-500",
+    tags: ["Food Ordering", "Recommendations", "AI"],
+  },
+  {
+    title: "Gourav Studio",
+    category: "creative",
+    description:
+      "Immersive digital-art portfolio for Gourav Pangeni, showcasing character studies, curated collections, creative process, and client inquiries.",
+    demo: "https://admirationseeker.vercel.app/",
+    icon: Palette,
+    gradient: "from-pink-600 to-blue-600",
+    tags: ["Next.js", "Digital Portfolio", "Interactive UI"],
+  },
+  {
+    title: "Dwarika Engineering",
+    category: "creative",
+    description:
+      "A polished engineering-company website that presents its services, capabilities, and project work through a clear, professional digital experience.",
+    demo: "https://dwarikaengineering.com/",
+    icon: Wrench,
+    gradient: "from-slate-600 to-cyan-500",
+    tags: ["Web Design", "Company Profile", "Responsive UI"],
+  },
+];
+
 const categoryNames = Object.fromEntries(
   content.categories.filter(({ key }) => key !== "all").map(({ key, label }) => [key, label]),
 );
@@ -28,12 +182,12 @@ export default function ProjectsSection() {
     : content.items.filter((project) => project.category === activeCategory);
 
   return (
-    <div className="min-h-screen bg-background py-20 lg:py-28">
+    <div className="min-h-screen py-20 lg:py-28">
       <div className="mx-auto w-full max-w-7xl px-6 lg:px-8">
         <div className="mb-12 text-center">
-          <div className="mb-5 inline-flex items-center gap-2 text-accent">
-            <Sparkles size={16} className="text-accent" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em]">{content.eyebrow}</span>
+          <div className="mb-5 inline-flex items-center gap-2 text-orange-600">
+            <FolderKanban size={16} className="text-orange-500" />
+            <span className="text-xs font-bold uppercase tracking-[0.2em]">Selected work</span>
           </div>
           <H2 className="mx-auto max-w-3xl text-4xl sm:text-5xl md:text-6xl">{content.title}</H2>
           <div className="mx-auto mt-5 h-1 w-24 rounded-full bg-gradient-to-r from-orange-500 to-rose-500" />

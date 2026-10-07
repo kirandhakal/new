@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Download, MessageCircle, ArrowRight } from "lucide-react";
+import { Download, MessageCircle, ArrowRight, Hand } from "lucide-react";
+import { animate, useInView } from "framer-motion";
 import type { SectionKey } from "@/types/navigation";
 import heroJson from "@/data/landing-page/home-hero.json";
 import type { HeroContent } from "@/types/content";
@@ -12,6 +13,28 @@ interface HomeSectionProps {
 }
 
 const hero = heroJson as HeroContent;
+
+const AnimatedNumber = ({ to, suffix = "+" }: { to: number; suffix?: string }) => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true });
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    const controls = animate(0, to, {
+      duration: 2,
+      ease: "easeOut",
+      onUpdate: (v) => setValue(Math.round(v)),
+    });
+    return () => controls.stop();
+  }, [inView, to]);
+
+  return (
+    <div ref={ref} className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-rose-600">
+      {value}{suffix}
+    </div>
+  );
+};
 
 const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
@@ -30,7 +53,8 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
   }, []);
 
   return (
-    <div className="relative overflow-hidden bg-background text-foreground min-h-screen flex items-center">
+    <div className="relative overflow-hidden min-h-screen flex items-center">
+      {/* Decorative elements */}
       
       {/* Dot pattern overlay */}
       <div className="absolute inset-0 opacity-[0.015]" style={{
@@ -44,9 +68,9 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
             {/* Mobile: 1) Greeting + Name + Role  2) Image  3) Rest. Desktop: Image left, content right. */}
             {/* Block 1: Greeting + "I'm Kiran Dhakal" + role (mobile order 1); desktop: col 2 row 1 */}
             <div className="flex flex-col items-center md:items-start text-center md:text-left order-1 w-full md:col-start-2 md:row-start-1 space-y-4 md:space-y-0">
-              <div className="inline-flex items-center gap-2 bg-card/80 backdrop-blur-sm px-4 py-2 rounded-full border border-border shadow-sm">
-                <span className="w-2 h-2 bg-success rounded-full animate-pulse"></span>
-                <span className="text-sm sm:text-lg font-medium text-muted-foreground">{hero.greeting}</span>
+              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-orange-200/50 shadow-sm">
+                <Hand size={18} className="text-orange-500 origin-[70%_70%] animate-[wave_2s_ease-in-out_infinite]" />
+                <span className="text-sm sm:text-lg font-medium text-gray-700">Hey there! Welcome to my portfolio</span>
               </div>
               <div className="space-y-3 md:space-y-4">
                 <H1 className="leading-tight">
@@ -86,20 +110,26 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
 
               {/* Stats */}
               <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-md mx-auto md:mx-0">
-                {hero.stats.map((stat) => (
-                  <div key={stat.label} className="bg-card/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-border shadow-sm">
-                    <div className="text-3xl font-black text-accent">{stat.value}</div>
-                    <div className="text-xs text-muted-foreground font-medium mt-1">{stat.label}</div>
-                  </div>
-                ))}
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-orange-100/50 shadow-sm">
+                  <AnimatedNumber to={3} />
+                  <div className="text-xs text-gray-600 font-medium mt-1">Years Exp</div>
+                </div>
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-orange-100/50 shadow-sm">
+                  <AnimatedNumber to={20} />
+                  <div className="text-xs text-gray-600 font-medium mt-1">Projects</div>
+                </div>
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-orange-100/50 shadow-sm">
+                  <AnimatedNumber to={10} />
+                  <div className="text-xs text-gray-600 font-medium mt-1">Happy Clients</div>
+                </div>
               </div>
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <a
-                  href={hero.download.href}
-                  download={hero.download.filename}
-                  className="group relative inline-flex items-center justify-center gap-3 bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 rounded-2xl font-bold transition-all transform hover:scale-105 hover:shadow-lifted overflow-hidden"
+                  href="/Kiran-Dhakal-CV.pdf"
+                  download="Kiran-Dhakal-CV.pdf"
+                  className="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white px-8 py-4 rounded-2xl font-bold transition-all transform hover:scale-105 hover:shadow-2xl overflow-hidden"
                   aria-label="Download Kiran Dhakal's CV"
                 >
                   <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></span>

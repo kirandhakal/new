@@ -2,10 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Code2, Braces } from 'lucide-react';
-import skillsJson from '@/data/landing-page/home-skills.json';
-import type { SkillContent } from '@/types/content';
-import { H2, P } from '@/components/typography';
+import { Code2, Braces, Wrench } from 'lucide-react';
 
 // SVG Icon Components
 const NodeIcon = () => <img src="/images/node.svg" alt="Node.js Icon" className="w-12 h-12" />;
@@ -30,6 +27,8 @@ const SkillsSection = () => {
 
   return (
     <div className="py-20 lg:py-32 min-h-screen relative overflow-hidden flex items-center">
+      {/* Decorative background */}
+      
       {/* Dot pattern */}
       <div className="absolute inset-0 opacity-[0.015]" style={{
         backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
@@ -45,9 +44,9 @@ const SkillsSection = () => {
           viewport={{ once: true }}
           className="text-center mb-20 space-y-6"
         >
-          <div className="inline-flex items-center gap-2 bg-card/80 backdrop-blur-sm px-5 py-2 rounded-full border border-border shadow-sm mb-4">
-            <span className="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
-            <span className="text-sm font-medium text-muted-foreground">{content.eyebrow}</span>
+          <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full border border-orange-200/50 shadow-sm mb-4">
+            <Wrench size={16} className="text-orange-500" />
+            <span className="text-sm font-medium text-gray-700">My Expertise</span>
           </div>
           
           <H2 className="text-4xl sm:text-5xl md:text-7xl">{content.title}</H2>
