@@ -4,7 +4,9 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Home, Mail, Briefcase, Settings, User } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import PageShell from "@/components/PageShell";
+import notFoundJson from "@/data/not-found/not-found.json";
 
 interface GraphNode {
   id: number;
@@ -22,22 +24,8 @@ interface PacketProps {
   duration: number;
 }
 
-const NODES = [
-  { id: 0, x: 15, y: 20, label: "google.com" },
-  { id: 1, x: 75, y: 10, label: "github.com" },
-  { id: 2, x: 88, y: 55, label: "reddit.com" },
-  { id: 3, x: 60, y: 85, label: "twitter.com" },
-  { id: 4, x: 20, y: 78, label: "wikipedia.org" },
-  { id: 5, x: 45, y: 30, label: "404 ?" },
-  { id: 6, x: 10, y: 50, label: "youtube.com" },
-  { id: 7, x: 80, y: 30, label: "npm.js" },
-  { id: 8, x: 35, y: 65, label: "stack overflow" },
-];
-
-const EDGES = [
-  [0, 5], [1, 5], [2, 5], [3, 5], [4, 5], [6, 5], [7, 5], [8, 5],
-  [0, 6], [1, 7], [2, 3], [3, 8], [4, 8], [0, 4],
-];
+const NODES = notFoundJson.nodes;
+const EDGES = notFoundJson.edges;
 
 const Packet = ({ from, to, nodes, color, delay, duration }: PacketProps) => {
   const f = nodes[from];
@@ -70,17 +58,6 @@ const Packet = ({ from, to, nodes, color, delay, duration }: PacketProps) => {
 
 const WebGraph = () => {
   const [hovered, setHovered] = useState<number | null>(null);
-
-  const packets = [
-    { from: 0, to: 5, color: "#f97316", delay: 0, duration: 2.4 },
-    { from: 1, to: 5, color: "#fb923c", delay: 0.6, duration: 2.1 },
-    { from: 2, to: 5, color: "#fbbf24", delay: 1.2, duration: 2.8 },
-    { from: 3, to: 5, color: "#f97316", delay: 0.3, duration: 2.5 },
-    { from: 6, to: 5, color: "#fb923c", delay: 1.8, duration: 2.2 },
-    { from: 7, to: 5, color: "#fbbf24", delay: 0.9, duration: 1.9 },
-    { from: 4, to: 5, color: "#f97316", delay: 1.5, duration: 2.6 },
-    { from: 8, to: 5, color: "#fb923c", delay: 0.1, duration: 2.3 },
-  ];
 
   return (
     <svg
@@ -118,7 +95,7 @@ const WebGraph = () => {
       })}
 
       {/* Packets */}
-      {packets.map((p, i) => (
+      {notFoundJson.packets.map((p, i) => (
         <Packet key={i} {...p} nodes={NODES} />
       ))}
 
@@ -240,12 +217,7 @@ const TerminalLine = ({ text, delay, color = "#86efac" }: { text: string; delay:
 const NotFoundPage = () => {
   const router = useRouter();
 
-  const navLinks = [
-    { to: "/services", icon: <Settings size={16} />, label: "Services", sub: "What I offer", accent: "#f97316", bg: "#fff7ed" },
-    { to: "/skills", icon: <User size={16} />, label: "Skills", sub: "Tools & stack", accent: "#d97706", bg: "#fffbeb" },
-    { to: "/projects", icon: <Briefcase size={16} />, label: "Projects", sub: "Selected work", accent: "#be123c", bg: "#fff1f2" },
-    { to: "/contact", icon: <Mail size={16} />, label: "Contact", sub: "Let's talk", accent: "#0e7490", bg: "#ecfeff" },
-  ];
+  const iconMap: Record<string, LucideIcon> = { Settings, User, Briefcase, Mail };
 
   return (
     <>
@@ -290,13 +262,11 @@ const NotFoundPage = () => {
       `}</style>
 
       <PageShell activeSection="home">
-        <section className="min-h-[calc(100vh-72px)] flex items-center px-4 sm:px-8 py-12"
-          style={{ background: "linear-gradient(135deg, #fafafa 0%, #fff7ed 50%, #fafafa 100%)" }}>
+        <section className="min-h-[calc(100vh-72px)] flex items-center px-4 sm:px-8 py-12 bg-background">
           <div className="w-full max-w-5xl mx-auto">
 
             {/* Main card */}
-            <div className="relative rounded-3xl overflow-hidden border border-orange-100"
-              style={{ background: "rgba(255,255,255,0.85)", backdropFilter: "blur(16px)" }}>
+            <div className="relative rounded-2xl overflow-hidden border border-border bg-card/85 backdrop-blur-md">
 
               {/* Scanline overlay */}
               <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-3xl opacity-[0.03]">
@@ -308,10 +278,10 @@ const NotFoundPage = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
 
                 {/* Left: Graph visualization */}
-                <div className="fade-up relative flex flex-col items-center justify-center p-8 lg:p-10 lg:border-r border-orange-100"
+                <div className="fade-up relative flex flex-col items-center justify-center p-8 lg:p-10 lg:border-r border-border"
                   style={{ minHeight: "380px" }}>
-                  <div className="text-lg font-mono text-orange-600 mb-4 tracking-widest uppercase opacity-70">
-                    routing packets 
+                  <div className="text-lg font-mono text-accent mb-4 tracking-widest uppercase opacity-70">
+                    {notFoundJson.graphLabel}
                   </div>
                   <div className="w-full" style={{ maxWidth: "360px", animation: "float 4s ease-in-out infinite" }}>
                     <WebGraph />
@@ -331,12 +301,12 @@ const NotFoundPage = () => {
                   </div>
 
                   <div className="fade-up-2 mb-2" style={{ fontSize: "clamp(72px, 12vw, 108px)", lineHeight: 1 }}>
-                    <GlitchText text="404" />
+                    <GlitchText text={notFoundJson.code} />
                   </div>
 
                   <div className="fade-up-2 mb-6">
                     <p style={{ fontFamily: "'Courier New', monospace", fontSize: "18px", color: "#374151", fontWeight: 600 }}>
-                      lost in the web
+                      {notFoundJson.message}
                     </p>
                     {/* <p style={{ fontSize: "14px", color: "#6b7280", lineHeight: 1.7, marginTop: "8px" }}>
                       The URL you requested doesn't resolve to any known handler.
@@ -351,16 +321,10 @@ const NotFoundPage = () => {
                       <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
                       <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
                       <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
-                      <span className="ml-2 text-xs font-mono text-gray-500">traceroute</span>
+                      <span className="ml-2 text-xs font-mono text-gray-500">{notFoundJson.terminalTitle}</span>
                     </div>
                     <div className="px-4 py-4 space-y-0">
-                      <TerminalLine text="$ traceroute mystery.url" delay={300} color="#9ca3af" />
-                      <TerminalLine text="  1  router.local (10.0.0.1)   1ms" delay={900} color="#9ca3af" />
-                      <TerminalLine text="  2  isp.gateway (203.x.x.1)  12ms" delay={1400} color="#9ca3af" />
-                      <TerminalLine text="  3  * * * request timed out" delay={1900} color="#fbbf24" />
-                      <TerminalLine text="  4  * * * request timed out" delay={2500} color="#fbbf24" />
-                      <TerminalLine text="  → destination host unreachable" delay={3100} color="#f87171" />
-                      <TerminalLine text="  ✓ known routes: /, /services, /projects..." delay={3800} color="#86efac" />
+                      {notFoundJson.terminalLines.map((line) => <TerminalLine key={line.text} {...line} />)}
                     </div>
                   </div>
 
@@ -368,15 +332,13 @@ const NotFoundPage = () => {
                   <div className="fade-up-4 flex gap-3">
                     <button
                       onClick={() => router.back()}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-mono text-sm font-semibold border transition-all hover:bg-gray-50"
-                      style={{ borderColor: "#d1d5db", color: "#374151" }}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-mono text-sm font-semibold border border-border text-muted-foreground transition-all hover:bg-secondary"
                     >
                       <ArrowLeft size={15} /> back
                     </button>
                     <Link
                       href="/"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-mono text-sm font-bold text-white transition-all hover:opacity-90"
-                      style={{ background: "linear-gradient(135deg, #f97316, #be123c)" }}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent font-mono text-sm font-bold text-accent-foreground transition-all hover:bg-accent/90"
                     >
                       <Home size={15} /> home
                     </Link>
@@ -385,23 +347,26 @@ const NotFoundPage = () => {
               </div>
 
               {/* Bottom nav strip */}
-              <div className="border-t border-orange-100 px-8 py-5">
-                <div className="text-xs font-mono text-gray-400 mb-4 uppercase tracking-widest">known endpoints</div>
+              <div className="border-t border-border px-8 py-5">
+                <div className="text-xs font-mono text-muted-foreground mb-4 uppercase tracking-widest">{notFoundJson.navTitle}</div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {navLinks.map((link) => (
+                  {notFoundJson.navLinks.map((link) => {
+                    const Icon = iconMap[link.icon];
+                    return (
                     <Link
                       key={link.to}
                       href={link.to}
                       className="nav-card flex items-center gap-3 p-3 rounded-xl border"
                       style={{ background: link.bg, borderColor: `${link.accent}25` }}
                     >
-                      <div className="shrink-0" style={{ color: link.accent }}>{link.icon}</div>
+                      <div className="shrink-0" style={{ color: link.accent }}><Icon size={16} /></div>
                       <div>
-                        <div className="font-mono font-bold text-gray-900 text-sm leading-none mb-0.5">{link.label}</div>
-                        <div className="text-xs text-gray-500">{link.sub}</div>
+                        <div className="font-mono font-bold text-foreground text-sm leading-none mb-0.5">{link.label}</div>
+                        <div className="text-xs text-muted-foreground">{link.sub}</div>
                       </div>
                     </Link>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </div>

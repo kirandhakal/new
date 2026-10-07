@@ -23,7 +23,8 @@ npm start
 
 - `app/` contains routes, metadata, robots, and sitemap entries.
 - `features/` contains page and section-level UI.
-- `components/` contains reusable layout and SEO components.
+- `components/` contains reusable layout, typography, SEO, and `ui/` primitives.
+- `data/` contains JSON-backed content for each portfolio domain.
 - `lib/` contains shared metadata and hook logic.
 - `types/` contains shared TypeScript declarations.
 - `public/` contains static assets.

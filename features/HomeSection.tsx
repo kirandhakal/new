@@ -4,17 +4,15 @@ import React, { useState, useEffect } from "react";
 import { Download, MessageCircle, ArrowRight, Hand } from "lucide-react";
 import { animate, useInView } from "framer-motion";
 import type { SectionKey } from "@/types/navigation";
+import heroJson from "@/data/landing-page/home-hero.json";
+import type { HeroContent } from "@/types/content";
+import { H1, P } from "@/components/typography";
 
 interface HomeSectionProps {
   setActiveSection: (section: SectionKey) => void;
 }
 
-const roles = [
-  "Web Developer",
-  "Full Stack Developer",
-  "Computer Engineer",
-  "AI Enthusiast"
-];
+const hero = heroJson as HeroContent;
 
 const AnimatedNumber = ({ to, suffix = "+" }: { to: number; suffix?: string }) => {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -46,7 +44,7 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
     const interval = setInterval(() => {
       setIsAnimating(true);
       setTimeout(() => {
-        setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
+        setCurrentRoleIndex((prev) => (prev + 1) % hero.roles.length);
         setIsAnimating(false);
       }, 500); // Half of the animation duration
     }, 3000); // Change role every 3 seconds
@@ -75,18 +73,18 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
                 <span className="text-sm sm:text-lg font-medium text-gray-700">Hey there! Welcome to my portfolio</span>
               </div>
               <div className="space-y-3 md:space-y-4">
-                <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 leading-tight tracking-tight">
-                  I'm Kiran Dhakal
-                </h1>
+                <H1 className="leading-tight">
+                  {hero.name}
+                </H1>
                 <div className="flex items-center gap-3 justify-center md:justify-start">
                   <div className="h-1 w-10 sm:w-12 bg-gradient-to-r from-orange-500 to-rose-500 rounded-full"></div>
                   <div className="relative h-10 sm:h-12 overflow-hidden">
                     <p
-                      className={`text-xl sm:text-2xl md:text-3xl font-bold text-orange-700 transition-all duration-500 ${
+                      className={`text-xl sm:text-2xl md:text-3xl font-bold text-accent transition-all duration-500 ${
                         isAnimating ? 'opacity-0 translate-y-8' : 'opacity-100 translate-y-0'
                       }`}
                     >
-                      {roles[currentRoleIndex]}
+                      {hero.roles[currentRoleIndex]}
                     </p>
                   </div>
                 </div>
@@ -96,26 +94,19 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
             {/* Block 2: Image — right below "I'm Kiran Dhakal" on mobile; desktop: col 1, span 2 rows */}
             <div className="flex justify-center md:justify-end order-2 w-full md:col-start-1 md:row-start-1 md:row-span-2">
               <div className="relative group">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-400 to-rose-400 opacity-20 animate-ping-slow"></div>
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 opacity-30 blur-xl group-hover:opacity-50 transition-opacity duration-500"></div>
                 <div className="relative w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full overflow-hidden border-4 md:border-8 border-white shadow-2xl group-hover:scale-105 transition-transform duration-500">
                   <img
-                    src="/images/kiran1.jpg"
-                    alt="Kiran Dhakal - Web Developer"
+                    src={hero.image}
+                    alt={hero.imageAlt}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-gradient-to-br from-orange-400 to-rose-400 rounded-full blur-2xl opacity-60"></div>
-                <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-400 rounded-full blur-2xl opacity-60"></div>
               </div>
             </div>
 
             {/* Block 3: Description, stats, CTAs, tech (mobile order 3); desktop: col 2 row 2 */}
             <div className="space-y-6 sm:space-y-8 order-3 w-full text-center md:text-left md:col-start-2 md:row-start-2 md:flex md:flex-col md:items-start">
-              <p className="text-base sm:text-lg text-gray-600 leading-relaxed max-w-xl mx-auto md:mx-0">
-                Crafting exceptional digital experiences through clean code and thoughtful design. 
-                I transform ideas into responsive, interactive web applications that users love.
-              </p>
+              <P className="text-base sm:text-lg max-w-xl mx-auto md:mx-0">{hero.description}</P>
 
               {/* Stats */}
               <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-md mx-auto md:mx-0">
@@ -143,29 +134,29 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
                 >
                   <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></span>
                   <Download size={20} className="relative z-10" />
-                  <span className="relative z-10">Download CV</span>
+                  <span className="relative z-10">{hero.download.label}</span>
                   <ArrowRight size={20} className="relative z-10 group-hover:translate-x-1 transition-transform" />
                 </a>
                 
                 <button
                   onClick={() => setActiveSection && setActiveSection("contact")}
-                  className="group inline-flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-gray-800 px-8 py-4 rounded-2xl font-bold transition-all transform hover:scale-105 border-2 border-gray-200 hover:border-orange-300 shadow-lg hover:shadow-xl"
+                  className="group inline-flex items-center justify-center gap-3 bg-card hover:bg-secondary text-card-foreground px-8 py-4 rounded-2xl font-bold transition-all transform hover:scale-105 border-2 border-border hover:border-ring shadow-soft hover:shadow-lifted"
                   aria-label="Navigate to contact section"
                 >
                   <MessageCircle size={20} />
-                  <span>Let's Talk</span>
+                  <span>{hero.contactLabel}</span>
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
 
               {/* Tech stack preview */}
               <div className="pt-4">
-                <p className="text-sm text-gray-500 font-medium mb-3">Working with</p>
+                <p className="text-sm text-muted-foreground font-medium mb-3">{hero.techLabel}</p>
                 <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                  {['React','Next js', 'Node.js', 'TypeScript', 'Tailwind', 'MongoDB' ,'Postgress'].map((tech, i) => (
+                  {hero.technologies.map((tech) => (
                     <span 
-                      key={i}
-                      className="px-4 py-2 bg-white/60 backdrop-blur-sm rounded-full text-sm font-semibold text-gray-700 border border-orange-100/50 shadow-sm hover:shadow-md hover:scale-105 transition-all cursor-default"
+                      key={tech}
+                      className="px-4 py-2 bg-card/60 backdrop-blur-sm rounded-full text-sm font-semibold text-muted-foreground border border-border shadow-sm hover:shadow-soft hover:scale-105 transition-all cursor-default"
                     >
                       {tech}
                     </span>

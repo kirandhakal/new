@@ -2,7 +2,11 @@
 
 import React, { useState } from "react";
 import { Heart, Github, Linkedin, Mail } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import footerJson from "@/data/footer/footer.json";
+
+const iconMap: Record<string, LucideIcon> = { Github, Linkedin, Mail };
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -35,11 +39,11 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white py-12 mt-auto relative overflow-hidden">
+    <footer className="bg-primary text-primary-foreground py-12 mt-auto relative overflow-hidden">
       
       {/* Decorative blur */}
-      <div className="absolute top-0 left-1/4 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute top-0 left-1/4 w-64 h-64 bg-accent/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-accent/10 rounded-full blur-3xl"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
@@ -49,7 +53,7 @@ const Footer = () => {
 
             {/* Sending Love */}
             <div className="flex items-center gap-2 text-xl font-medium relative">
-              <span>Sending</span>
+              <span>{footerJson.messageBefore}</span>
 
               <span
                 onClick={createHeart}
@@ -85,44 +89,32 @@ const Footer = () => {
                 </AnimatePresence>
               </span>
 
-              <span>Love</span>
+              <span>{footerJson.messageAfter}</span>
             </div>
 
             {/* Copyright */}
-            <p className="text-gray-100 text-lg">
-              © {currentYear} All rights reserved.
+            <p className="text-primary-foreground/90 text-lg">
+              © {currentYear} {footerJson.copyright}
             </p>
           </div>
 
           {/* Social Links */}
           <div className="flex items-center gap-4">
-            <a
-              href="https://github.com/kirandhakal"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-all hover:scale-110"
-              aria-label="GitHub"
-            >
-              <Github size={20} />
-            </a>
-
-            <a
-              href="https://www.linkedin.com/in/kirandhakal7/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-all hover:scale-110"
-              aria-label="LinkedIn"
-            >
-              <Linkedin size={20} />
-            </a>
-
-            <a
-              href="mailto:kirandhakal715@gmail.com"
-              className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-all hover:scale-110"
-              aria-label="Email"
-            >
-              <Mail size={20} />
-            </a>
+            {footerJson.socialLinks.map((link) => {
+              const Icon = iconMap[link.icon];
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target={link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-all hover:scale-110"
+                  aria-label={link.label}
+                >
+                  <Icon size={20} />
+                </a>
+              );
+            })}
           </div>
 
         </div>

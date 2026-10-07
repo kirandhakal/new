@@ -7,6 +7,15 @@ import {
   Send, CheckCircle, MapPin, Twitter, Youtube 
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import contactJson from '@/data/contact-form/contact.json';
+import type { ContactFormData } from '@/types/content';
+import { Form, FormField as FormFieldContainer, FormLabel, Input, Textarea } from '@/components/ui';
+import { H1 } from '@/components/typography';
+
+const content = contactJson;
+const icons: Record<string, LucideIcon> = {
+  Facebook, Instagram, Github, Linkedin, Mail, Phone, MapPin, Twitter, Youtube,
+};
 
 interface SuccessMessageProps {
   onReset: () => void;
@@ -124,14 +133,14 @@ const SuccessMessage = ({ onReset }: SuccessMessageProps) => (
       <CheckCircle size={40} />
     </div>
     <div className="space-y-2">
-      <h3 className="text-3xl font-black uppercase italic tracking-tighter text-gray-900">Delivered!</h3>
-      <p className="text-gray-500 text-xl font-medium">Your message is on its way.<br/>I'll be in touch shortly.</p>
+      <h3 className="text-3xl font-black uppercase italic tracking-tighter text-foreground">{content.successTitle}</h3>
+      <p className="text-muted-foreground text-xl font-medium">{content.successMessage}</p>
     </div>
     <button
       onClick={onReset}
       className="text-lg font-black uppercase tracking-widest text-gray-400 hover:text-orange-500 transition-colors"
     >
-      Send Another
+      {content.resetLabel}
     </button>
   </motion.div>
 );
@@ -167,30 +176,30 @@ const SocialIconBox = ({ icon: Icon, url, name }: SocialIconBoxProps) => (
 );
 
 const FormField = ({ label, name, value, onChange, placeholder, type = 'text', required = true, isTextarea = false }: FormFieldProps) => (
-  <div className="space-y-1">
-    <label className="text-[15px] font-black uppercase tracking-widest text-gray-600 ml-2">{label}</label>
+  <FormFieldContainer>
+  <FormLabel className="text-[15px] font-black uppercase tracking-widest text-muted-foreground ml-2">{label}</FormLabel>
     {isTextarea ? (
-      <textarea
+      <Textarea
         name={name}
         required={required}
         rows={4}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full bg-white/50 border border-gray-100 focus:border-orange-400 focus:bg-white rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all resize-none shadow-sm"
+        className="w-full bg-card/50 border border-input focus:border-ring focus:bg-card rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all resize-none shadow-sm"
       />
     ) : (
-      <input
+      <Input
         type={type}
         name={name}
         required={required}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full bg-white/50 border border-gray-100 focus:border-orange-400 focus:bg-white rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all shadow-sm"
+        className="w-full bg-card/50 border border-input focus:border-ring focus:bg-card rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all shadow-sm"
       />
     )}
-  </div>
+  </FormFieldContainer>
 );
 
 const ContactSection = () => {
@@ -302,46 +311,27 @@ const ContactSection = () => {
                   exit={{ opacity: 0, scale: 0.95 }}
                   className="bg-white/70 backdrop-blur-md p-8 md:p-10 rounded-[2.5rem] shadow-sm shadow-orange-200/20 border border-white h-full relative overflow-hidden"
                 >
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <FormField
-                      label="Your Name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="John Doe"
-                    />
-                    <FormField
-                      label="Email Address"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="john@example.com"
-                      type="email"
-                    />
-                    <FormField
-                      label="Phone Number"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="+977 98XXXXXXXX"
-                      type="tel"
-                    />
-                    <FormField
-                      label="Message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="Tell me about your project..."
-                      isTextarea={true}
-                    />
+                  <Form onSubmit={handleSubmit}>
+                    {content.fields.map((field) => (
+                      <FormField
+                        key={field.name}
+                        label={field.label}
+                        name={field.name as keyof ContactFormData}
+                        value={formData[field.name as keyof ContactFormData]}
+                        onChange={handleChange}
+                        placeholder={field.placeholder}
+                        type={field.type === 'textarea' ? 'text' : field.type}
+                        isTextarea={field.type === 'textarea'}
+                      />
+                    ))}
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       disabled={isSubmitting}
-                      className="w-full py-5 bg-black text-white rounded-2xl font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 relative overflow-hidden transition-colors disabled:bg-gray-800"
+                      className="w-full py-5 bg-primary text-primary-foreground rounded-2xl font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 relative overflow-hidden transition-colors disabled:bg-primary/70"
                     >
                       <span className="relative z-10">
-                        {isSubmitting ? 'Sending...' : 'Send Message'}
+                        {isSubmitting ? content.submittingLabel : content.submitLabel}
                       </span>
                       {!isSubmitting && <Send size={16} className="relative z-10" />}
                       {/* Animated Progress Loader */}
@@ -363,7 +353,7 @@ const ContactSection = () => {
                         {errorMessage || "Submission failed."}
                       </motion.p>
                     )}
-                  </form>
+                  </Form>
                 </motion.div>
               ) : (
                 <SuccessMessage onReset={() => setStatus('')} />
@@ -381,10 +371,10 @@ const ContactSection = () => {
             <div className="bg-white/50 backdrop-blur-md p-6 md:p-8 rounded-[2.5rem] border border-white shadow-sm shadow-orange-200/10 space-y-4">
               <h3 className="text-xl font-black uppercase tracking-tighter text-gray-900">Contact Info</h3>
               <div className="grid gap-3">
-                {CONTACT_INFO.map((info, index) => (
+                {content.contactInfo.map((info) => (
                   <ContactInfoBox
-                    key={index}
-                    icon={info.icon}
+                    key={info.label}
+                    icon={icons[info.icon]}
                     label={info.label}
                     value={info.value}
                     href={info.href}
@@ -399,8 +389,8 @@ const ContactSection = () => {
               <div className="grid grid-cols-3 gap-3">
                 {SOCIAL_LINKS.map((social, index) => (
                   <SocialIconBox
-                    key={index}
-                    icon={social.icon}
+                    key={social.name}
+                    icon={icons[social.icon]}
                     url={social.url}
                     name={social.name}
                   />

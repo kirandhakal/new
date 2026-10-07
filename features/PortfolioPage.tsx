@@ -4,7 +4,7 @@ import React, { Suspense, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import NavBar from "@/components/NavBar";
+import Navbar from "@/components/Navbar";
 import { ArrowUp } from "lucide-react";
 import type { SectionKey } from "@/types/navigation";
 
@@ -44,7 +44,7 @@ function useIsNearViewport(ref: React.RefObject<HTMLElement | null>, rootMargin 
 
 const SectionFallback = ({ label }: { label: string }) => (
   <div className="py-20 lg:py-32 min-h-screen flex items-center justify-center">
-    <div className="text-gray-500 font-medium">{label}</div>
+    <div className="text-muted-foreground font-medium">{label}</div>
   </div>
 );
 
@@ -153,7 +153,7 @@ const PortfolioPage = () => {
         </div>
       </main>
 
-      <NavBar activeSection={activeSection} setActiveSection={scrollToSection} />
+      <Navbar activeSection={activeSection} setActiveSection={scrollToSection} />
       <Suspense fallback={null}>
         <ChatbaseWidget />
       </Suspense>
@@ -169,7 +169,7 @@ const PortfolioPage = () => {
         onClick={() => scrollToSection("home")}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className="fixed bottom-54 md:bottom-28 right-8 z-50 p-4 bg-gradient-to-r from-orange-500 to-rose-500 text-white rounded-full shadow-2xl hover:shadow-orange-500/50 transition-shadow"
+        className="fixed bottom-54 md:bottom-28 right-8 z-50 p-4 bg-accent text-accent-foreground rounded-full shadow-lifted transition-shadow hover:bg-accent/90"
         aria-label="Scroll to top"
       >
         <ArrowUp size={24} />

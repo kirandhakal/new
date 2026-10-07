@@ -1,0 +1,32 @@
+{
+  "eyebrow": "Get In Touch",
+  "titleBefore": "Let's",
+  "titleAccent": "Connect",
+  "description": "Have a project in mind? Drop me a line below.",
+  "fields": [
+    { "label": "Your Name", "name": "name", "placeholder": "John Doe", "type": "text" },
+    { "label": "Email Address", "name": "email", "placeholder": "john@example.com", "type": "email" },
+    { "label": "Phone Number", "name": "phone", "placeholder": "+977 98XXXXXXXX", "type": "tel" },
+    { "label": "Message", "name": "message", "placeholder": "Tell me about your project...", "type": "textarea" }
+  ],
+  "submitLabel": "Send Message",
+  "submittingLabel": "Sending...",
+  "successTitle": "Delivered!",
+  "successMessage": "Your message is on its way. I'll be in touch shortly.",
+  "resetLabel": "Send Another",
+  "contactInfoTitle": "Contact Info",
+  "contactInfo": [
+    { "icon": "Mail", "label": "Email", "value": "kirandhakal715@gmail.com", "href": "mailto:kirandhakal715@gmail.com" },
+    { "icon": "Phone", "label": "Phone", "value": "+977 9827591616", "href": "tel:+9779827591616" },
+    { "icon": "MapPin", "label": "Location", "value": "Kathmandu, Nepal", "href": "#" }
+  ],
+  "socialTitle": "Follow Me",
+  "socialLinks": [
+    { "name": "Facebook", "icon": "Facebook", "url": "https://www.facebook.com/kirandhakal715", "color": "bg-blue-600" },
+    { "name": "Instagram", "icon": "Instagram", "url": "https://www.instagram.com/dhakalkiran_", "color": "bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500" },
+    { "name": "GitHub", "icon": "Github", "url": "https://github.com/kirandhakal", "color": "bg-gray-900" },
+    { "name": "LinkedIn", "icon": "Linkedin", "url": "https://www.linkedin.com/in/kirandhakal7/", "color": "bg-blue-700" },
+    { "name": "Twitter", "icon": "Twitter", "url": "https://x.com/dhakaldiary", "color": "bg-sky-500" },
+    { "name": "YouTube", "icon": "Youtube", "url": "https://www.youtube.com/@kirandhakal715", "color": "bg-red-600" }
+  ]
+}

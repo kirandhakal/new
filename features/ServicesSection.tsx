@@ -4,52 +4,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, Globe, Smartphone, Palette, Code, Database, Cloud } from 'lucide-react';
 
-const ServicesSection = () => {
-  const services = [
-    {
-      title: 'Web Development',
-      icon: Globe,
-      description:
-        'I specialize in crafting exceptional web experiences using React JS and Next.js. This powerful JavaScript library allows me to build dynamic, user-friendly, and high-performing websites.',
-      gradient: 'from-orange-400 to-rose-400',
-    },
-    {
-      title: 'App Development',
-      icon: Smartphone,
-      description:
-        'I craft exceptional mobile apps using Flutter, building beautiful and high-performing apps for both iOS and Android with a single codebase.',
-      gradient: 'from-amber-400 to-orange-400',
-    },
-    {
-      title: 'UI/UX Design',
-      icon: Palette,
-      description:
-        'As a skilled front-end developer and UX/UI enthusiast, I bridge the gap between code and creativity, crafting seamless user experiences.',
-      gradient: 'from-rose-400 to-pink-400',
-    },
-    {
-      title: 'Backend Development',
-      icon: Database,
-      description:
-        'Building robust and scalable server-side applications with Node.js, Express, and modern database technologies like MongoDB and PostgreSQL.',
-      gradient: 'from-blue-400 to-cyan-400',
-    },
-    {
-      title: 'Cloud & DevOps',
-      icon: Cloud,
-      description:
-        'Deploying and managing applications on cloud platforms with modern DevOps practices, CI/CD pipelines, and containerization.',
-      gradient: 'from-purple-400 to-indigo-400',
-    },
-    {
-      title: 'Clean Code',
-      icon: Code,
-      description:
-        'Writing maintainable, scalable, and well-documented code following best practices and design patterns for long-term project success.',
-      gradient: 'from-emerald-400 to-teal-400',
-    },
-  ];
+const services = servicesJson as ServiceContent;
+const icons: Record<string, LucideIcon> = { Globe, Smartphone, Palette, Code, Database, Cloud };
 
+const ServicesSection = () => {
   return (
     <div className="py-20 lg:py-32 relative overflow-hidden min-h-screen flex items-center">
       {/* Decorative elements - matching HomeSection */}
@@ -73,41 +31,40 @@ const ServicesSection = () => {
             <Briefcase size={16} className="text-orange-500" />
             <span className="text-sm font-medium text-gray-700">What I Offer</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 leading-tight tracking-tight mb-4">
-            My Services
-          </h1>
+          <H1 className="leading-tight mb-4">{services.title}</H1>
           <div className="flex justify-center">
             <div className="h-1 w-24 bg-gradient-to-r from-orange-500 to-rose-500 rounded-full"></div>
           </div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mt-6 font-medium">
-            Delivering comprehensive digital solutions tailored to bring your vision to life
-          </p>
+          <P className="text-lg max-w-2xl mx-auto mt-6 font-medium">{services.description}</P>
         </motion.div>
 
         {/* Services Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {services.map((service, index) => (
+          {services.items.map((service, index) => {
+            const Icon = icons[service.icon];
+            return (
             <motion.div
-              key={index}
+              key={service.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
               whileHover={{ y: -8, scale: 1.02 }}
-              className="group bg-white/70 backdrop-blur-md p-8 rounded-[2.5rem] border border-white shadow-lg shadow-orange-200/20 hover:shadow-2xl transition-all duration-300"
+              className="group bg-card/70 text-card-foreground backdrop-blur-md p-8 rounded-2xl border border-border shadow-soft hover:shadow-lifted transition-all duration-300"
             >
               <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${service.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                <service.icon size={32} className="text-white" strokeWidth={2} />
+                <Icon size={32} className="text-white" strokeWidth={2} />
               </div>
-              <h3 className="text-2xl font-black text-gray-900 mb-4 leading-tight tracking-tight group-hover:text-orange-600 transition-colors">
+              <h3 className="text-2xl font-black text-foreground mb-4 leading-tight tracking-tight group-hover:text-accent transition-colors">
                 {service.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed font-medium">
+              <p className="text-muted-foreground leading-relaxed font-medium">
                 {service.description}
               </p>
               <div className={`mt-6 h-1 w-16 bg-gradient-to-r ${service.gradient} rounded-full group-hover:w-full transition-all duration-300`}></div>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

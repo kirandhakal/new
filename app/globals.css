@@ -3,6 +3,54 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --background: 60 9% 98%;
+  --foreground: 20 14% 4%;
+  --card: 0 0% 100%;
+  --card-foreground: 20 14% 4%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 20 14% 4%;
+  --primary: 20 14% 4%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 30 7% 94%;
+  --secondary-foreground: 20 14% 12%;
+  --accent: 24 95% 53%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 30 7% 94%;
+  --muted-foreground: 25 5% 38%;
+  --border: 30 8% 88%;
+  --input: 30 8% 88%;
+  --ring: 24 95% 53%;
+  --success: 142 71% 45%;
+  --warning: 38 92% 50%;
+  --danger: 0 84% 60%;
+
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --text-eyebrow: 0.75rem;
+  --text-body: 1rem;
+  --text-lead: 1.125rem;
+  --text-display: clamp(2.25rem, 5vw, 4.5rem);
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+
+  --shadow-soft: 0 1px 2px hsl(20 14% 4% / 0.06), 0 8px 24px hsl(20 14% 4% / 0.06);
+  --shadow-lifted: 0 16px 40px hsl(20 14% 4% / 0.12);
+}
+
+@layer base {
+  body {
+    background: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+  }
+}
+
 /* Subtle entrance used by project cards on load and when changing filters. */
 @keyframes project-card-enter {
   from {
