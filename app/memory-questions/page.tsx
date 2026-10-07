@@ -73,7 +73,7 @@ export default function MemoryQuestionsPage() {
           <div className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-emerald-300"><FileQuestion size={17} /> Community exam notes</div>
           <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">Memory based questions</h1>
           <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">Share what you remember from the exam so others can prepare. Add the subject, exam date and time, then review or edit the starter questions.</p>
-          <div className="mt-6 flex flex-wrap gap-3 text-sm text-slate-200"><span className="rounded-full bg-white/10 px-4 py-2">October 7 exam</span><span className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2"><Clock3 size={15} /> 12:00–14:00</span></div>
+          {/* <div className="mt-6 flex flex-wrap gap-3 text-sm text-slate-200"><span className="rounded-full bg-white/10 px-4 py-2">October 7 exam</span><span className="flex items-center gap-2 rounded-full bg-white/10 px-4 py-2"><Clock3 size={15} /> 12:00–14:00</span></div> */}
         </header>
 
         {submitted ? (
