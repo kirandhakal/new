@@ -383,7 +383,7 @@ const ContactSection = () => {
                 {SOCIAL_LINKS.map((social, index) => (
                   <SocialIconBox
                     key={social.name}
-                    icon={icons[social.icon]}
+                    icon={social.icon}
                     url={social.url}
                     name={social.name}
                   />
