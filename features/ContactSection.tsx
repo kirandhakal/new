@@ -45,13 +45,6 @@ interface FormFieldProps {
   isTextarea?: boolean;
 }
 
-interface ContactFormData {
-  name: string;
-  email: string;
-  phone: string;
-  message: string;
-}
-
 // Move constant data outside component to avoid recreation on every render
 const SOCIAL_LINKS = [
   { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/kirandhakal715' },
