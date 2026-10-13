@@ -27,6 +27,11 @@ export const pageMetaTags = {
     description: "Full-stack web development services including front-end development, back-end development, and UI/UX design.",
     keywords: "web development services, React development, Node.js development, consulting"
   },
+  caseStudies: {
+    title: "Case Studies - Kiran Dhakal",
+    description: "In-depth case studies of engineering projects, covering the problem, research, system design, and wireframes.",
+    keywords: "case studies, e-commerce, travel recommendation, system design, portfolio"
+  },
   contact: {
     title: "Contact - Kiran Dhakal",
     description: "Get in touch with me for web development projects, consultations, or inquiries.",

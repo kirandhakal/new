@@ -1,11 +1,14 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/seo";
+import { caseStudies } from "@/lib/case-studies";
 
 const pages: { path: string; priority: number }[] = [
   { path: "", priority: 1 },
   { path: "/services", priority: 0.7 },
   { path: "/skills", priority: 0.7 },
   { path: "/projects", priority: 0.7 },
+  { path: "/case-studies", priority: 0.7 },
+  ...caseStudies.items.map((item) => ({ path: `/case-studies/${item.slug}`, priority: 0.6 })),
   { path: "/contact", priority: 0.7 },
   { path: "/Kiran-Dhakal-CV.pdf", priority: 0.6 },
 ];

@@ -28,6 +28,7 @@ export interface ProjectContent {
   githubPrompt: string;
   githubLabel: string;
   githubUrl: string;
+  caseStudiesLabel: string;
 }
 
 export interface SkillContent {
@@ -43,4 +44,36 @@ export interface ContactFormData {
   email: string;
   phone: string;
   message: string;
+}
+
+export interface CaseStudy {
+  slug: string;
+  title: string;
+  tagline: string;
+  category: string;
+  year: string;
+  institution: string;
+  projectType: string;
+  team: string[];
+  icon: string;
+  gradient: string;
+  cover: string;
+  stack: string[];
+  overview: string;
+  problem: string;
+  objective: string;
+  impact: string;
+  highlights: Array<{ icon: string; title: string; description: string }>;
+  actors: Array<{ name: string; description: string }>;
+  research: { intro: string; items: Array<{ name: string; description: string; url?: string }> };
+  approach: { name: string; intro: string; steps: string[] };
+}
+
+export interface CaseStudyContent {
+  eyebrow: string;
+  title: string;
+  description: string;
+  readLabel: string;
+  backLabel: string;
+  items: CaseStudy[];
 }

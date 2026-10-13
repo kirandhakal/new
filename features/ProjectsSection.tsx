@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   BellRing,
+  BookOpen,
   ExternalLink,
   FileText,
   Github,
@@ -128,6 +130,9 @@ export default function ProjectsSection() {
           <a href={content.githubUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 rounded-lg border border-border bg-card px-6 py-3 font-semibold text-foreground hover:border-ring">
             <Github size={19} />{content.githubLabel}<ExternalLink size={16} />
           </a>
+          <Link href="/case-studies" className="ml-0 mt-3 inline-flex items-center gap-3 rounded-lg bg-gradient-to-r from-orange-500 to-rose-500 px-6 py-3 font-semibold text-white shadow-md hover:shadow-lg sm:ml-3 sm:mt-0">
+            <BookOpen size={19} />{content.caseStudiesLabel}
+          </Link>
         </div>
       </div>
     </div>
