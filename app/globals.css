@@ -56,6 +56,50 @@
 
   --shadow-soft: 0 10px 30px hsl(228 60% 2% / 0.45);
   --shadow-lifted: 0 24px 60px hsl(228 60% 2% / 0.65);
+
+  --ridge-back: 225 32% 20%;
+  --ridge-mid: 225 38% 13%;
+  --peak: 225 32% 21%;
+  --snow: 45 22% 93%;
+}
+
+/* Light mode — "Himalayan dawn": snow-paper surfaces, ink-navy text, deeper saffron accent. */
+:root:not(.dark) {
+  color-scheme: light;
+
+  --background: 40 33% 95%;        /* #f6f2ea */
+  --foreground: 228 38% 13%;       /* #151b2e */
+  --card: 40 40% 99%;
+  --card-foreground: 228 38% 13%;
+  --popover: 40 40% 99%;
+  --popover-foreground: 228 38% 13%;
+  --primary: 228 38% 13%;
+  --primary-foreground: 40 33% 95%;
+  --secondary: 38 24% 89%;         /* #ebe5d9 */
+  --secondary-foreground: 228 38% 13%;
+  --accent: 38 100% 50%;           /* #ff9f00 saffron */
+  --accent-foreground: 228 38% 13%;
+  --flag-blue: 223 85% 55%;
+  --flag-red: 4 82% 55%;
+  --flag-green: 147 61% 38%;
+  --flag-yellow: 38 100% 50%;
+  --flag-white: 40 12% 84%;
+  --muted: 38 24% 89%;
+  --muted-foreground: 226 14% 40%;
+  --border: 36 20% 82%;
+  --input: 36 20% 78%;
+  --ring: 38 100% 50%;
+  --success: 147 61% 38%;
+  --warning: 38 100% 50%;
+  --danger: 4 82% 52%;
+
+  --shadow-soft: 0 10px 30px hsl(228 38% 13% / 0.08);
+  --shadow-lifted: 0 24px 60px hsl(228 38% 13% / 0.16);
+
+  --ridge-back: 222 24% 68%;
+  --ridge-mid: 222 28% 84%;
+  --peak: 222 20% 73%;
+  --snow: 0 0% 100%;
 }
 
 @layer base {

@@ -11,9 +11,14 @@ const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], varia
 const devanagari = Noto_Serif_Devanagari({ subsets: ["devanagari"], weight: ["600", "800"], variable: "--font-devanagari", display: "swap" });
 
 export const viewport: Viewport = {
-  themeColor: "#0a0e1a",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0e1a" },
+    { media: "(prefers-color-scheme: light)", color: "#f6f2ea" },
+  ],
 };
+
+// Runs before first paint so a saved light/dark choice never flashes the wrong theme. Dark is the default.
+const themeScript = `try{var t=localStorage.getItem("theme");document.documentElement.classList.toggle("dark",t!=="light")}catch(e){}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -24,8 +29,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${instrument.variable} ${spaceMono.variable} ${devanagari.variable}`}>
+    <html lang="en" className={`${bricolage.variable} ${instrument.variable} ${spaceMono.variable} ${devanagari.variable} dark`} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <Script id="gtm" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],

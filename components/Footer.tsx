@@ -22,7 +22,8 @@ const Footer = () => {
 
   return (
     <footer className="relative mt-auto overflow-hidden border-t border-border bg-card pb-36 lg:pb-10 lg:pl-24">
-      <PrayerFlags count={21} sag={28} className="opacity-90" />
+      <PrayerFlags count={9} sag={22} className="opacity-90 sm:hidden" />
+      <PrayerFlags count={21} sag={28} className="hidden opacity-90 sm:block" />
 
       <div className="mx-auto max-w-7xl px-5 pt-10 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-12 md:items-end">

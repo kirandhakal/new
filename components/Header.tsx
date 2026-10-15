@@ -2,6 +2,7 @@
 
 import React from 'react';
 import useCurrentTime from '@/lib/useCurrentTime';
+import ThemeToggle from './ThemeToggle';
 
 interface HeaderProps {
   onHomeClick: () => void;
@@ -34,17 +35,18 @@ const Header = ({ onHomeClick }: HeaderProps) => {
         </button>
 
         <div className="flex flex-none items-center gap-2 font-mono text-[11px] text-muted-foreground">
-          <span className="hidden items-center gap-2 rounded-full border border-border px-3 py-1.5 sm:inline-flex">
+          <span className="hidden items-center gap-2 rounded-full border border-border px-3 py-1.5 md:inline-flex">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-flag-green opacity-60" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-flag-green" />
             </span>
             Open for new climbs
           </span>
-          <span className="flex items-center gap-2 rounded-full border border-border px-3 py-1.5" suppressHydrationWarning>
+          <span className="hidden items-center gap-2 rounded-full border border-border px-3 py-1.5 min-[400px]:flex" suppressHydrationWarning>
             <span aria-hidden="true">{isNight ? '☾' : '☀'}</span>
             <span className="tabular-nums text-foreground" suppressHydrationWarning>KTM {time}</span>
           </span>
+          <ThemeToggle />
         </div>
       </div>
     </header>

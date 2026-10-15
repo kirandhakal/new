@@ -178,12 +178,12 @@ export default function ProjectsSection() {
               >
                 <path
                   d={`M${left.x} ${left.y} L${peak.x} ${peak.y} L${right.x} ${right.y} L${right.x} ${BASE_Y} L${left.x} ${BASE_Y} Z`}
-                  fill={active ? categoryTone[item.category].fill : "hsl(225 32% 21%)"}
+                  fill={active ? categoryTone[item.category].fill : "hsl(var(--peak))"}
                   stroke="hsl(var(--card))"
                   strokeWidth="2"
                   className="transition-[fill] duration-300"
                 />
-                <path d={`M${peak.x} ${peak.y} L${capR.x} ${capR.y} L${peak.x + 4} ${capR.y - 6} L${capL.x} ${capL.y} Z`} fill="hsl(var(--foreground))" opacity={active ? 1 : 0.8} />
+                <path d={`M${peak.x} ${peak.y} L${capR.x} ${capR.y} L${peak.x + 4} ${capR.y - 6} L${capL.x} ${capL.y} Z`} fill="hsl(var(--snow))" opacity={active ? 1 : 0.85} />
                 <text x={peak.x} y={BASE_Y - 10} textAnchor="middle" className={`font-mono text-[15px] ${active ? "fill-background" : "fill-muted-foreground"}`}>
                   {String(i + 1).padStart(2, "0")}
                 </text>

@@ -131,23 +131,27 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
     <div ref={ref} className="relative isolate flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden">
       {/* Sky */}
       <motion.div style={{ y: skyY }} className="absolute inset-0 -z-10" aria-hidden="true">
-        {STARS.map((star, i) => (
-          <span
-            key={i}
-            className="animate-twinkle absolute rounded-full bg-foreground"
-            style={{ left: `${star.left}%`, top: `${star.top}%`, width: star.size, height: star.size, animationDelay: `${star.delay}s` }}
-          />
-        ))}
-        {/* Crescent moon: a snow disc with a sky-coloured disc offset over it */}
-        <span className="absolute right-[10%] top-[14%] h-14 w-14 overflow-hidden rounded-full bg-foreground sm:h-20 sm:w-20">
+        <div className="hidden dark:block">
+          {STARS.map((star, i) => (
+            <span
+              key={i}
+              className="animate-twinkle absolute rounded-full bg-foreground"
+              style={{ left: `${star.left}%`, top: `${star.top}%`, width: star.size, height: star.size, animationDelay: `${star.delay}s` }}
+            />
+          ))}
+        </div>
+        {/* Night: crescent moon (snow disc with a sky disc over it). Day: the rising sun. */}
+        <span className="absolute right-[10%] top-[14%] hidden h-14 w-14 overflow-hidden rounded-full bg-foreground dark:block sm:h-20 sm:w-20">
           <span className="absolute -right-3 -top-3 h-14 w-14 rounded-full bg-background sm:h-20 sm:w-20" />
         </span>
+        <span className="absolute right-[10%] top-[14%] h-16 w-16 rounded-full bg-flag-yellow ring-[10px] ring-flag-yellow/25 dark:hidden sm:h-24 sm:w-24" />
       </motion.div>
 
-      <PrayerFlags className="opacity-90" count={17} sag={42} />
+      <PrayerFlags className="opacity-90 sm:hidden" count={9} sag={30} />
+      <PrayerFlags className="hidden opacity-90 sm:block" count={17} sag={42} />
 
       {/* Copy + permit */}
-      <motion.div style={{ y: copyY }} className="relative z-10 mx-auto grid w-full max-w-7xl flex-1 items-center gap-16 px-5 pb-[34vw] pt-2 sm:px-6 md:pb-[24vw] lg:grid-cols-12 lg:gap-10 lg:px-8 lg:pb-[18vw]">
+      <motion.div style={{ y: copyY }} className="relative z-10 mx-auto grid w-full max-w-7xl flex-1 items-center gap-16 px-5 pb-[34vw] pt-2 sm:px-6 md:pb-[28vw] lg:grid-cols-12 lg:gap-10 lg:px-8 lg:pb-[300px]">
         <div className="lg:col-span-7">
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="eyebrow">
             <span className="h-2 w-2 rounded-[2px] bg-flag-blue" /> Base camp · 1,400 m · 27.71°N 85.32°E
@@ -235,17 +239,17 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
 
       {/* Mountains */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0" aria-hidden="true">
-        <motion.svg style={{ y: backY }} viewBox="0 0 1440 400" preserveAspectRatio="none" className="absolute bottom-0 h-[38vw] max-h-[420px] min-h-[180px] w-full">
-          <path d={toPath(BACK_RIDGE)} fill="hsl(225 32% 20%)" />
-          {SNOW_CAPS.map((d) => <path key={d} d={d} fill="hsl(var(--foreground))" opacity="0.92" />)}
+        <motion.svg style={{ y: backY }} viewBox="0 0 1440 400" preserveAspectRatio="none" className="absolute bottom-0 h-[30vw] max-h-[330px] min-h-[150px] w-full">
+          <path d={toPath(BACK_RIDGE)} fill="hsl(var(--ridge-back))" />
+          {SNOW_CAPS.map((d) => <path key={d} d={d} fill="hsl(var(--snow))" opacity="0.95" />)}
           {/* Summit flag on the tallest peak */}
           <path d="M900 38 V8" stroke="hsl(var(--accent))" strokeWidth="2" />
           <path d="M900 8 h18 l-5 6 l5 6 h-18 Z" fill="hsl(var(--accent))" />
         </motion.svg>
-        <motion.svg style={{ y: midY }} viewBox="0 0 1440 400" preserveAspectRatio="none" className="absolute bottom-0 h-[38vw] max-h-[420px] min-h-[180px] w-full">
-          <path d={MID_RIDGE} fill="hsl(225 38% 13%)" />
+        <motion.svg style={{ y: midY }} viewBox="0 0 1440 400" preserveAspectRatio="none" className="absolute bottom-0 h-[30vw] max-h-[330px] min-h-[150px] w-full">
+          <path d={MID_RIDGE} fill="hsl(var(--ridge-mid))" />
         </motion.svg>
-        <svg viewBox="0 0 1440 400" preserveAspectRatio="none" className="relative block h-[38vw] max-h-[420px] min-h-[180px] w-full">
+        <svg viewBox="0 0 1440 400" preserveAspectRatio="none" className="relative block h-[30vw] max-h-[330px] min-h-[150px] w-full">
           <path d={FRONT_RIDGE} fill="hsl(var(--background))" />
         </svg>
       </div>
