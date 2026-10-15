@@ -47,7 +47,7 @@ const icons: Record<string, LucideIcon> = {
 function SectionTitle({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
     <div className="mb-8">
-      <span className="text-sm font-bold uppercase tracking-widest text-orange-500">{eyebrow}</span>
+      <span className="text-sm font-bold uppercase tracking-widest text-accent">{eyebrow}</span>
       <h2 className="mt-2 text-3xl font-black tracking-tight text-foreground md:text-4xl">{title}</h2>
     </div>
   );
@@ -69,7 +69,7 @@ export default function CaseStudyDetail({ study }: { study: CaseStudy }) {
       <header className="mt-10 grid items-center gap-12 lg:grid-cols-2">
         <div>
           <div className="mb-6 flex items-center gap-3">
-            <span className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${study.gradient} text-white shadow-lg`}>
+            <span className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-accent text-accent-foreground shadow-lg`}>
               <Icon size={24} />
             </span>
             <span className="font-semibold text-muted-foreground">{study.category}</span>
@@ -78,21 +78,21 @@ export default function CaseStudyDetail({ study }: { study: CaseStudy }) {
           <P className="mb-8 text-xl font-medium">{study.tagline}</P>
           <dl className="grid gap-4 text-sm sm:grid-cols-2">
             <div className="flex gap-3">
-              <GraduationCap size={18} className="mt-0.5 shrink-0 text-orange-500" />
+              <GraduationCap size={18} className="mt-0.5 shrink-0 text-accent" />
               <div><dt className="font-bold text-foreground">{study.projectType}</dt><dd className="text-muted-foreground">{study.institution}</dd></div>
             </div>
             <div className="flex gap-3">
-              <Users size={18} className="mt-0.5 shrink-0 text-orange-500" />
+              <Users size={18} className="mt-0.5 shrink-0 text-accent" />
               <div><dt className="font-bold text-foreground">Team</dt><dd className="text-muted-foreground">{study.team.join(", ")}</dd></div>
             </div>
             <div className="flex gap-3">
-              <CalendarDays size={18} className="mt-0.5 shrink-0 text-orange-500" />
+              <CalendarDays size={18} className="mt-0.5 shrink-0 text-accent" />
               <div><dt className="font-bold text-foreground">Year</dt><dd className="text-muted-foreground">{study.year}</dd></div>
             </div>
           </dl>
         </div>
-        <div className={`overflow-hidden rounded-3xl bg-gradient-to-br ${study.gradient} p-6 shadow-lifted sm:p-10`}>
-          <img src={study.cover} alt={`${study.title} wireframe`} className="mx-auto max-h-[420px] w-auto rounded-2xl bg-white shadow-2xl" />
+        <div className={`overflow-hidden rounded-3xl bg-secondary grid-texture p-6 shadow-lifted sm:p-10`}>
+          <img src={study.cover} alt={`${study.title} wireframe`} className="mx-auto max-h-[420px] w-auto rounded-2xl bg-card shadow-lifted" />
         </div>
       </header>
 
@@ -103,7 +103,7 @@ export default function CaseStudyDetail({ study }: { study: CaseStudy }) {
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {brief.map(({ icon: BriefIcon, label, text }) => (
             <div key={label} className="rounded-2xl border border-border bg-card/70 p-6 shadow-soft">
-              <BriefIcon size={24} className="mb-4 text-orange-500" />
+              <BriefIcon size={24} className="mb-4 text-accent" />
               <H3 className="mb-2 text-xl">{label}</H3>
               <p className="leading-relaxed text-muted-foreground">{text}</p>
             </div>
@@ -119,7 +119,7 @@ export default function CaseStudyDetail({ study }: { study: CaseStudy }) {
             const FeatureIcon = icons[feature.icon] ?? Sparkles;
             return (
               <div key={feature.title} className="group rounded-2xl border border-border bg-card/70 p-6 shadow-soft transition-shadow hover:shadow-lifted">
-                <span className={`mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${study.gradient} text-white shadow-md transition-transform group-hover:scale-110`}>
+                <span className={`mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-accent text-accent-foreground shadow-md transition-transform group-hover:scale-110`}>
                   <FeatureIcon size={22} />
                 </span>
                 <h3 className="mb-2 text-lg font-bold text-foreground">{feature.title}</h3>
@@ -136,7 +136,7 @@ export default function CaseStudyDetail({ study }: { study: CaseStudy }) {
         <ol className="grid gap-4 md:grid-cols-2">
           {study.actors.map((actor, index) => (
             <li key={actor.name} className="flex gap-5 rounded-2xl border border-border bg-card/70 p-6">
-              <span className="text-3xl font-black text-orange-300">{String(index + 1).padStart(2, "0")}</span>
+              <span className="text-3xl font-black text-accent">{String(index + 1).padStart(2, "0")}</span>
               <div>
                 <h3 className="mb-1 text-lg font-bold text-foreground">{actor.name}</h3>
                 <p className="text-sm leading-relaxed text-muted-foreground">{actor.description}</p>
@@ -161,7 +161,7 @@ export default function CaseStudyDetail({ study }: { study: CaseStudy }) {
                 <p className="text-sm leading-relaxed text-muted-foreground">{item.description}</p>
               </>
             );
-            const className = "group block rounded-2xl border-l-4 border-orange-400 bg-card/70 p-5 shadow-soft";
+            const className = "group block rounded-2xl border-l-4 border-accent bg-card/70 p-5 shadow-soft";
             return item.url ? (
               <a key={item.name} href={item.url} target="_blank" rel="noopener noreferrer" className={`${className} transition-shadow hover:shadow-lifted`}>{body}</a>
             ) : (
@@ -179,7 +179,7 @@ export default function CaseStudyDetail({ study }: { study: CaseStudy }) {
           <ol className="flex flex-wrap gap-3">
             {study.approach.steps.map((step, index) => (
               <li key={step} className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-semibold text-foreground">
-                <span className={`flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br ${study.gradient} text-xs text-white`}>{index + 1}</span>
+                <span className={`flex h-6 w-6 items-center justify-center rounded-full bg-secondary grid-texture text-xs text-white`}>{index + 1}</span>
                 {step}
               </li>
             ))}

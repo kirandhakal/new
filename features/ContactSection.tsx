@@ -4,13 +4,13 @@ import React, { useState, type ChangeEvent, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Facebook, Instagram, Github, Linkedin, Mail, Phone, 
-  Send, CheckCircle, MapPin, Twitter, Youtube 
+  Send, CheckCircle, MapPin, Twitter, Youtube, ArrowUpRight
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import contactJson from '@/data/contact-form/contact.json';
 import type { ContactFormData } from '@/types/content';
 import { Form, FormField as FormFieldContainer, FormLabel, Input, Textarea } from '@/components/ui';
-import { H1 } from '@/components/typography';
+import SectionHeading from '@/components/SectionHeading';
 
 const content = contactJson;
 const icons: Record<string, LucideIcon> = {
@@ -66,72 +66,42 @@ const CONTACT_API_URL = process.env.NEXT_PUBLIC_CONTACT_API_URL
 const CONTACT_FORM_KEY = process.env.NEXT_PUBLIC_CONTACT_FORM_KEY
   || 'frm_I-Sn9KqEu3BrCwky2xQMZxQK'; 
 
-// Extract complex animation component for reusability
+// Paper-plane overlay shown while the request is in flight.
 const EnvelopeAnimation = () => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, scale: 0.8, filter: "blur(20px)" }}
-    className="absolute inset-0 z-50 flex items-center justify-center pointer-events-none"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0, scale: 0.9 }}
+    className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center rounded-3xl bg-background/70 backdrop-blur-sm"
   >
-    <div className="relative w-48 h-48 flex items-center justify-center">
-      <svg 
-        viewBox="0 0 24 24" 
-        className="w-40 h-40 drop-shadow-[0_0_30px_rgba(249,115,22,0.3)]"
-        fill="none" 
-        stroke="currentColor" 
-        strokeWidth="1"
-      >
-        <motion.path 
-          d="M3 8L12 13L21 8" 
-          stroke="#f97316" 
-          strokeLinecap="round" 
-          strokeLinejoin="round" 
-        />
-        <motion.rect 
-          x="3" y="5" width="18" height="14" rx="2" 
-          stroke="#f97316" 
-          strokeLinejoin="round" 
-        />
-        <motion.rect 
-          x="3" y="5" width="18" height="14" rx="2"
-          fill="#ffedd5"
-          initial={{ opacity: 0, clipPath: 'inset(100% 0 0 0)' }}
-          animate={{ opacity: 0.8, clipPath: 'inset(0% 0 0 0)' }}
-          transition={{ duration: 3, ease: "easeInOut" }}
-          className="z-[-1]"
-        />
-      </svg>
-      <motion.div
-        initial={{ opacity: 0, x: -20, y: 20 }}
-        animate={{ opacity: [0, 1, 0], x: 40, y: -40 }}
-        transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
-        className="absolute text-orange-500"
-      >
-        <Send size={24} />
-      </motion.div>
-    </div>
+    <motion.div
+      animate={{ x: [0, 40, 0], y: [0, -30, 0], rotate: [0, 12, 0] }}
+      transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
+      className="flex h-20 w-20 items-center justify-center rounded-full bg-accent text-accent-foreground"
+    >
+      <Send size={30} />
+    </motion.div>
   </motion.div>
 );
 
-// Success message component
 const SuccessMessage = ({ onReset }: SuccessMessageProps) => (
   <motion.div
     key="success-message"
-    initial={{ opacity: 0, scale: 0.9 }}
+    initial={{ opacity: 0, scale: 0.96 }}
     animate={{ opacity: 1, scale: 1 }}
-    className="bg-white p-12 rounded-[2.5rem] shadow-sm shadow-orange-100 text-center space-y-6 flex flex-col items-center justify-center min-h-[500px]"
+    className="flex min-h-[520px] flex-col items-center justify-center gap-6 rounded-3xl border border-border bg-card p-10 text-center"
   >
-    <div className="w-20 h-20 bg-orange-50 text-orange-500 rounded-full flex items-center justify-center border border-orange-100">
-      <CheckCircle size={40} />
+    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-accent text-accent-foreground">
+      <CheckCircle size={38} />
     </div>
     <div className="space-y-2">
-      <h3 className="text-3xl font-black uppercase italic tracking-tighter text-foreground">{content.successTitle}</h3>
-      <p className="text-muted-foreground text-xl font-medium">{content.successMessage}</p>
+      <h3 className="font-display text-4xl font-bold tracking-tight text-foreground">{content.successTitle}</h3>
+      <p className="text-lg text-muted-foreground">{content.successMessage}</p>
     </div>
     <button
+      type="button"
       onClick={onReset}
-      className="text-lg font-black uppercase tracking-widest text-gray-400 hover:text-orange-500 transition-colors"
+      className="rounded-full border border-border px-6 py-3 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:border-accent hover:text-accent"
     >
       {content.resetLabel}
     </button>
@@ -141,15 +111,16 @@ const SuccessMessage = ({ onReset }: SuccessMessageProps) => (
 const ContactInfoBox = ({ icon: Icon, label, value, href }: IconBoxProps) => (
   <a
     href={href}
-    className="group flex items-center gap-3 p-3 bg-white rounded-2xl hover:bg-orange-600 hover:text-white transition-all duration-300 shadow-sm border border-orange-50"
+    className="group flex items-center gap-4 border-b border-border py-5 last:border-b-0"
   >
-    <div className="p-2 bg-orange-100 text-orange-600 rounded-xl group-hover:bg-white/20 group-hover:text-white transition-colors">
-      <Icon size={26} />
-    </div>
-    <div>
-      <p className="text-[15px] font-black uppercase tracking-widest opacity-60">{label}</p>
-      <p className="font-bold text-lg truncate">{value}</p>
-    </div>
+    <span className="flex h-11 w-11 flex-none items-center justify-center rounded-full bg-secondary text-foreground transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
+      <Icon size={18} />
+    </span>
+    <span className="min-w-0 flex-1">
+      <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">{label}</span>
+      <span className="block truncate font-display text-lg font-semibold text-foreground sm:text-xl">{value}</span>
+    </span>
+    <ArrowUpRight size={18} className="flex-none text-muted-foreground transition-all group-hover:rotate-45 group-hover:text-accent" />
   </a>
 );
 
@@ -159,37 +130,38 @@ const SocialIconBox = ({ icon: Icon, url, name }: SocialIconBoxProps) => (
     target="_blank"
     rel="noopener noreferrer"
     aria-label={name}
-    whileHover={{ y: -2 }}
-    whileTap={{ scale: 0.97 }}
-    className="group flex flex-col items-center justify-center gap-2 py-4 rounded-2xl bg-white border border-orange-100 text-gray-600 shadow-sm hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-colors"
+    whileTap={{ scale: 0.96 }}
+    className="group flex flex-col items-center justify-center gap-2 rounded-2xl border border-border py-4 text-muted-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground"
   >
-    <Icon size={22} />
+    <Icon size={20} />
     <span className="text-xs font-semibold">{name}</span>
   </motion.a>
 );
 
 const FormField = ({ label, name, value, onChange, placeholder, type = 'text', required = true, isTextarea = false }: FormFieldProps) => (
   <FormFieldContainer>
-  <FormLabel className="text-[15px] font-black uppercase tracking-widest text-muted-foreground ml-2">{label}</FormLabel>
+    <FormLabel htmlFor={`contact-${name}`}>{label}</FormLabel>
     {isTextarea ? (
       <Textarea
+        id={`contact-${name}`}
         name={name}
         required={required}
-        rows={4}
+        rows={5}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full bg-card/50 border border-input focus:border-ring focus:bg-card rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all resize-none shadow-sm"
+        className="resize-none text-base"
       />
     ) : (
       <Input
+        id={`contact-${name}`}
         type={type}
         name={name}
         required={required}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full bg-card/50 border border-input focus:border-ring focus:bg-card rounded-2xl px-5 py-4 text-base font-semibold outline-none transition-all shadow-sm"
+        className="text-base"
       />
     )}
   </FormFieldContainer>
@@ -259,146 +231,102 @@ const ContactSection = () => {
   };
 
   return (
-    <div className="py-20 min-h-screen relative overflow-hidden font-sans">
-      
-      {/* Decorative Backgrounds */}
+    <div className="mx-auto w-full max-w-7xl px-5 py-24 sm:px-6 lg:px-8 lg:py-32">
+      <SectionHeading
+        index="04"
+        eyebrow={content.eyebrow}
+        title={<>Let&apos;s build <span className="text-outline">something</span> <span className="text-accent">great.</span></>}
+        description={content.description}
+      />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        
-        {/* Header Section */}
-        <div className="text-center mb-16 space-y-4">
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/80 backdrop-blur-sm text-orange-600 border border-orange-100 shadow-sm font-bold text-[10px] uppercase tracking-widest"
-          >
-            <Mail size={14} className="text-orange-500" />
-            <span>Get In Touch</span>
-          </motion.div>
-          
-          {/* <h2 className="text-6xl md:text-8xl font-black tracking-tighter uppercase italic leading-none text-gray-900">
-            Let's <span className="text-orange-500">Connect</span>
-          </h2> */}
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 leading-tight tracking-tight">
-               Let's <span >Connect</span>
-                </h1>
-          <div className="flex justify-center">
-            <div className="h-1 w-24 bg-gradient-to-r from-orange-500 to-rose-500 rounded-full"></div>
-          </div>
-
-          <p className="text-lg text-gray-600 max-w-xl mx-auto font-medium">
-            Have a project in mind? Drop me a line below.
-          </p>
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-12 items-stretch">
-          
-          {/* Form Container */}
-          <div className="relative">
-            <AnimatePresence mode="wait">
-              {status !== 'success' ? (
-                <motion.div
-                  key="form-container"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  className="bg-white/70 backdrop-blur-md p-8 md:p-10 rounded-[2.5rem] shadow-sm shadow-orange-200/20 border border-white h-full relative overflow-hidden"
-                >
-                  <Form onSubmit={handleSubmit}>
+      <div className="mt-12 grid grid-cols-1 items-start gap-6 lg:grid-cols-12 lg:gap-8">
+        {/* Form */}
+        <div className="relative min-w-0 lg:col-span-7">
+          <AnimatePresence mode="wait">
+            {status !== 'success' ? (
+              <motion.div
+                key="form-container"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.97 }}
+                className="rounded-3xl border border-border bg-card p-6 sm:p-9"
+              >
+                <Form onSubmit={handleSubmit}>
+                  <div className="grid gap-5 sm:grid-cols-2">
                     {content.fields.map((field) => (
-                      <FormField
-                        key={field.name}
-                        label={field.label}
-                        name={field.name as keyof ContactFormData}
-                        value={formData[field.name as keyof ContactFormData]}
-                        onChange={handleChange}
-                        placeholder={field.placeholder}
-                        type={field.type === 'textarea' ? 'text' : field.type}
-                        isTextarea={field.type === 'textarea'}
-                      />
-                    ))}
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      disabled={isSubmitting}
-                      className="w-full py-5 bg-primary text-primary-foreground rounded-2xl font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-3 relative overflow-hidden transition-colors disabled:bg-primary/70"
-                    >
-                      <span className="relative z-10">
-                        {isSubmitting ? content.submittingLabel : content.submitLabel}
-                      </span>
-                      {!isSubmitting && <Send size={16} className="relative z-10" />}
-                      {/* Animated Progress Loader */}
-                      {isSubmitting && (
-                        <motion.div 
-                          className="absolute inset-0 bg-orange-600 origin-left"
-                          initial={{ scaleX: 0 }}
-                          animate={{ scaleX: 1 }}
-                          transition={{ duration: 1.5, ease: "linear" }}
+                      <div key={field.name} className={field.type === 'textarea' || field.type === 'tel' ? 'sm:col-span-2' : ''}>
+                        <FormField
+                          label={field.label}
+                          name={field.name as keyof ContactFormData}
+                          value={formData[field.name as keyof ContactFormData]}
+                          onChange={handleChange}
+                          placeholder={field.placeholder}
+                          type={field.type === 'textarea' ? 'text' : field.type}
+                          isTextarea={field.type === 'textarea'}
                         />
-                      )}
-                    </motion.button>
-                    {status === 'error' && (
-                      <motion.p 
-                        initial={{ opacity: 0 }} 
-                        animate={{ opacity: 1 }} 
-                        className="text-red-500 text-[10px] font-bold uppercase text-center"
-                      >
-                        {errorMessage || "Submission failed."}
-                      </motion.p>
-                    )}
-                  </Form>
-                </motion.div>
-              ) : (
-                <SuccessMessage onReset={() => setStatus('')} />
-              )}
-            </AnimatePresence>
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="group flex w-full items-center justify-between rounded-full bg-accent py-2 pl-7 pr-2 font-bold text-accent-foreground transition-colors hover:bg-primary disabled:opacity-70"
+                  >
+                    <span>{isSubmitting ? content.submittingLabel : content.submitLabel}</span>
+                    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-foreground text-accent transition-transform duration-300 group-hover:rotate-45">
+                      <ArrowUpRight size={20} />
+                    </span>
+                  </button>
+                  {status === 'error' && (
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      role="alert"
+                      className="rounded-xl border border-danger/40 bg-danger/10 px-4 py-3 text-center text-sm font-medium text-danger"
+                    >
+                      {errorMessage || "Submission failed."}
+                    </motion.p>
+                  )}
+                </Form>
+              </motion.div>
+            ) : (
+              <SuccessMessage onReset={() => setStatus('')} />
+            )}
+          </AnimatePresence>
 
-            {/* OVERLAY LETTERBOX ANIMATION */}
-            <AnimatePresence>
-              {isSubmitting && <EnvelopeAnimation />}
-            </AnimatePresence>
-          </div>
-
-          {/* Contact Details Side */}
-          <div className="space-y-6 flex flex-col">
-            <div className="bg-white/50 backdrop-blur-md p-6 md:p-8 rounded-[2.5rem] border border-white shadow-sm shadow-orange-200/10 space-y-4">
-              <h3 className="text-xl font-black uppercase tracking-tighter text-gray-900">Contact Info</h3>
-              <div className="grid gap-3">
-                {content.contactInfo.map((info) => (
-                  <ContactInfoBox
-                    key={info.label}
-                    icon={icons[info.icon]}
-                    label={info.label}
-                    value={info.value}
-                    href={info.href}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Social Media Grid */}
-            <div className="bg-white/50 backdrop-blur-md p-6 md:p-8 rounded-[2.5rem] border border-white shadow-sm shadow-orange-200/10 flex-1">
-              <h3 className="text-xl font-black uppercase tracking-tighter text-gray-900 mb-4">Follow Me</h3>
-              <div className="grid grid-cols-3 gap-3">
-                {SOCIAL_LINKS.map((social, index) => (
-                  <SocialIconBox
-                    key={social.name}
-                    icon={social.icon}
-                    url={social.url}
-                    name={social.name}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
+          <AnimatePresence>
+            {isSubmitting && <EnvelopeAnimation />}
+          </AnimatePresence>
         </div>
 
-        {/* Footer */}
-        {/* <div className="mt-20 pt-8 border-t border-orange-100 text-center">
-          <p className="text-gray-600 text-[20px] font-black uppercase tracking-[0.4em]">
-            Available for new opportunities
-          </p>
-        </div> */}
+        {/* Details */}
+        <div className="flex min-w-0 flex-col gap-6 lg:col-span-5">
+          <div className="rounded-3xl border border-border bg-card px-6 py-2 sm:px-8">
+            {content.contactInfo.map((info) => (
+              <ContactInfoBox
+                key={info.label}
+                icon={icons[info.icon]}
+                label={info.label}
+                value={info.value}
+                href={info.href}
+              />
+            ))}
+          </div>
+
+          <div className="rounded-3xl border border-border bg-card p-6 sm:p-8">
+            <p className="eyebrow">{content.socialTitle}</p>
+            <div className="mt-5 grid grid-cols-3 gap-2">
+              {SOCIAL_LINKS.map((social) => (
+                <SocialIconBox key={social.name} icon={social.icon} url={social.url} name={social.name} />
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-3xl bg-coral p-6 text-accent-foreground sm:p-8">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] opacity-70">Response time</p>
+            <p className="mt-2 font-display text-2xl font-bold leading-tight">Usually within 24 hours ✦</p>
+          </div>
+        </div>
       </div>
     </div>
   );

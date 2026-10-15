@@ -11,13 +11,13 @@ export default function CaseStudiesSection() {
   return (
     <div className="relative px-6 py-20 lg:py-32">
       <div className="mb-16 text-center">
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-orange-200/50 bg-white/80 px-5 py-2 shadow-sm backdrop-blur-sm">
-          <BookOpen size={16} className="text-orange-500" />
-          <span className="text-sm font-medium text-gray-700">{caseStudies.eyebrow}</span>
+        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2 shadow-sm backdrop-blur-sm">
+          <BookOpen size={16} className="text-accent" />
+          <span className="text-sm font-medium text-muted-foreground">{caseStudies.eyebrow}</span>
         </div>
         <H2 className="mb-4">{caseStudies.title}</H2>
         <div className="flex justify-center">
-          <div className="h-1 w-24 rounded-full bg-gradient-to-r from-orange-500 to-rose-500"></div>
+          <div className="h-1 w-24 rounded-full bg-accent"></div>
         </div>
         <P className="mx-auto mt-6 max-w-2xl text-lg font-medium">{caseStudies.description}</P>
       </div>
@@ -31,16 +31,16 @@ export default function CaseStudiesSection() {
               href={`/case-studies/${study.slug}`}
               className="group flex flex-col overflow-hidden rounded-3xl border border-border bg-card/70 shadow-soft backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lifted"
             >
-              <div className={`relative h-64 overflow-hidden bg-gradient-to-br ${study.gradient}`}>
+              <div className={`relative h-64 overflow-hidden bg-secondary grid-texture`}>
                 <img
                   src={study.cover}
                   alt={`${study.title} preview`}
-                  className="absolute inset-x-8 top-8 h-full w-[calc(100%-4rem)] rounded-t-2xl bg-white object-cover object-top shadow-2xl transition-transform duration-500 group-hover:scale-[1.03]"
+                  className="absolute inset-x-8 top-8 h-full w-[calc(100%-4rem)] rounded-t-2xl bg-card object-cover object-top shadow-2xl transition-transform duration-500 group-hover:scale-[1.03]"
                 />
               </div>
               <div className="flex flex-1 flex-col p-8">
                 <div className="mb-4 flex items-center gap-3">
-                  <span className={`flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${study.gradient} text-white`}>
+                  <span className={`flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-accent-foreground`}>
                     <Icon size={20} />
                   </span>
                   <span className="text-sm font-semibold text-muted-foreground">{study.category} · {study.year}</span>

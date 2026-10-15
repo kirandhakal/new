@@ -43,8 +43,8 @@ function useIsNearViewport(ref: React.RefObject<HTMLElement | null>, rootMargin 
 }
 
 const SectionFallback = ({ label }: { label: string }) => (
-  <div className="py-20 lg:py-32 min-h-screen flex items-center justify-center">
-    <div className="text-muted-foreground font-medium">{label}</div>
+  <div className="flex min-h-screen items-center justify-center">
+    <div className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">{label}</div>
   </div>
 );
 
@@ -104,45 +104,45 @@ const PortfolioPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Header onHomeClick={() => scrollToSection("home")} />
 
-      <main className="pt-[72px] md:pt-20">
+      <main className="pt-16 md:pt-[72px]">
         <div>
-          <section ref={sectionRefs.home} id="home" className="min-h-screen bg-white">
-            <div className="max-w-7xl mx-auto">
+          <section ref={sectionRefs.home} id="home" className="relative">
+            <div>
             <Suspense fallback={<SectionFallback label="Loading home..." />}>
               {isHomeNear ? <HomeSection setActiveSection={scrollToSection} /> : null}
             </Suspense>
             </div>
           </section>
 
-          <section ref={sectionRefs.services} id="services" className="min-h-screen bg-[#fdf8ef]">
-            <div className="max-w-7xl mx-auto">
+          <section ref={sectionRefs.services} id="services" className="relative">
+            <div>
             <Suspense fallback={<SectionFallback label="Loading services..." />}>
               {isServicesNear ? <ServicesSection /> : null}
             </Suspense>
             </div>
           </section>
 
-          <section ref={sectionRefs.skills} id="skills" className="min-h-screen bg-white">
-            <div className="max-w-7xl mx-auto">
+          <section ref={sectionRefs.skills} id="skills" className="relative">
+            <div>
             <Suspense fallback={<SectionFallback label="Loading skills..." />}>
               {isSkillsNear ? <SkillsSection /> : null}
             </Suspense>
             </div>
           </section>
 
-          <section ref={sectionRefs.projects} id="projects" className="min-h-screen bg-[#fdf8ef]">
-            <div className="max-w-7xl mx-auto">
+          <section ref={sectionRefs.projects} id="projects" className="relative">
+            <div>
             <Suspense fallback={<SectionFallback label="Loading projects..." />}>
               {isProjectsNear ? <ProjectsSection /> : null}
             </Suspense>
             </div>
           </section>
 
-          <section ref={sectionRefs.contact} id="contact" className="min-h-screen bg-white">
-            <div className="max-w-7xl mx-auto">
+          <section ref={sectionRefs.contact} id="contact" className="relative">
+            <div>
             <Suspense fallback={<SectionFallback label="Loading contact..." />}>
               {isContactNear ? <ContactSection /> : null}
             </Suspense>
@@ -169,10 +169,10 @@ const PortfolioPage = () => {
         onClick={() => scrollToSection("home")}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className="fixed bottom-54 md:bottom-28 right-8 z-50 p-4 bg-accent text-accent-foreground rounded-full shadow-lifted transition-shadow hover:bg-accent/90"
+        className="fixed bottom-24 right-4 z-40 hidden h-12 w-12 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-lifted transition-colors hover:bg-accent hover:text-accent-foreground md:bottom-8 md:right-8 md:flex"
         aria-label="Scroll to top"
       >
-        <ArrowUp size={24} />
+        <ArrowUp size={20} />
       </motion.button>
     </div>
   );

@@ -67,8 +67,8 @@ const WebGraph = () => {
     >
       <defs>
         <radialGradient id="glow404" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#f97316" stopOpacity="0.25" />
-          <stop offset="100%" stopColor="#f97316" stopOpacity="0" />
+          <stop offset="0%" stopColor="#d2ff4d" stopOpacity="0.25" />
+          <stop offset="100%" stopColor="#d2ff4d" stopOpacity="0" />
         </radialGradient>
         <filter id="blur404">
           <feGaussianBlur stdDeviation="1.5" />
@@ -87,7 +87,7 @@ const WebGraph = () => {
             key={i}
             x1={na.x} y1={na.y}
             x2={nb.x} y2={nb.y}
-            stroke={is404 ? "#f9731640" : "#6b728030"}
+            stroke={is404 ? "#d2ff4d40" : "#9a9a8d30"}
             strokeWidth={is404 ? "0.4" : "0.25"}
             strokeDasharray={is404 ? "0.8 1.2" : "none"}
           />
@@ -108,8 +108,8 @@ const WebGraph = () => {
             <circle
               cx={n.x} cy={n.y}
               r={is404 ? 4.5 : isHov ? 2.8 : 2}
-              fill={is404 ? "#f97316" : "#1f2937"}
-              stroke={is404 ? "#fbbf24" : isHov ? "#f97316" : "#374151"}
+              fill={is404 ? "#d2ff4d" : "#9a9a8d"}
+              stroke={is404 ? "#ff7a59" : isHov ? "#d2ff4d" : "#2a2e26"}
               strokeWidth={is404 ? "0.8" : "0.4"}
               style={{ transition: "r 0.2s, fill 0.2s" }}
             >
@@ -123,7 +123,7 @@ const WebGraph = () => {
                 y={n.y - (is404 ? 6.5 : 3.5)}
                 textAnchor="middle"
                 fontSize={is404 ? "3.5" : "2.8"}
-                fill={is404 ? "#f97316" : "#9ca3af"}
+                fill={is404 ? "#d2ff4d" : "#9a9a8d"}
                 fontFamily="monospace"
                 fontWeight={is404 ? "bold" : "normal"}
               >
@@ -146,7 +146,7 @@ const GlitchText = ({ text }: { text: string }) => {
           fontFamily: "'Courier New', monospace",
           fontWeight: 900,
           letterSpacing: "-0.03em",
-          color: "#111827",
+          color: "#eeebe1",
         }}
       >
         {text}
@@ -158,7 +158,7 @@ const GlitchText = ({ text }: { text: string }) => {
           fontFamily: "'Courier New', monospace",
           fontWeight: 900,
           letterSpacing: "-0.03em",
-          color: "#f97316",
+          color: "#d2ff4d",
           animation: "glitch1 3.5s infinite",
           clipPath: "polygon(0 30%, 100% 30%, 100% 55%, 0 55%)",
         }}
@@ -172,7 +172,7 @@ const GlitchText = ({ text }: { text: string }) => {
           fontFamily: "'Courier New', monospace",
           fontWeight: 900,
           letterSpacing: "-0.03em",
-          color: "#3b82f6",
+          color: "#b4a5ff",
           animation: "glitch2 3.5s infinite",
           clipPath: "polygon(0 60%, 100% 60%, 100% 80%, 0 80%)",
         }}
@@ -183,7 +183,7 @@ const GlitchText = ({ text }: { text: string }) => {
   );
 };
 
-const TerminalLine = ({ text, delay, color = "#86efac" }: { text: string; delay: number; color?: string }) => {
+const TerminalLine = ({ text, delay, color = "#d2ff4d" }: { text: string; delay: number; color?: string }) => {
   const [visible, setVisible] = useState(false);
   const [typed, setTyped] = useState("");
 
@@ -208,7 +208,7 @@ const TerminalLine = ({ text, delay, color = "#86efac" }: { text: string; delay:
     <div style={{ color, fontFamily: "monospace", fontSize: "13px", lineHeight: "1.8" }}>
       {typed}
       {typed.length < text.length && (
-        <span style={{ animation: "blink 1s infinite", color: "#f97316" }}>█</span>
+        <span style={{ animation: "blink 1s infinite", color: "#d2ff4d" }}>█</span>
       )}
     </div>
   );
@@ -286,8 +286,8 @@ const NotFoundPage = () => {
                   <div className="w-full" style={{ maxWidth: "360px", animation: "float 4s ease-in-out infinite" }}>
                     <WebGraph />
                   </div>
-                  {/* <div className="text-xs font-mono text-gray-400 mt-4 text-center">
-                    all roads lead to <span style={{ color: "#f97316" }}>nowhere</span>
+                  {/* <div className="text-xs font-mono text-muted-foreground mt-4 text-center">
+                    all roads lead to <span style={{ color: "#d2ff4d" }}>nowhere</span>
                   </div> */}
                 </div>
 
@@ -295,8 +295,8 @@ const NotFoundPage = () => {
                 <div className="flex flex-col justify-center p-8 lg:p-10">
                   <div className="fade-up-1">
                     {/* <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono mb-6"
-                      style={{ background: "#111827", color: "#f97316", letterSpacing: "0.08em" }}>
-                      <span style={{ color: "#86efac" }}>$</span> traceroute {window?.location?.pathname ?? "/???"}
+                      style={{ background: "#1c1f19", color: "#d2ff4d", letterSpacing: "0.08em" }}>
+                      <span style={{ color: "#d2ff4d" }}>$</span> traceroute {window?.location?.pathname ?? "/???"}
                     </div> */}
                   </div>
 
@@ -305,7 +305,7 @@ const NotFoundPage = () => {
                   </div>
 
                   <div className="fade-up-2 mb-6">
-                    <p style={{ fontFamily: "'Courier New', monospace", fontSize: "18px", color: "#374151", fontWeight: 600 }}>
+                    <p style={{ fontFamily: "'Courier New', monospace", fontSize: "18px", color: "#9a9a8d", fontWeight: 600 }}>
                       {notFoundJson.message}
                     </p>
                     {/* <p style={{ fontSize: "14px", color: "#6b7280", lineHeight: 1.7, marginTop: "8px" }}>
@@ -315,13 +315,13 @@ const NotFoundPage = () => {
                   </div>
 
                   {/* Terminal */}
-                  <div className="fade-up-3 rounded-2xl overflow-hidden mb-6 border border-gray-800"
-                    style={{ background: "#0d1117" }}>
-                    <div className="flex items-center gap-2 px-4 py-3 border-b border-gray-800">
-                      <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
-                      <span className="ml-2 text-xs font-mono text-gray-500">{notFoundJson.terminalTitle}</span>
+                  <div className="fade-up-3 rounded-2xl overflow-hidden mb-6 border border-border"
+                    style={{ background: "#141612" }}>
+                    <div className="flex items-center gap-2 px-4 py-3 border-b border-border">
+                      <div className="w-2.5 h-2.5 rounded-full bg-coral" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-warning" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-accent" />
+                      <span className="ml-2 text-xs font-mono text-muted-foreground">{notFoundJson.terminalTitle}</span>
                     </div>
                     <div className="px-4 py-4 space-y-0">
                       {notFoundJson.terminalLines.map((line) => <TerminalLine key={line.text} {...line} />)}

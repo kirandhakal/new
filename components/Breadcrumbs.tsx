@@ -9,7 +9,7 @@ export interface BreadcrumbItem {
 export default function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
   return (
     <nav aria-label="Breadcrumb">
-      <ol className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+      <ol className="flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">
         {items.map((item, index) => (
           <li key={`${item.label}-${index}`} className="flex items-center gap-2">
             {index > 0 && <ChevronRight size={14} aria-hidden="true" />}

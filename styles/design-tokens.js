@@ -20,16 +20,19 @@ const designTokens = {
     success: "hsl(var(--success) / <alpha-value>)",
     warning: "hsl(var(--warning) / <alpha-value>)",
     danger: "hsl(var(--danger) / <alpha-value>)",
+    coral: "hsl(var(--coral) / <alpha-value>)",
+    lilac: "hsl(var(--lilac) / <alpha-value>)",
   },
   fontFamily: {
     sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+    display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],
     mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
   },
   fontSize: {
     eyebrow: ["var(--text-eyebrow)", { lineHeight: "1rem", letterSpacing: "0.12em" }],
     body: ["var(--text-body)", { lineHeight: "1.75" }],
     lead: ["var(--text-lead)", { lineHeight: "1.75" }],
-    display: ["var(--text-display)", { lineHeight: "0.95", letterSpacing: "0" }],
+    display: ["var(--text-display)", { lineHeight: "0.9", letterSpacing: "-0.03em" }],
   },
   borderRadius: {
     sm: "var(--radius-sm)",

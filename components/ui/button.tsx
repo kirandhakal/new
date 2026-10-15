@@ -7,7 +7,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variants = {
-  default: "bg-primary text-primary-foreground hover:bg-primary/90",
+  default: "bg-accent text-accent-foreground hover:bg-primary",
   outline: "border border-border bg-card text-card-foreground hover:bg-secondary",
   ghost: "text-foreground hover:bg-secondary",
 };
@@ -25,7 +25,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       ref={ref}
       type={type}
       className={cn(
-        "inline-flex items-center justify-center rounded-lg font-semibold transition-colors disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex items-center justify-center rounded-full font-semibold transition-colors disabled:pointer-events-none disabled:opacity-50",
         variants[variant],
         sizes[size],
         className,

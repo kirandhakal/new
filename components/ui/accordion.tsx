@@ -2,7 +2,7 @@ import type { DetailsHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 export function Accordion({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("divide-y divide-gray-200", className)} {...props} />;
+  return <div className={cn("divide-y divide-border", className)} {...props} />;
 }
 
 interface AccordionItemProps extends DetailsHTMLAttributes<HTMLDetailsElement> {

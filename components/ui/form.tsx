@@ -2,15 +2,15 @@ import type { FormHTMLAttributes, HTMLAttributes, LabelHTMLAttributes } from "re
 import { cn } from "@/lib/utils";
 
 export function Form({ className, ...props }: FormHTMLAttributes<HTMLFormElement>) {
-  return <form className={cn("space-y-6", className)} {...props} />;
+  return <form className={cn("space-y-5", className)} {...props} />;
 }
 
 export function FormField({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("space-y-1", className)} {...props} />;
+  return <div className={cn("space-y-2", className)} {...props} />;
 }
 
 export function FormLabel({ className, ...props }: LabelHTMLAttributes<HTMLLabelElement>) {
-  return <label className={cn("text-sm font-semibold text-foreground", className)} {...props} />;
+  return <label className={cn("font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground", className)} {...props} />;
 }
 
 export function FormMessage({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) {

@@ -1,193 +1,154 @@
 "use client";
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Code2, Braces, Wrench } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Code2, Braces } from 'lucide-react';
 import skillsJson from '@/data/landing-page/home-skills.json';
 import type { SkillContent } from '@/types/content';
-import { H2, P } from '@/components/typography';
-
-// SVG Icon Components
-const NodeIcon = () => <img src="/images/node.svg" alt="Node.js Icon" className="w-12 h-12" />;
-const DockerIcon = () => <img src="/images/docker.svg" alt="Docker Icon" className="w-12 h-12" />;
-const GitIcon = () => <img src="/images/git.svg" alt="Git Icon" className="w-12 h-12" />;
-const GitHubIcon = () => <img src="/images/github.svg" alt="GitHub Icon" className="w-12 h-12" />;
-const FigmaIcon = () => <img src="/images/figma.svg" alt="Figma Icon" className="w-12 h-12" />;
+import SectionHeading from '@/components/SectionHeading';
 
 const content = skillsJson as SkillContent;
+
+// Brand SVGs are flattened to one tone so they match the lucide icons: bone by default, ink on the lime chip.
+const svgIcon = (src: string, alt: string) => (
+  <img src={src} alt={alt} className="h-5 w-5 object-contain brightness-0 invert group-aria-selected:invert-0" />
+);
+
 const skillIcons: Record<string, React.ReactNode> = {
-  Code2: <Code2 size={48} />,
-  Braces: <Braces size={48} />,
-  Node: <NodeIcon />,
-  Figma: <FigmaIcon />,
-  Git: <GitIcon />,
-  GitHub: <GitHubIcon />,
-  Docker: <DockerIcon />,
+  Code2: <Code2 size={20} />,
+  Braces: <Braces size={20} />,
+  Node: svgIcon('/images/node.svg', 'Node.js'),
+  Figma: svgIcon('/images/figma.svg', 'Figma'),
+  Git: svgIcon('/images/git.svg', 'Git'),
+  GitHub: svgIcon('/images/github.svg', 'GitHub'),
+  Docker: svgIcon('/images/docker.svg', 'Docker'),
+};
+
+const fileName = (name: string) => {
+  const base = name.toLowerCase().replace(/[^a-z]/g, '');
+  if (name.includes('HTML')) return `${base}.html`;
+  if (name.includes('React')) return 'app.jsx';
+  if (name.includes('Node')) return 'server.js';
+  if (name.includes('Docker')) return 'Dockerfile';
+  if (name.includes('GitHub')) return 'deploy.yml';
+  if (name.includes('Git')) return 'branch.sh';
+  return 'tokens.css';
+};
+
+const KEYWORDS = /^(const|let|return|import|from|export|require|FROM|WORKDIR|COPY|RUN|EXPOSE|CMD|git|on|jobs|name|steps|uses|run)$/;
+
+/* Tiny highlighter: strings → lime, comments → muted, a few keywords → lilac. */
+const highlight = (line: string) => {
+  if (/^\s*(#|\/\*|\/\/)/.test(line)) {
+    return <span className="text-muted-foreground/70 italic">{line}</span>;
+  }
+  return line.split(/("[^"]*"|\b[A-Za-z_]+\b)/g).map((part, i) => {
+    if (part.startsWith('"')) return <span key={i} className="text-accent">{part}</span>;
+    if (KEYWORDS.test(part)) return <span key={i} className="text-lilac">{part}</span>;
+    return <span key={i}>{part}</span>;
+  });
 };
 
 const SkillsSection = () => {
-  const [activeSkill, setActiveSkill] = useState<number | null>(null);
+  const [active, setActive] = useState(0);
+  const skill = content.items[active];
+  const lines = skill.code.split('\n');
 
   return (
-    <div className="py-20 lg:py-32 min-h-screen relative overflow-hidden flex items-center">
-      {/* Decorative background */}
-      
-      {/* Dot pattern */}
-      <div className="absolute inset-0 opacity-[0.015]" style={{
-        backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)',
-        backgroundSize: '24px 24px'
-      }}></div>
+    <div className="mx-auto w-full max-w-7xl px-5 py-24 sm:px-6 lg:px-8 lg:py-32">
+      <SectionHeading
+        index="02"
+        eyebrow={content.eyebrow}
+        title={<>Skills &amp; <span className="text-outline">tools</span></>}
+        description={content.description}
+      />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 w-full">
-        {/* Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-20 space-y-6"
+      <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
+        {/* Skill picker — horizontal scroller on phones, vertical list on desktop */}
+        <div
+          role="tablist"
+          aria-label="Skills"
+          className="-mx-5 flex snap-x gap-2 overflow-x-auto px-5 pb-2 [scrollbar-width:none] sm:-mx-6 sm:px-6 lg:col-span-5 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0"
         >
-          <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2 rounded-full border border-orange-200/50 shadow-sm mb-4">
-            <Wrench size={16} className="text-orange-500" />
-            <span className="text-sm font-medium text-gray-700">My Expertise</span>
-          </div>
-          
-          <H2 className="text-4xl sm:text-5xl md:text-7xl">{content.title}</H2>
-          
-          <P className="text-xl max-w-2xl mx-auto">{content.description}</P>
-          
-          <div className="flex justify-center">
-            <div className="h-1 w-24 bg-gradient-to-r from-orange-500 to-rose-500 rounded-full"></div>
-          </div>
-        </motion.div>
-
-        {/* Skills Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
-          {content.items.map((skill, index) => {
-            const isActive = activeSkill === index;
-            
+          {content.items.map((item, index) => {
+            const isActive = index === active;
             return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                onMouseEnter={() => setActiveSkill(index)}
-                onMouseLeave={() => setActiveSkill(null)}
-                className={`group relative bg-white/70 backdrop-blur-md rounded-3xl p-6 border-2 transition-all duration-500 cursor-pointer ${
-                  isActive 
-                    ? 'border-ring shadow-lifted -translate-y-2 scale-[1.02]' 
-                    : 'border-white shadow-lg hover:shadow-xl'
+              <button
+                key={item.name}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActive(index)}
+                onMouseEnter={() => setActive(index)}
+                className={`group flex flex-none snap-start items-center gap-4 rounded-2xl border px-4 py-3 text-left transition-all duration-300 lg:px-5 lg:py-4 ${
+                  isActive
+                    ? 'border-accent bg-accent/10'
+                    : 'border-border bg-card hover:border-muted-foreground/40'
                 }`}
               >
-                {/* Gradient overlay on hover */}
-                <div className={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${skill.bgColor} -z-10`}></div>
-
-                <div className="flex flex-col h-full">
-                  {/* Header */}
-                  <div className="flex items-start gap-4 mb-4">
-                    {/* Icon */}
-                    <div className={`flex-shrink-0 p-4 rounded-2xl bg-gradient-to-br ${skill.color} shadow-lg transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-3`}>
-                      <div className="text-white flex items-center justify-center">
-                        {skillIcons[skill.icon]}
-                      </div>
-                    </div>
-
-                    {/* Title and description */}
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-2xl font-bold text-foreground mb-1 tracking-tight">
-                        {skill.name}
-                      </h3>
-                      <p className="text-sm text-muted-foreground font-medium">
-                        {skill.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Code Preview */}
-                  <div className="flex-1 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-5 shadow-inner overflow-hidden">
-                    {/* Terminal header */}
-                    <div className="flex items-center gap-2 mb-4 pb-3 border-b border-gray-700/50">
-                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      <span className="text-muted-foreground text-xs ml-2 font-mono">
-                        {skill.name.toLowerCase().replace(/[^a-z]/g, '')}.
-                        {skill.name.includes('HTML') ? 'html' :
-                         skill.name.includes('React') ? 'jsx' :
-                         skill.name.includes('Node') ? 'js' :
-                         skill.name.includes('Docker') ? 'dockerfile' :
-                         skill.name.includes('Git') && !skill.name.includes('GitHub') ? 'sh' :
-                         skill.name.includes('GitHub') ? 'yml' :
-                         'css'}
-                      </span>
-                    </div>
-                    
-                    {/* Code content */}
-                    <pre className="text-sm leading-relaxed overflow-x-auto">
-                      <code className="font-mono">
-                        {skill.code.split('\n').map((line, i) => (
-                          <div key={i} className="group/line hover:bg-white/5 px-2 -mx-2 rounded transition-colors">
-                            <span className="text-muted-foreground select-none inline-block w-6 text-right mr-4">
-                              {i + 1}
-                            </span>
-                            <span className="text-emerald-400">
-                              {line}
-                            </span>
-                          </div>
-                        ))}
-                      </code>
-                    </pre>
-                  </div>
-
-                  {/* Hover indicator */}
-                  <div className={`mt-4 flex items-center gap-2 text-sm font-semibold transition-all duration-300 ${
-                    isActive ? 'text-accent' : 'text-muted-foreground/70'
-                  }`}>
-                    <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      isActive ? 'bg-accent animate-pulse' : 'bg-muted'
-                    }`}></div>
-                    <span>{isActive ? 'Viewing code' : 'Hover to explore'}</span>
-                  </div>
-                </div>
-              </motion.div>
+                <span className={`flex h-10 w-10 flex-none items-center justify-center rounded-xl transition-colors ${isActive ? 'bg-accent text-accent-foreground' : 'bg-secondary text-foreground'}`}>
+                  {skillIcons[item.icon]}
+                </span>
+                <span className="min-w-0">
+                  <span className="block whitespace-nowrap font-display text-base font-bold text-foreground lg:text-lg">{item.name}</span>
+                  <span className="hidden text-sm text-muted-foreground lg:block">{item.description}</span>
+                </span>
+                <span className={`ml-auto hidden font-mono text-xs lg:block ${isActive ? 'text-accent' : 'text-muted-foreground/50'}`}>
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+              </button>
             );
           })}
         </div>
 
-        {/* Bottom decoration */}
-        <div className="mt-20 flex justify-center">
-          <div className="flex items-center gap-4">
-            <div className="h-px w-16 bg-gradient-to-r from-transparent to-orange-300"></div>
-            <div className="text-sm text-muted-foreground font-medium">{content.footer}</div>
-            <div className="h-px w-16 bg-gradient-to-l from-transparent to-orange-300"></div>
+        {/* Terminal preview */}
+        <div className="lg:col-span-7">
+          <div className="sticky top-28 overflow-hidden rounded-3xl border border-border bg-card shadow-lifted">
+            <div className="flex items-center justify-between border-b border-border px-5 py-3.5">
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-coral" />
+                <span className="h-3 w-3 rounded-full bg-warning" />
+                <span className="h-3 w-3 rounded-full bg-accent" />
+              </div>
+              <span className="font-mono text-xs text-muted-foreground">~/kiran/{fileName(skill.name)}</span>
+              <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 sm:block">{lines.length} lines</span>
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.pre
+                key={skill.name}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25 }}
+                className="min-h-[18rem] overflow-x-auto p-5 font-mono text-[13px] leading-7 text-foreground sm:p-6 sm:text-sm"
+              >
+                <code>
+                  {lines.map((line, i) => (
+                    <div key={i} className="flex">
+                      <span className="mr-5 inline-block w-5 flex-none select-none text-right text-muted-foreground/40">{i + 1}</span>
+                      <span className="whitespace-pre">{highlight(line)}</span>
+                    </div>
+                  ))}
+                  <div className="flex">
+                    <span className="mr-5 inline-block w-5 flex-none select-none text-right text-muted-foreground/40">{lines.length + 1}</span>
+                    <span className="h-5 w-2 translate-y-1 animate-blink bg-accent" />
+                  </div>
+                </code>
+              </motion.pre>
+            </AnimatePresence>
+
+            <div className="flex items-center justify-between border-t border-border px-5 py-3 font-mono text-[11px] text-muted-foreground">
+              <span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-accent" /> {skill.description}</span>
+              <span className="hidden sm:inline">UTF-8</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <style>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) translateX(0px); }
-          50% { transform: translateY(-20px) translateX(10px); }
-        }
-        @keyframes float-delayed {
-          0%, 100% { transform: translateY(0px) translateX(0px); }
-          50% { transform: translateY(20px) translateX(-10px); }
-        }
-        .animate-float { animation: float 6s ease-in-out infinite; }
-        .animate-float-delayed { animation: float-delayed 7s ease-in-out infinite; }
-      `}</style>
+      <p className="mt-14 text-center font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground sm:tracking-[0.24em]">
+        ✦ {content.footer} ✦
+      </p>
     </div>
   );
 };

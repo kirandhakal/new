@@ -10,7 +10,7 @@ interface WhatsAppButtonProps {
 export function WhatsAppButton({ phone, message = "Hello!", className }: WhatsAppButtonProps) {
   const href = `https://wa.me/${phone.replace(/\D/g, "")}?text=${encodeURIComponent(message)}`;
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" className={cn("fixed bottom-24 right-6 z-40 rounded-full bg-emerald-500 p-4 text-white shadow-lg", className)}>
+    <a href={href} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" className={cn("fixed bottom-24 right-6 z-40 rounded-full bg-accent p-4 text-accent-foreground shadow-lifted", className)}>
       <MessageCircle aria-hidden="true" />
     </a>
   );
