@@ -25,8 +25,9 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative mt-auto px-3 pb-32 pt-10 sm:px-6 lg:pb-10 lg:pl-28 lg:pr-8">
-      <div className="pcb-grid relative mx-auto max-w-7xl overflow-hidden rounded-3xl border border-border bg-board px-6 py-12 sm:px-12">
+    <footer className="relative mt-auto px-3 pb-32 pt-10 sm:px-6 lg:pb-10 lg:pl-24 lg:pr-0">
+      <div className="mx-auto max-w-7xl lg:px-8">
+      <div className="pcb-grid relative overflow-hidden rounded-3xl border border-border bg-board px-6 py-12 sm:px-12">
         <Hole className="left-4 top-4" />
         <Hole className="right-4 top-4" />
         <Hole className="bottom-4 left-4" />
@@ -98,6 +99,7 @@ const Footer = () => {
             <span>{footerJson.messageAfter} · assembled in Kathmandu</span>
           </div>
         </div>
+      </div>
       </div>
     </footer>
   );
