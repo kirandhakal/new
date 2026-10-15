@@ -5,7 +5,7 @@ export const highlight = (line: string) => {
   if (/^\s*(#|\/\*|\/\/)/.test(line)) return <span className="italic text-muted-foreground/70">{line}</span>;
   return line.split(/("[^"]*"|\b[A-Za-z_]+\b)/g).map((part, i) => {
     if (part.startsWith('"')) return <span key={i} className="text-accent">{part}</span>;
-    if (KEYWORDS.test(part)) return <span key={i} className="text-flag-blue">{part}</span>;
+    if (KEYWORDS.test(part)) return <span key={i} className="text-led-blue">{part}</span>;
     return <span key={i}>{part}</span>;
   });
 };

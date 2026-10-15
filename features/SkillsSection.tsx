@@ -1,64 +1,71 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Braces, Code2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import skillsJson from '@/data/landing-page/home-skills.json';
 import type { SkillContent } from '@/types/content';
-import CampHeading from '@/components/CampHeading';
-import { FLAG_TONES } from '@/lib/expedition';
-import { codeFileName as fileName, highlight } from '@/lib/highlight';
+import ModuleHeading from '@/components/ModuleHeading';
+import { LED_TEXT, hash, toHex } from '@/lib/board';
+import { codeFileName, highlight } from '@/lib/highlight';
 
 const content = skillsJson as SkillContent;
+const LEVELS = [92, 90, 86, 78, 88, 84, 76];
+const partNo = (name: string) => `KD${(hash(name) % 9000) + 1000}`;
 
-// Brand SVGs are flattened to one dark tone so they read on the coloured chip.
-const svgIcon = (src: string, alt: string) => (
-  <img src={src} alt={alt} className="h-5 w-5 object-contain brightness-0" />
+/* A square wave whose bit pattern comes from the skill's name, so every chip has its own signal. */
+const waveform = (seed: number, bits = 24, w = 600, h = 34) => {
+  const step = w / bits;
+  let d = '';
+  let prev = -1;
+  for (let i = 0; i < bits; i++) {
+    const bit = (seed >> (i % 31)) & 1;
+    const y = bit ? 4 : h - 4;
+    d += prev === -1 ? `M0 ${y}` : prev !== bit ? ` V${y}` : '';
+    d += ` H${(i + 1) * step}`;
+    prev = bit;
+  }
+  return d;
+};
+
+/* DIP chip on the breadboard: one per skill. */
+const DipChip = ({ name, active, onClick, led }: { name: string; active: boolean; onClick: () => void; led: string }) => (
+  <button
+    type="button"
+    role="tab"
+    aria-selected={active}
+    onClick={onClick}
+    className="group relative flex flex-none snap-start flex-col items-center px-2 py-3"
+  >
+    {/* legs */}
+    <span className="absolute inset-x-4 top-0 flex justify-between" aria-hidden="true">
+      {[0, 1, 2, 3, 4].map((i) => <span key={i} className="h-3 w-[3px] bg-copper/80" />)}
+    </span>
+    <span className="absolute inset-x-4 bottom-0 flex justify-between" aria-hidden="true">
+      {[0, 1, 2, 3, 4].map((i) => <span key={i} className="h-3 w-[3px] bg-copper/80" />)}
+    </span>
+    <span
+      className={`relative flex h-20 w-36 flex-col items-center justify-center rounded-md bg-chip px-2 text-center text-chip-foreground transition-all duration-300 sm:w-40 ${
+        active ? 'ring-2 ring-accent ring-offset-2 ring-offset-board' : 'group-hover:-translate-y-0.5'
+      }`}
+    >
+      <span className="absolute left-0 top-1/2 h-4 w-2 -translate-y-1/2 rounded-r-full bg-board" aria-hidden="true" />
+      <span className="font-mono text-[9px] tracking-[0.14em] opacity-60">{partNo(name)}</span>
+      <span className="mt-0.5 line-clamp-2 font-display text-sm font-bold uppercase leading-tight">{name}</span>
+      {active && <span className={`led absolute right-2 top-2 ${led}`} />}
+    </span>
+  </button>
 );
-
-const skillIcons: Record<string, React.ReactNode> = {
-  Code2: <Code2 size={20} />,
-  Braces: <Braces size={20} />,
-  Node: svgIcon('/images/node.svg', 'Node.js'),
-  Figma: svgIcon('/images/figma.svg', 'Figma'),
-  Git: svgIcon('/images/git.svg', 'Git'),
-  GitHub: svgIcon('/images/github.svg', 'GitHub'),
-  Docker: svgIcon('/images/docker.svg', 'Docker'),
-};
-
-/* Map is drawn in a 1000×600 viewBox. Waypoints climb from bottom-left to the top-right. */
-const WAYPOINTS: Array<[number, number]> = [
-  [90, 520], [235, 440], [380, 488], [500, 352], [650, 392], [770, 250], [905, 112],
-];
-const waypointAltitude = (i: number) => 5400 + i * 160;
-
-const TRAIL = WAYPOINTS.reduce((d, [x, y], i) => {
-  if (i === 0) return `M${x} ${y}`;
-  const [px, py] = WAYPOINTS[i - 1];
-  return `${d} Q${(px + x) / 2 + (i % 2 ? 40 : -40)} ${(py + y) / 2 + 30} ${x} ${y}`;
-}, '');
-
-/* Wobbly concentric rings around two summits make the contour lines. */
-const contour = (cx: number, cy: number, radius: number, seed: number) => {
-  const pts = Array.from({ length: 60 }, (_, i) => {
-    const a = (i / 60) * Math.PI * 2;
-    const r = radius * (1 + 0.14 * Math.sin(3 * a + seed) + 0.07 * Math.sin(5 * a + seed * 2));
-    return `${(cx + Math.cos(a) * r * 1.5).toFixed(1)} ${(cy + Math.sin(a) * r).toFixed(1)}`;
-  });
-  return `M${pts.join(' L')} Z`;
-};
-const CONTOURS = [
-  ...Array.from({ length: 8 }, (_, k) => contour(880, 150, 26 + k * 46, k * 0.7)),
-  ...Array.from({ length: 5 }, (_, k) => contour(260, 470, 22 + k * 40, k * 1.3 + 2)),
-];
 
 const SkillsSection = () => {
   const [active, setActive] = useState(0);
   const [touched, setTouched] = useState(false);
   const total = content.items.length;
   const skill = content.items[active];
+  const level = LEVELS[active % LEVELS.length];
+  const seed = useMemo(() => hash(skill.name), [skill.name]);
 
-  // Walk the trail on its own until the visitor takes over.
+  // Cycle through chips on its own until the visitor probes one.
   useEffect(() => {
     if (touched) return;
     const id = setInterval(() => setActive((i) => (i + 1) % total), 4200);
@@ -72,138 +79,125 @@ const SkillsSection = () => {
 
   return (
     <div className="mx-auto w-full max-w-7xl px-5 py-24 sm:px-6 lg:px-8 lg:py-32">
-      <CampHeading
-        camp="skills"
-        title={<>The route map, <span className="text-flag-red">one waypoint</span> at a time.</>}
-        description={`${content.description}. Tap a waypoint to read the field notes.`}
+      <ModuleHeading
+        module="skills"
+        title={<>Logic <span className="text-copper">analyzer</span></>}
+        description={`${content.description}. Probe a chip to read its signal.`}
       />
 
-      <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8">
-        {/* Topographic map */}
-        <div className="relative min-w-0 overflow-hidden rounded-3xl border border-border bg-card lg:col-span-7">
-          <div className="flex items-center justify-between border-b border-border px-5 py-3 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-            <span>Sheet 07 · Skills range</span>
-            <span>1 : 25,000</span>
-          </div>
-          <div className="relative aspect-[5/3]">
-            <svg viewBox="0 0 1000 600" className="absolute inset-0 h-full w-full" aria-hidden="true">
-              {CONTOURS.map((d, i) => (
-                <path key={i} d={d} fill="none" stroke="hsl(var(--muted-foreground) / 0.18)" strokeWidth={i % 4 === 0 ? 1.6 : 0.9} />
-              ))}
-              <path d={TRAIL} fill="none" stroke="hsl(var(--border))" strokeWidth="6" strokeLinecap="round" />
-              <path d={TRAIL} fill="none" stroke="hsl(var(--accent))" strokeWidth="2.5" strokeDasharray="10 10" strokeLinecap="round" className="animate-trail" />
-              <text x="905" y="62" textAnchor="middle" className="fill-muted-foreground font-mono text-[18px]">▲ 6,400</text>
-            </svg>
+      {/* Breadboard */}
+      <div className="pcb-grid mt-14 rounded-3xl border border-border bg-board p-4 sm:p-6">
+        <div className="flex items-center justify-between">
+          <span className="silk">Breadboard · {total} ICs</span>
+          <span className="silk hidden sm:inline">{touched ? 'Manual probe' : 'Auto-scan'}</span>
+        </div>
+        <div role="tablist" aria-label="Skills" className="-mx-4 mt-3 flex snap-x gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-wrap lg:justify-center lg:overflow-visible lg:px-0">
+          {content.items.map((item, i) => (
+            <DipChip key={item.name} name={item.name} active={i === active} onClick={() => go(i)} led={LED_TEXT[i % LED_TEXT.length]} />
+          ))}
+        </div>
+      </div>
 
-            {content.items.map((item, i) => {
-              const [x, y] = WAYPOINTS[i % WAYPOINTS.length];
-              const isActive = i === active;
-              const visited = i < active;
-              return (
-                <button
-                  key={item.name}
-                  type="button"
-                  onClick={() => go(i)}
-                  aria-label={`${item.name}, waypoint ${i + 1}`}
-                  aria-pressed={isActive}
-                  className="group absolute -translate-x-1/2 -translate-y-1/2"
-                  style={{ left: `${x / 10}%`, top: `${y / 6}%` }}
-                >
-                  {isActive && <span className="absolute inset-0 animate-ping rounded-full bg-accent/50" />}
-                  <span
-                    className={`relative flex h-8 w-8 items-center justify-center rounded-full border-2 font-mono text-[11px] font-bold transition-all duration-300 sm:h-9 sm:w-9 sm:text-xs ${
-                      isActive
-                        ? 'scale-110 border-accent bg-accent text-accent-foreground'
-                        : visited
-                          ? 'border-accent bg-background text-accent'
-                          : 'border-muted-foreground/60 bg-background text-muted-foreground group-hover:border-foreground group-hover:text-foreground'
-                    }`}
-                  >
-                    {i + 1}
-                  </span>
-                  <span
-                    className={`absolute left-1/2 top-full mt-2 hidden -translate-x-1/2 whitespace-nowrap rounded-md border border-border bg-background/90 px-2 py-1 text-xs font-semibold transition-opacity sm:block ${
-                      isActive ? 'text-foreground opacity-100' : 'text-muted-foreground opacity-0 group-hover:opacity-100'
-                    }`}
-                  >
-                    {item.name}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-          <div className="flex items-center gap-4 border-t border-border px-5 py-3 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-            <span className="flex items-center gap-2"><span className="h-0.5 w-5 bg-accent" /> Trail</span>
-            <span className="flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full border-2 border-accent" /> Visited</span>
-            <span className="ml-auto">{active + 1} / {total}</span>
-          </div>
+      {/* Analyzer screen */}
+      <div className="mt-6 overflow-hidden rounded-3xl border border-border bg-chip text-chip-foreground shadow-lifted">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-chip-foreground/10 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.16em]">
+          <span className="text-chip-foreground/60">Probe · CH1–CH3 · 100 MHz</span>
+          <span className="text-led-green">● Trigger armed</span>
         </div>
 
-        {/* Field notes */}
-        <div className="min-w-0 lg:col-span-5">
-          <div className="flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card">
-            <div className="flex items-center justify-between border-b border-border px-5 py-3">
-              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Field notes · Day {String(active + 1).padStart(2, '0')}</span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">▲ {waypointAltitude(active).toLocaleString('en-US')} m</span>
-            </div>
-
+        <div className="grid lg:grid-cols-12">
+          {/* waveforms */}
+          <div className="border-b border-chip-foreground/10 p-5 lg:col-span-7 lg:border-b-0 lg:border-r">
             <AnimatePresence mode="wait">
-              <motion.div
-                key={skill.name}
-                initial={{ opacity: 0, x: 16 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -16 }}
-                transition={{ duration: 0.25 }}
-                className="flex flex-1 flex-col p-5 sm:p-6"
-              >
-                <div className="flex items-center gap-4">
-                  <span className={`flex h-12 w-12 flex-none items-center justify-center rounded-xl text-accent-foreground ${FLAG_TONES[active % FLAG_TONES.length]}`}>
-                    {skillIcons[skill.icon]}
-                  </span>
-                  <div className="min-w-0">
-                    <h3 className="font-display text-2xl font-bold tracking-tight text-foreground">{skill.name}</h3>
-                    <p className="text-sm text-muted-foreground">{skill.description}</p>
+              <motion.div key={skill.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
+                <div className="flex flex-wrap items-end justify-between gap-3">
+                  <div>
+                    <p className="font-mono text-[10px] tracking-[0.16em] text-chip-foreground/50">{partNo(skill.name)} · {skill.description}</p>
+                    <h3 className="mt-1 font-display text-3xl font-bold uppercase tracking-tight">{skill.name}</h3>
                   </div>
+                  <p className="font-mono text-sm">
+                    level <span className="text-led-green">{level}%</span> <span className="text-chip-foreground/40">{toHex(level)}</span>
+                  </p>
                 </div>
 
-                <div className="mt-5 flex-1 overflow-hidden rounded-2xl border border-border bg-background">
-                  <div className="flex items-center justify-between border-b border-border px-4 py-2 font-mono text-[11px] text-muted-foreground">
-                    <span>{fileName(skill.name)}</span>
-                    <span className="flex gap-1.5">
-                      <span className="h-2 w-2 rounded-full bg-flag-red" />
-                      <span className="h-2 w-2 rounded-full bg-flag-yellow" />
-                      <span className="h-2 w-2 rounded-full bg-flag-green" />
-                    </span>
-                  </div>
-                  <pre className="overflow-x-auto p-4 font-mono text-[12.5px] leading-6 text-foreground">
-                    <code>
-                      {skill.code.split('\n').map((line, i) => (
-                        <div key={i} className="flex">
-                          <span className="mr-4 inline-block w-4 flex-none select-none text-right text-muted-foreground/40">{i + 1}</span>
-                          <span className="whitespace-pre">{highlight(line)}</span>
-                        </div>
-                      ))}
-                    </code>
-                  </pre>
+                <div className="mt-5 space-y-3">
+                  {[
+                    { label: 'CLK', d: waveform(0b101010101010101010101010101010, 24), color: 'hsl(var(--chip-foreground) / 0.5)' },
+                    { label: 'SIG', d: waveform(seed, 24), color: 'hsl(var(--led-green))' },
+                    { label: 'DATA', d: waveform(seed >>> 7, 24), color: 'hsl(var(--led-amber))' },
+                  ].map((ch) => (
+                    <div key={ch.label} className="flex items-center gap-3">
+                      <span className="w-10 flex-none font-mono text-[10px] text-chip-foreground/50">{ch.label}</span>
+                      <svg viewBox="0 0 600 34" preserveAspectRatio="none" className="h-8 w-full" aria-hidden="true">
+                        <line x1="0" x2="600" y1="17" y2="17" stroke="hsl(var(--chip-foreground) / 0.08)" />
+                        <motion.path
+                          d={ch.d}
+                          fill="none"
+                          stroke={ch.color}
+                          strokeWidth="2"
+                          vectorEffect="non-scaling-stroke"
+                          initial={{ pathLength: 0 }}
+                          animate={{ pathLength: 1 }}
+                          transition={{ duration: 0.9, ease: 'easeOut' }}
+                        />
+                      </svg>
+                    </div>
+                  ))}
+                </div>
+
+                {/* level as a 10-segment bar graph LED */}
+                <div className="mt-6 flex gap-1.5" aria-label={`Proficiency ${level} percent`}>
+                  {Array.from({ length: 10 }, (_, i) => (
+                    <span
+                      key={i}
+                      className={`h-3 flex-1 rounded-[2px] ${i < Math.round(level / 10) ? (i > 7 ? 'bg-led-red' : i > 5 ? 'bg-led-amber' : 'bg-led-green') : 'bg-chip-foreground/10'}`}
+                    />
+                  ))}
                 </div>
               </motion.div>
             </AnimatePresence>
+          </div>
 
-            <div className="flex items-center justify-between gap-3 border-t border-border p-3">
-              <button type="button" onClick={() => go(active - 1)} className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">
-                <ArrowLeft size={16} /> Back
+          {/* decoded payload */}
+          <div className="flex flex-col lg:col-span-5">
+            <div className="flex items-center justify-between border-b border-chip-foreground/10 px-5 py-2.5 font-mono text-[11px] text-chip-foreground/60">
+              <span>decode → {codeFileName(skill.name)}</span>
+              <span>{skill.code.split('\n').length} lines</span>
+            </div>
+            <AnimatePresence mode="wait">
+              <motion.pre
+                key={skill.name}
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.2 }}
+                className="max-h-72 flex-1 overflow-auto p-5 font-mono text-[12.5px] leading-6"
+              >
+                <code>
+                  {skill.code.split('\n').map((line, i) => (
+                    <div key={i} className="flex">
+                      <span className="mr-4 inline-block w-4 flex-none select-none text-right text-chip-foreground/30">{i + 1}</span>
+                      <span className="whitespace-pre">{highlight(line)}</span>
+                    </div>
+                  ))}
+                </code>
+              </motion.pre>
+            </AnimatePresence>
+            <div className="flex items-center justify-between gap-2 border-t border-chip-foreground/10 p-3">
+              <button type="button" onClick={() => go(active - 1)} className="inline-flex items-center gap-2 rounded-md px-3 py-2 font-mono text-xs uppercase tracking-wider text-chip-foreground/70 transition-colors hover:text-chip-foreground">
+                <ArrowLeft size={15} /> Prev
               </button>
-              <span className="hidden font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground sm:inline">{touched ? 'Manual' : 'Auto-trek'}</span>
-              <button type="button" onClick={() => go(active + 1)} className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2.5 text-sm font-bold text-accent-foreground transition-transform hover:-translate-y-0.5">
-                Next waypoint <ArrowRight size={16} />
+              <span className="font-mono text-[11px] text-chip-foreground/50">{active + 1}/{total}</span>
+              <button type="button" onClick={() => go(active + 1)} className="inline-flex items-center gap-2 rounded-md bg-led-green px-3 py-2 font-mono text-xs font-semibold uppercase tracking-wider text-chip transition-transform hover:-translate-y-0.5">
+                Next chip <ArrowRight size={15} />
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      <p className="mt-12 text-center font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground sm:tracking-[0.24em]">
-        ⛰ {content.footer} ⛰
+      <p className="mt-10 text-center font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground">
+        // {content.footer}
       </p>
     </div>
   );

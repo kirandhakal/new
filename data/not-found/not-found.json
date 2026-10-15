@@ -7,10 +7,10 @@
     { "text": "$ traceroute mystery.url", "delay": 300, "color": "#9a9a8d" },
     { "text": "  1  router.local (10.0.0.1)   1ms", "delay": 900, "color": "#9a9a8d" },
     { "text": "  2  isp.gateway (203.x.x.1)  12ms", "delay": 1400, "color": "#9a9a8d" },
-    { "text": "  3  * * * request timed out", "delay": 1900, "color": "#ff5a4e" },
-    { "text": "  4  * * * request timed out", "delay": 2500, "color": "#ff5a4e" },
+    { "text": "  3  * * * request timed out", "delay": 1900, "color": "#ff4747" },
+    { "text": "  4  * * * request timed out", "delay": 2500, "color": "#ff4747" },
     { "text": "  → destination host unreachable", "delay": 3100, "color": "#ff6b5e" },
-    { "text": "  ✓ known routes: /, /services, /projects...", "delay": 3800, "color": "#ffc93c" }
+    { "text": "  ✓ known routes: /, /services, /projects...", "delay": 3800, "color": "#3bff8f" }
   ],
   "nodes": [
     { "id": 0, "x": 15, "y": 20, "label": "google.com" },
@@ -25,20 +25,20 @@
   ],
   "edges": [[0,5],[1,5],[2,5],[3,5],[4,5],[6,5],[7,5],[8,5],[0,6],[1,7],[2,3],[3,8],[4,8],[0,4]],
   "packets": [
-    { "from": 0, "to": 5, "color": "#ffc93c", "delay": 0, "duration": 2.4 },
-    { "from": 1, "to": 5, "color": "#4c7dff", "delay": 0.6, "duration": 2.1 },
-    { "from": 2, "to": 5, "color": "#ff5a4e", "delay": 1.2, "duration": 2.8 },
-    { "from": 3, "to": 5, "color": "#ffc93c", "delay": 0.3, "duration": 2.5 },
-    { "from": 6, "to": 5, "color": "#4c7dff", "delay": 1.8, "duration": 2.2 },
-    { "from": 7, "to": 5, "color": "#ff5a4e", "delay": 0.9, "duration": 1.9 },
-    { "from": 4, "to": 5, "color": "#ffc93c", "delay": 1.5, "duration": 2.6 },
-    { "from": 8, "to": 5, "color": "#4c7dff", "delay": 0.1, "duration": 2.3 }
+    { "from": 0, "to": 5, "color": "#3bff8f", "delay": 0, "duration": 2.4 },
+    { "from": 1, "to": 5, "color": "#4fb5ff", "delay": 0.6, "duration": 2.1 },
+    { "from": 2, "to": 5, "color": "#ff4747", "delay": 1.2, "duration": 2.8 },
+    { "from": 3, "to": 5, "color": "#3bff8f", "delay": 0.3, "duration": 2.5 },
+    { "from": 6, "to": 5, "color": "#4fb5ff", "delay": 1.8, "duration": 2.2 },
+    { "from": 7, "to": 5, "color": "#ff4747", "delay": 0.9, "duration": 1.9 },
+    { "from": 4, "to": 5, "color": "#3bff8f", "delay": 1.5, "duration": 2.6 },
+    { "from": 8, "to": 5, "color": "#4fb5ff", "delay": 0.1, "duration": 2.3 }
   ],
   "navTitle": "known endpoints",
   "navLinks": [
-    { "to": "/services", "icon": "Settings", "label": "Services", "sub": "What I offer", "accent": "#ffc93c", "bg": "hsl(var(--secondary))" },
-    { "to": "/skills", "icon": "User", "label": "Skills", "sub": "Tools & stack", "accent": "#4c7dff", "bg": "hsl(var(--secondary))" },
-    { "to": "/projects", "icon": "Briefcase", "label": "Projects", "sub": "Selected work", "accent": "#ff5a4e", "bg": "hsl(var(--secondary))" },
-    { "to": "/contact", "icon": "Mail", "label": "Contact", "sub": "Let's talk", "accent": "#ffc93c", "bg": "hsl(var(--secondary))" }
+    { "to": "/services", "icon": "Settings", "label": "Services", "sub": "What I offer", "accent": "#3bff8f", "bg": "hsl(var(--secondary))" },
+    { "to": "/skills", "icon": "User", "label": "Skills", "sub": "Tools & stack", "accent": "#4fb5ff", "bg": "hsl(var(--secondary))" },
+    { "to": "/projects", "icon": "Briefcase", "label": "Projects", "sub": "Selected work", "accent": "#ff4747", "bg": "hsl(var(--secondary))" },
+    { "to": "/contact", "icon": "Mail", "label": "Contact", "sub": "Let's talk", "accent": "#3bff8f", "bg": "hsl(var(--secondary))" }
   ]
 }

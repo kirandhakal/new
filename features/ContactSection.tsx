@@ -4,13 +4,13 @@ import React, { useState, type ChangeEvent, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Facebook, Instagram, Github, Linkedin, Mail, Phone, 
-  MapPin, Twitter, Youtube, ArrowUpRight, Flag
+  MapPin, Twitter, Youtube, ArrowUpRight, Send
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import contactJson from '@/data/contact-form/contact.json';
 import type { ContactFormData } from '@/types/content';
 import { Form, FormField as FormFieldContainer, FormLabel, Input, Textarea } from '@/components/ui';
-import CampHeading from '@/components/CampHeading';
+import ModuleHeading from '@/components/ModuleHeading';
 
 const content = contactJson;
 const icons: Record<string, LucideIcon> = {
@@ -66,19 +66,30 @@ const CONTACT_API_URL = process.env.NEXT_PUBLIC_CONTACT_API_URL
 const CONTACT_FORM_KEY = process.env.NEXT_PUBLIC_CONTACT_FORM_KEY
   || 'frm_I-Sn9KqEu3BrCwky2xQMZxQK'; 
 
-// Climber-on-the-move overlay shown while the request is in flight.
+// TX overlay shown while the message is on the wire.
 const EnvelopeAnimation = () => (
   <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
-    className="pointer-events-none absolute inset-0 z-50 flex flex-col items-center justify-center gap-4 rounded-3xl bg-background/80 backdrop-blur-sm"
+    className="pointer-events-none absolute inset-0 z-50 flex flex-col items-center justify-center gap-4 rounded-3xl bg-background/85 backdrop-blur-sm"
   >
-    <svg viewBox="0 0 120 80" className="h-24 w-36" aria-hidden="true">
-      <path d="M5 75 L60 12 L115 75 Z" fill="hsl(var(--secondary))" />
-      <motion.circle r="4" fill="hsl(var(--accent))" initial={{ cx: 12, cy: 70 }} animate={{ cx: [12, 60], cy: [70, 14] }} transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }} />
+    <div className="flex items-center gap-6 font-mono text-xs uppercase tracking-[0.2em]">
+      <span className="flex items-center gap-2 text-led-amber"><span className="led animate-led" /> TX</span>
+      <span className="flex items-center gap-2 text-muted-foreground"><span className="led opacity-30" /> RX</span>
+    </div>
+    <svg viewBox="0 0 240 40" className="h-10 w-60" aria-hidden="true">
+      <motion.path
+        d="M0 30 H30 V10 H50 V30 H70 V10 H110 V30 H130 V10 H150 V30 H190 V10 H210 V30 H240"
+        fill="none"
+        stroke="hsl(var(--accent))"
+        strokeWidth="2.5"
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: [0, 1] }}
+        transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+      />
     </svg>
-    <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Climbing to the summit…</span>
+    <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Transmitting @ 115200 baud…</span>
   </motion.div>
 );
 
@@ -87,26 +98,19 @@ const SuccessMessage = ({ onReset }: SuccessMessageProps) => (
     key="success-message"
     initial={{ opacity: 0, scale: 0.97 }}
     animate={{ opacity: 1, scale: 1 }}
-    className="flex min-h-[520px] flex-col items-center justify-center gap-6 rounded-3xl border border-border bg-card p-10 text-center"
+    className="flex min-h-[520px] flex-col justify-center gap-2 rounded-3xl border border-border bg-chip p-8 font-mono text-sm text-chip-foreground sm:p-10"
   >
-    <svg viewBox="0 0 160 110" className="h-32 w-44" aria-hidden="true">
-      <path d="M0 108 L80 30 L160 108 Z" fill="hsl(var(--secondary))" />
-      <path d="M80 30 L66 44 L74 42 L80 48 L86 42 L94 44 Z" fill="hsl(var(--foreground))" />
-      <motion.g initial={{ scaleY: 0 }} animate={{ scaleY: 1 }} style={{ originY: 1 }} transition={{ type: "spring", stiffness: 160, damping: 10, delay: 0.2 }}>
-        <line x1="80" y1="30" x2="80" y2="0" stroke="hsl(var(--foreground))" strokeWidth="2.5" />
-        <path d="M80 1 h28 l-7 8 l7 8 h-28 Z" fill="hsl(var(--accent))" />
-      </motion.g>
-    </svg>
-    <div className="space-y-2">
-      <h3 className="font-display text-4xl font-extrabold tracking-tight text-foreground">{content.successTitle} Flag planted.</h3>
-      <p className="text-lg text-muted-foreground">{content.successMessage}</p>
-    </div>
+    <p className="text-chip-foreground/50">$ uart send --to kiran</p>
+    <p>&gt; frame 1/1 sent ............ <span className="text-led-green">[ OK ]</span></p>
+    <p>&gt; checksum verified ......... <span className="text-led-green">[ OK ]</span></p>
+    <p className="mt-2 font-display text-3xl font-bold uppercase text-led-green">ACK ✓ {content.successTitle}</p>
+    <p className="text-chip-foreground/70">{content.successMessage}</p>
     <button
       type="button"
       onClick={onReset}
-      className="rounded-full border border-border px-6 py-3 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+      className="mt-6 self-start rounded-md border border-chip-foreground/20 px-4 py-2.5 text-xs uppercase tracking-[0.2em] text-chip-foreground/80 transition-colors hover:border-led-green hover:text-led-green"
     >
-      {content.resetLabel}
+      $ {content.resetLabel}
     </button>
   </motion.div>
 );
@@ -117,7 +121,7 @@ const ContactInfoBox = ({ icon: Icon, label, value, href, channel }: IconBoxProp
       <Icon size={18} />
     </span>
     <span className="min-w-0 flex-1">
-      <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">CH {String(channel).padStart(2, '0')} · {label}</span>
+      <span className="block font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">{['TX', 'RX', 'GND'][channel - 1] ?? `P${channel}`} · {label}</span>
       <span className="block truncate font-display text-lg font-bold text-foreground">{value}</span>
     </span>
     <ArrowUpRight size={18} className="flex-none text-muted-foreground transition-all group-hover:rotate-45 group-hover:text-accent" />
@@ -131,7 +135,7 @@ const SocialIconBox = ({ icon: Icon, url, name }: SocialIconBoxProps) => (
     rel="noopener noreferrer"
     aria-label={name}
     whileTap={{ scale: 0.96 }}
-    className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-border py-4 text-muted-foreground transition-colors hover:border-foreground hover:bg-foreground hover:text-background"
+    className="flex flex-col items-center justify-center gap-2 rounded-lg border border-border py-4 text-muted-foreground transition-colors hover:border-foreground hover:bg-foreground hover:text-background"
   >
     <Icon size={20} />
     <span className="text-xs font-semibold">{name}</span>
@@ -214,14 +218,14 @@ const ContactSection = () => {
 
   return (
     <div className="mx-auto w-full max-w-7xl px-5 py-24 sm:px-6 lg:px-8 lg:py-32">
-      <CampHeading
-        camp="contact"
-        title={<>You made it to the <span className="text-accent">summit</span>.</>}
-        description={`${content.description} Sign the summit register and I'll radio back.`}
+      <ModuleHeading
+        module="contact"
+        title={<>Serial <span className="text-copper">port</span></>}
+        description={`${content.description} Write to the port and I'll send an ACK back.`}
       />
 
       <div className="mt-14 grid grid-cols-1 items-start gap-6 lg:grid-cols-12 lg:gap-8">
-        {/* Summit register */}
+        {/* UART console */}
         <div className="relative min-w-0 lg:col-span-7">
           <AnimatePresence mode="wait">
             {status !== 'success' ? (
@@ -230,11 +234,11 @@ const ContactSection = () => {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.97 }}
-                className="overflow-hidden rounded-3xl border border-border bg-card"
+                className="overflow-hidden rounded-2xl border border-border bg-card"
               >
                 <div className="flex items-center justify-between border-b border-dashed border-border px-6 py-4 sm:px-9">
-                  <span className="font-display text-lg font-bold text-foreground">Summit register</span>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">▲ 8,849 m · Entry #{new Date().getFullYear()}</span>
+                  <span className="flex items-center gap-2 font-mono text-sm font-semibold text-foreground"><span className="led text-led-green" /> /dev/ttyKD0</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">115200 · 8N1</span>
                 </div>
                 <Form onSubmit={handleSubmit} className="p-6 sm:p-9">
                   <div className="grid gap-5 sm:grid-cols-2">
@@ -255,11 +259,11 @@ const ContactSection = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="group flex w-full items-center justify-between rounded-full bg-accent py-2 pl-7 pr-2 font-bold text-accent-foreground transition-transform hover:-translate-y-0.5 disabled:opacity-70"
+                    className="group flex w-full items-center justify-between rounded-lg bg-foreground py-2 pl-6 pr-2 font-mono text-sm font-semibold uppercase tracking-wider text-background transition-transform hover:-translate-y-0.5 disabled:opacity-70"
                   >
-                    <span>{isSubmitting ? content.submittingLabel : 'Plant your flag & send'}</span>
-                    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-foreground text-accent">
-                      <Flag size={19} className="transition-transform duration-300 group-hover:-rotate-12" />
+                    <span>{isSubmitting ? content.submittingLabel : 'Transmit message'}</span>
+                    <span className="flex h-11 w-11 items-center justify-center rounded-md bg-accent text-accent-foreground">
+                      <Send size={18} className="transition-transform duration-300 group-hover:translate-x-0.5" />
                     </span>
                   </button>
                   {status === 'error' && (
@@ -279,18 +283,18 @@ const ContactSection = () => {
           </AnimatePresence>
         </div>
 
-        {/* Base camp radio */}
+        {/* Pinout */}
         <div className="flex min-w-0 flex-col gap-6 lg:col-span-5">
-          <div className="rounded-3xl border border-border bg-card px-6 py-2 sm:px-8">
+          <div className="rounded-2xl border border-border bg-card px-6 py-2 sm:px-8">
             <p className="flex items-center gap-2 pt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-flag-green" /> Base camp radio · on air
+              <span className="led animate-led text-led-green" /> J5 pinout · listening
             </p>
             {content.contactInfo.map((info, i) => (
               <ContactInfoBox key={info.label} channel={i + 1} icon={icons[info.icon]} label={info.label} value={info.value} href={info.href} />
             ))}
           </div>
 
-          <div className="rounded-3xl border border-border bg-card p-6 sm:p-8">
+          <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
             <p className="eyebrow">{content.socialTitle}</p>
             <div className="mt-5 grid grid-cols-3 gap-2">
               {SOCIAL_LINKS.map((social) => (
@@ -299,11 +303,11 @@ const ContactSection = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 rounded-3xl bg-flag-yellow p-6 text-accent-foreground sm:p-8">
-            <span className="text-4xl" aria-hidden="true">☀</span>
+          <div className="flex items-center gap-4 rounded-3xl bg-copper p-6 text-background sm:p-8">
+            <span className="font-mono text-4xl font-bold" aria-hidden="true">⏱</span>
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] opacity-70">Descent time</p>
-              <p className="mt-1 font-display text-2xl font-extrabold leading-tight">Replies within 24 hours</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] opacity-70">Latency</p>
+              <p className="mt-1 font-display text-2xl font-bold uppercase leading-tight">Reply &lt; 24 hours</p>
             </div>
           </div>
         </div>

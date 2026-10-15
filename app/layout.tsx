@@ -1,19 +1,18 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import Script from "next/script";
-import { Bricolage_Grotesque, Instrument_Sans, Noto_Serif_Devanagari, Space_Mono } from "next/font/google";
+import { Chakra_Petch, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/seo";
 
-const bricolage = Bricolage_Grotesque({ subsets: ["latin"], weight: ["400", "600", "700", "800"], variable: "--font-bricolage", display: "swap" });
-const instrument = Instrument_Sans({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-instrument", display: "swap" });
-const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-spacemono", display: "swap" });
-const devanagari = Noto_Serif_Devanagari({ subsets: ["devanagari"], weight: ["600", "800"], variable: "--font-devanagari", display: "swap" });
+const chakra = Chakra_Petch({ subsets: ["latin"], weight: ["500", "600", "700"], variable: "--font-chakra", display: "swap" });
+const plexSans = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-plex-sans", display: "swap" });
+const plexMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-plex-mono", display: "swap" });
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0a0e1a" },
-    { media: "(prefers-color-scheme: light)", color: "#f6f2ea" },
+    { media: "(prefers-color-scheme: dark)", color: "#07130e" },
+    { media: "(prefers-color-scheme: light)", color: "#f4f4ef" },
   ],
 };
 
@@ -29,7 +28,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${instrument.variable} ${spaceMono.variable} ${devanagari.variable} dark`} suppressHydrationWarning>
+    <html lang="en" className={`${chakra.variable} ${plexSans.variable} ${plexMono.variable} dark`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <Script id="gtm" strategy="afterInteractive">

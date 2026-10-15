@@ -3,103 +3,97 @@
 @tailwind utilities;
 
 /*
- * "Expedition" theme — a Himalayan night. Deep sky surfaces, snow-white text and the
- * five lungta (prayer flag) colours as solid accents: blue sky, white air, red fire,
- * green water, yellow earth. No gradients.
+ * "Circuit board" theme. The page is a PCB: solder-mask surfaces, silkscreen text,
+ * copper traces and status-LED accents. Light = white solder mask with gold traces,
+ * dark (.dark, the default) = classic deep-green solder mask. Solid colours only.
  */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  --background: 225 44% 7%;        /* #0a0e1a night sky */
-  --foreground: 45 22% 93%;        /* #f2f0ea snow */
-  --card: 225 42% 11%;             /* #0f1528 */
-  --card-foreground: 45 22% 93%;
-  --popover: 225 42% 11%;
-  --popover-foreground: 45 22% 93%;
-  --primary: 45 22% 93%;
-  --primary-foreground: 225 44% 7%;
-  --secondary: 225 38% 16%;        /* #19213a ridge */
-  --secondary-foreground: 45 22% 93%;
-  --accent: 43 100% 62%;           /* #ffc93c summit sun (yellow flag) */
-  --accent-foreground: 225 44% 7%;
-  --flag-blue: 223 100% 65%;       /* #4c7dff */
-  --flag-red: 4 100% 65%;          /* #ff5a4e */
-  --flag-green: 147 61% 47%;       /* #2fbf71 */
-  --flag-yellow: 43 100% 62%;
-  --flag-white: 45 22% 93%;
-  --coral: var(--flag-red);
-  --lilac: var(--flag-blue);
-  --muted: 225 38% 16%;
-  --muted-foreground: 225 17% 64%; /* #949cb5 */
-  --border: 225 33% 20%;           /* #222a44 */
-  --input: 225 33% 23%;
-  --ring: 43 100% 62%;
-  --success: 147 61% 47%;
-  --warning: 43 100% 62%;
-  --danger: 4 100% 65%;
+  --background: 60 14% 95%;        /* #f4f4ef white solder mask */
+  --foreground: 160 30% 9%;        /* #101f19 black silkscreen */
+  --card: 0 0% 100%;
+  --card-foreground: 160 30% 9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 160 30% 9%;
+  --primary: 160 30% 9%;
+  --primary-foreground: 60 14% 95%;
+  --secondary: 60 9% 89%;
+  --secondary-foreground: 160 30% 9%;
+  --accent: 152 78% 32%;           /* LED green */
+  --accent-foreground: 0 0% 100%;
+  --copper: 36 72% 40%;            /* gold trace */
+  --led-green: 152 78% 34%;
+  --led-red: 2 78% 52%;
+  --led-amber: 36 100% 45%;
+  --led-blue: 214 88% 52%;
+  --coral: var(--led-red);
+  --lilac: var(--led-blue);
+  --muted: 60 9% 89%;
+  --muted-foreground: 160 8% 36%;
+  --border: 60 7% 80%;
+  --input: 60 7% 76%;
+  --ring: 152 78% 34%;
+  --success: 152 78% 34%;
+  --warning: 36 100% 45%;
+  --danger: 2 78% 50%;
+  --board: 60 12% 91%;             /* the PCB itself, a step darker than the page */
+  --chip: 160 18% 14%;             /* epoxy package of an IC */
+  --chip-foreground: 60 14% 92%;
 
-  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: var(--font-bricolage), var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-spacemono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --font-deva: var(--font-devanagari), "Noto Sans Devanagari", serif;
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-chakra), var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   --text-eyebrow: 0.75rem;
   --text-body: 1rem;
   --text-lead: 1.125rem;
   --text-display: clamp(3rem, 9vw, 7.5rem);
 
-  --radius-sm: 0.375rem;
-  --radius-md: 0.625rem;
-  --radius-lg: 0.875rem;
-  --radius-xl: 1.125rem;
-  --radius-2xl: 1.5rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
 
-  --shadow-soft: 0 10px 30px hsl(228 60% 2% / 0.45);
-  --shadow-lifted: 0 24px 60px hsl(228 60% 2% / 0.65);
-
-  --ridge-back: 225 32% 20%;
-  --ridge-mid: 225 38% 13%;
-  --peak: 225 32% 21%;
-  --snow: 45 22% 93%;
+  --shadow-soft: 0 1px 0 hsl(0 0% 0% / 0.04), 0 8px 24px hsl(160 30% 9% / 0.08);
+  --shadow-lifted: 0 1px 0 hsl(0 0% 0% / 0.05), 0 20px 50px hsl(160 30% 9% / 0.16);
 }
 
-/* Light mode — "Himalayan dawn": snow-paper surfaces, ink-navy text, deeper saffron accent. */
-:root:not(.dark) {
-  color-scheme: light;
+.dark {
+  color-scheme: dark;
 
-  --background: 40 33% 95%;        /* #f6f2ea */
-  --foreground: 228 38% 13%;       /* #151b2e */
-  --card: 40 40% 99%;
-  --card-foreground: 228 38% 13%;
-  --popover: 40 40% 99%;
-  --popover-foreground: 228 38% 13%;
-  --primary: 228 38% 13%;
-  --primary-foreground: 40 33% 95%;
-  --secondary: 38 24% 89%;         /* #ebe5d9 */
-  --secondary-foreground: 228 38% 13%;
-  --accent: 38 100% 50%;           /* #ff9f00 saffron */
-  --accent-foreground: 228 38% 13%;
-  --flag-blue: 223 85% 55%;
-  --flag-red: 4 82% 55%;
-  --flag-green: 147 61% 38%;
-  --flag-yellow: 38 100% 50%;
-  --flag-white: 40 12% 84%;
-  --muted: 38 24% 89%;
-  --muted-foreground: 226 14% 40%;
-  --border: 36 20% 82%;
-  --input: 36 20% 78%;
-  --ring: 38 100% 50%;
-  --success: 147 61% 38%;
-  --warning: 38 100% 50%;
-  --danger: 4 82% 52%;
+  --background: 160 45% 5%;        /* #07130e deep solder mask */
+  --foreground: 90 20% 92%;        /* #ebf0e6 silkscreen white */
+  --card: 160 38% 8%;              /* #0d1d16 */
+  --card-foreground: 90 20% 92%;
+  --popover: 160 38% 8%;
+  --popover-foreground: 90 20% 92%;
+  --primary: 90 20% 92%;
+  --primary-foreground: 160 45% 5%;
+  --secondary: 160 30% 12%;
+  --secondary-foreground: 90 20% 92%;
+  --accent: 146 100% 61%;          /* #3bff8f lit LED */
+  --accent-foreground: 160 45% 5%;
+  --copper: 30 62% 56%;            /* #d58c4c copper */
+  --led-green: 146 100% 61%;
+  --led-red: 0 100% 64%;
+  --led-amber: 40 100% 58%;
+  --led-blue: 205 100% 64%;
+  --muted: 160 30% 12%;
+  --muted-foreground: 140 10% 62%;
+  --border: 158 25% 17%;
+  --input: 158 25% 21%;
+  --ring: 146 100% 61%;
+  --success: 146 100% 61%;
+  --warning: 40 100% 58%;
+  --danger: 0 100% 64%;
+  --board: 160 40% 7%;
+  --chip: 160 12% 4%;
+  --chip-foreground: 90 20% 88%;
 
-  --shadow-soft: 0 10px 30px hsl(228 38% 13% / 0.08);
-  --shadow-lifted: 0 24px 60px hsl(228 38% 13% / 0.16);
-
-  --ridge-back: 222 24% 68%;
-  --ridge-mid: 222 28% 84%;
-  --peak: 222 20% 73%;
-  --snow: 0 0% 100%;
+  --shadow-soft: 0 10px 30px hsl(160 60% 2% / 0.5);
+  --shadow-lifted: 0 24px 60px hsl(160 60% 2% / 0.7);
 }
 
 @layer base {
@@ -132,58 +126,43 @@
 }
 
 @layer components {
-  /* Mono "field label" used for coordinates, altitudes and small captions. */
+  /* Silkscreen label: the tiny print on a circuit board. */
+  .silk {
+    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground;
+  }
+
   .eyebrow {
-    @apply inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground;
+    @apply inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground;
   }
 
-  /* Topographic contour texture drawn with two offset dot grids. */
-  .topo-dots {
-    background-image: radial-gradient(hsl(var(--foreground) / 0.06) 1px, transparent 1.2px);
-    background-size: 26px 26px;
+  /* Via grid: the plated holes you see across a bare board. */
+  .pcb-grid {
+    background-image: radial-gradient(hsl(var(--foreground) / 0.07) 1px, transparent 1.4px);
+    background-size: 24px 24px;
   }
 
-  /* Ruled notebook paper for the "field journal" panels. */
-  .ruled {
-    background-image: repeating-linear-gradient(to bottom, transparent 0 27px, hsl(var(--border) / 0.7) 27px 28px);
+  /* An LED: a solid dot with a halo. Colour comes from the text colour (e.g. text-led-green). */
+  .led {
+    @apply inline-block h-2 w-2 flex-none rounded-full;
+    background: currentColor;
+    box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 22%, transparent), 0 0 10px currentColor;
   }
 }
 
-/* Prayer flags sway from the string they hang on. */
-@keyframes flag-sway {
-  0%, 100% { transform: rotate(-5deg) skewX(-2deg); }
-  50% { transform: rotate(6deg) skewX(3deg); }
+/* Electrical pulse travelling along a trace (applied to dashed SVG strokes). */
+@keyframes signal {
+  to { stroke-dashoffset: -120; }
 }
-.animate-flag {
-  transform-origin: top center;
-  animation: flag-sway 3.2s ease-in-out infinite;
+.animate-signal {
+  animation: signal 1.6s linear infinite;
 }
 
-@keyframes twinkle {
-  0%, 100% { opacity: 0.25; }
-  50% { opacity: 1; }
+@keyframes led-blink {
+  0%, 60% { opacity: 1; }
+  61%, 100% { opacity: 0.25; }
 }
-.animate-twinkle {
-  animation: twinkle 3s ease-in-out infinite;
-}
-
-/* Luggage-tag swing for service cards. */
-@keyframes tag-swing {
-  0% { transform: rotate(0deg); }
-  30% { transform: rotate(4deg); }
-  60% { transform: rotate(-2.5deg); }
-  100% { transform: rotate(0deg); }
-}
-.group:hover .animate-tag-swing,
-.group:focus-within .animate-tag-swing {
-  animation: tag-swing 0.9s ease-out;
-}
-
-@keyframes trail-dash {
-  to { stroke-dashoffset: -40; }
-}
-.animate-trail {
-  animation: trail-dash 2.4s linear infinite;
+.animate-led {
+  animation: led-blink 1.1s steps(1) infinite;
 }
 
 @keyframes blink {
@@ -193,7 +172,6 @@
   animation: blink 1s steps(1) infinite;
 }
 
-/* Subtle entrance used by cards when changing filters. */
 @keyframes project-card-enter {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -210,9 +188,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-flag,
-  .animate-twinkle,
-  .animate-trail,
+  .animate-signal,
+  .animate-led,
   .animate-blink,
   .project-card-enter {
     animation: none;

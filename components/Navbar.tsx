@@ -2,70 +2,69 @@
 
 import React from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
-import { Backpack, Flag, Map, Mountain, Tent } from 'lucide-react';
+import { CircuitBoard, Cpu, MemoryStick, Microchip, Terminal } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import type { SectionKey } from '@/types/navigation';
-import { BASE_ALTITUDE, CAMPS, CAMP_ORDER, SUMMIT_ALTITUDE, altitudeFraction } from '@/lib/expedition';
+import { MODULES, MODULE_ORDER } from '@/lib/board';
 
 interface NavBarProps {
   activeSection: SectionKey;
   setActiveSection: (section: SectionKey) => void;
-  /** Hide the navigation while the climbing game is on screen — it has its own altimeter and controls. */
-  hidden?: boolean;
 }
 
-const campIcons: Record<SectionKey, LucideIcon> = {
-  home: Tent,
-  services: Backpack,
-  skills: Map,
-  projects: Mountain,
-  contact: Flag,
+const moduleIcons: Record<SectionKey, LucideIcon> = {
+  home: Cpu,
+  services: CircuitBoard,
+  skills: MemoryStick,
+  projects: Microchip,
+  contact: Terminal,
 };
 
-/* Altitude follows page scroll: the top of the page is Kathmandu, the bottom is the summit. */
-const useAltitude = () => {
+/* Scroll position shown as a program counter: 0x0000 at the top of the page, 0xFFFF at the end. */
+const useProgramCounter = () => {
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.4 });
-  const meters = useTransform(progress, [0, 1], [BASE_ALTITUDE, SUMMIT_ALTITUDE]);
-  const readout = useTransform(meters, (v) => Math.round(v).toLocaleString('en-US'));
-  return { progress, readout };
+  const pc = useTransform(progress, (v) => `0x${Math.round(Math.min(Math.max(v, 0), 1) * 0xffff).toString(16).toUpperCase().padStart(4, '0')}`);
+  return { progress, pc };
 };
 
-const Navbar = ({ activeSection, setActiveSection, hidden = false }: NavBarProps) => {
-  const { progress, readout } = useAltitude();
-  const markerBottom = useTransform(progress, (v) => `${v * 100}%`);
+const Navbar = ({ activeSection, setActiveSection }: NavBarProps) => {
+  const { progress, pc } = useProgramCounter();
+  const signalHeight = useTransform(progress, (v) => `${v * 100}%`);
   const barWidth = useTransform(progress, (v) => `${v * 100}%`);
-  const activeCamp = CAMPS[activeSection];
+  const active = MODULES[activeSection];
 
   return (
     <>
-      {/* Mobile + tablet: bottom camp bar with a live altimeter strip */}
-      <nav aria-label="Primary" className={`fixed inset-x-0 bottom-0 z-50 px-3 pb-3 transition-transform duration-300 lg:hidden safe-area-pb ${hidden ? "translate-y-[120%]" : ""}`}>
+      {/* Phone + tablet: bottom bus bar */}
+      <nav aria-label="Primary" className="fixed inset-x-0 bottom-0 z-50 px-3 pb-3 lg:hidden safe-area-pb">
         <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border bg-card/95 shadow-lifted backdrop-blur-xl">
-          <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
-            <span className="truncate">{activeCamp.name} · {activeCamp.label}</span>
-            <span className="flex-none text-accent">▲ <motion.span>{readout}</motion.span> m</span>
+          <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+            <span className="flex min-w-0 items-center gap-2 truncate">
+              <span className={`led ${active.led}`} /> {active.ref} · {active.addr} · {active.name}
+            </span>
+            <span className="flex-none text-accent">PC <motion.span>{pc}</motion.span></span>
           </div>
           <div className="relative h-[3px] bg-secondary">
-            <motion.span className="absolute inset-y-0 left-0 bg-accent" style={{ width: barWidth }} />
+            <motion.span className="absolute inset-y-0 left-0 bg-copper" style={{ width: barWidth }} />
           </div>
           <div className="flex items-center justify-between p-1.5">
-            {CAMP_ORDER.map((key) => {
-              const Icon = campIcons[key];
+            {MODULE_ORDER.map((key) => {
+              const Icon = moduleIcons[key];
               const isActive = activeSection === key;
               return (
                 <button
                   key={key}
                   type="button"
                   onClick={() => setActiveSection(key)}
-                  aria-label={`${CAMPS[key].name}: ${CAMPS[key].label}`}
+                  aria-label={`${MODULES[key].name}: ${MODULES[key].label}`}
                   aria-current={isActive ? 'page' : undefined}
                   className={`flex h-11 items-center justify-center gap-1.5 rounded-xl transition-all duration-300 ${
-                    isActive ? 'flex-[1.9] bg-accent px-3 text-accent-foreground' : 'flex-1 text-muted-foreground active:bg-secondary'
+                    isActive ? 'flex-[1.9] bg-foreground px-3 text-background' : 'flex-1 text-muted-foreground active:bg-secondary'
                   }`}
                 >
-                  <Icon size={18} strokeWidth={2.2} />
-                  {isActive && <span className="whitespace-nowrap text-xs font-bold">{CAMPS[key].short}</span>}
+                  <Icon size={18} strokeWidth={2.1} />
+                  {isActive && <span className="whitespace-nowrap font-mono text-[11px] font-semibold uppercase">{MODULES[key].name}</span>}
                 </button>
               );
             })}
@@ -73,48 +72,42 @@ const Navbar = ({ activeSection, setActiveSection, hidden = false }: NavBarProps
         </div>
       </nav>
 
-      {/* Desktop: vertical altimeter rail — camps are the navigation */}
-      <nav aria-label="Primary" className={`fixed bottom-10 left-6 top-28 z-40 hidden w-16 flex-col items-center transition-all duration-300 lg:flex ${hidden ? "pointer-events-none -translate-x-6 opacity-0" : ""}`}>
-        <div className="mb-4 w-full rounded-xl border border-border bg-card/90 px-1 py-2 text-center backdrop-blur">
-          <span className="block font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Alt</span>
-          <span className="block font-mono text-xs font-bold tabular-nums text-accent"><motion.span>{readout}</motion.span></span>
-          <span className="block font-mono text-[9px] text-muted-foreground">m</span>
+      {/* Desktop: vertical data bus — every module is a pad you can jump to */}
+      <nav aria-label="Primary" className="fixed bottom-10 left-6 top-28 z-40 hidden w-16 flex-col items-center lg:flex">
+        <div className="mb-4 w-full rounded-lg border border-border bg-card/90 px-1 py-2 text-center backdrop-blur">
+          <span className="block font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">PC</span>
+          <span className="block font-mono text-[11px] font-semibold tabular-nums text-accent"><motion.span>{pc}</motion.span></span>
         </div>
 
         <div className="relative w-full flex-1">
-          {/* Track + tick marks every 1,000 m */}
-          <span className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-border" />
-          {Array.from({ length: 8 }, (_, i) => 2000 + i * 1000).map((alt) => (
-            <span
-              key={alt}
-              className="absolute left-1/2 h-px w-2 -translate-x-1/2 bg-muted-foreground/40"
-              style={{ bottom: `${altitudeFraction(alt) * 100}%` }}
-            />
-          ))}
-          <motion.span className="absolute bottom-0 left-1/2 w-[3px] -translate-x-1/2 rounded-full bg-accent" style={{ height: markerBottom }} />
+          {/* Copper bus, with the signal filling it as you scroll */}
+          <span className="absolute inset-y-0 left-1/2 w-[3px] -translate-x-1/2 rounded-full bg-copper/25" />
+          <motion.span className="absolute left-1/2 top-0 w-[3px] -translate-x-1/2 rounded-full bg-copper" style={{ height: signalHeight }} />
 
-          {CAMP_ORDER.map((key) => {
-            const camp = CAMPS[key];
+          {MODULE_ORDER.map((key, i) => {
+            const m = MODULES[key];
             const isActive = activeSection === key;
             return (
               <button
                 key={key}
                 type="button"
                 onClick={() => setActiveSection(key)}
+                aria-label={`${m.name}: ${m.label}`}
                 aria-current={isActive ? 'page' : undefined}
-                className="group absolute left-1/2 -translate-x-1/2 translate-y-1/2"
-                style={{ bottom: `${altitudeFraction(camp.altitude) * 100}%` }}
+                className="group absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
+                style={{ top: `${(i / (MODULE_ORDER.length - 1)) * 100}%` }}
               >
                 <span
-                  className={`block h-3.5 w-3.5 rotate-45 rounded-[3px] border-2 transition-all duration-300 ${
-                    isActive ? 'scale-125 border-accent bg-accent' : 'border-muted-foreground bg-background group-hover:border-foreground'
+                  className={`flex h-7 w-10 items-center justify-center rounded-[4px] border-2 font-mono text-[9px] font-semibold transition-all duration-300 ${
+                    isActive ? 'border-copper bg-copper text-background' : 'border-copper/60 bg-background text-muted-foreground group-hover:border-copper group-hover:text-foreground'
                   }`}
-                />
-                <span
-                  className="pointer-events-none absolute left-7 top-1/2 -translate-y-1/2 translate-x-1 whitespace-nowrap rounded-lg border border-border bg-card px-3 py-1.5 text-left opacity-0 shadow-soft transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:opacity-100"
                 >
-                  <span className="block font-display text-sm font-bold text-foreground">{camp.name}</span>
-                  <span className="block font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">{camp.label}</span>
+                  {m.ref}
+                </span>
+                {isActive && <span className={`led absolute -right-2 -top-1 ${m.led}`} />}
+                <span className="pointer-events-none absolute left-12 top-1/2 -translate-y-1/2 translate-x-1 whitespace-nowrap rounded-md border border-border bg-card px-3 py-1.5 text-left opacity-0 shadow-soft transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:opacity-100">
+                  <span className="block font-display text-sm font-bold uppercase text-foreground">{m.name}</span>
+                  <span className="block font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">{m.addr} · {m.label}</span>
                 </span>
               </button>
             );
