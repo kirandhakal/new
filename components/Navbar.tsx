@@ -10,6 +10,8 @@ import { BASE_ALTITUDE, CAMPS, CAMP_ORDER, SUMMIT_ALTITUDE, altitudeFraction } f
 interface NavBarProps {
   activeSection: SectionKey;
   setActiveSection: (section: SectionKey) => void;
+  /** Hide the navigation while the climbing game is on screen — it has its own altimeter and controls. */
+  hidden?: boolean;
 }
 
 const campIcons: Record<SectionKey, LucideIcon> = {
@@ -29,7 +31,7 @@ const useAltitude = () => {
   return { progress, readout };
 };
 
-const Navbar = ({ activeSection, setActiveSection }: NavBarProps) => {
+const Navbar = ({ activeSection, setActiveSection, hidden = false }: NavBarProps) => {
   const { progress, readout } = useAltitude();
   const markerBottom = useTransform(progress, (v) => `${v * 100}%`);
   const barWidth = useTransform(progress, (v) => `${v * 100}%`);
@@ -38,7 +40,7 @@ const Navbar = ({ activeSection, setActiveSection }: NavBarProps) => {
   return (
     <>
       {/* Mobile + tablet: bottom camp bar with a live altimeter strip */}
-      <nav aria-label="Primary" className="fixed inset-x-0 bottom-0 z-50 px-3 pb-3 lg:hidden safe-area-pb">
+      <nav aria-label="Primary" className={`fixed inset-x-0 bottom-0 z-50 px-3 pb-3 transition-transform duration-300 lg:hidden safe-area-pb ${hidden ? "translate-y-[120%]" : ""}`}>
         <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border bg-card/95 shadow-lifted backdrop-blur-xl">
           <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
             <span className="truncate">{activeCamp.name} · {activeCamp.label}</span>
@@ -72,7 +74,7 @@ const Navbar = ({ activeSection, setActiveSection }: NavBarProps) => {
       </nav>
 
       {/* Desktop: vertical altimeter rail — camps are the navigation */}
-      <nav aria-label="Primary" className="fixed bottom-10 left-6 top-28 z-40 hidden w-16 flex-col items-center lg:flex">
+      <nav aria-label="Primary" className={`fixed bottom-10 left-6 top-28 z-40 hidden w-16 flex-col items-center transition-all duration-300 lg:flex ${hidden ? "pointer-events-none -translate-x-6 opacity-0" : ""}`}>
         <div className="mb-4 w-full rounded-xl border border-border bg-card/90 px-1 py-2 text-center backdrop-blur">
           <span className="block font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">Alt</span>
           <span className="block font-mono text-xs font-bold tabular-nums text-accent"><motion.span>{readout}</motion.span></span>

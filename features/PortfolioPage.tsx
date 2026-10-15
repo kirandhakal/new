@@ -101,7 +101,7 @@ const PortfolioPage = () => {
 
       <main className="pt-16 lg:pl-24">
         <div>
-          <section ref={sectionRefs.home} id="home" className="relative">
+          <section ref={sectionRefs.home} id="home" className="relative lg:-ml-24">
             <div>
             <Suspense fallback={<SectionFallback label="Loading home..." />}>
               {isHomeNear ? <HomeSection setActiveSection={scrollToSection} /> : null}
@@ -145,7 +145,7 @@ const PortfolioPage = () => {
         </div>
       </main>
 
-      <Navbar activeSection={activeSection} setActiveSection={scrollToSection} />
+      <Navbar activeSection={activeSection} setActiveSection={scrollToSection} hidden={activeSection === "home"} />
       <Suspense fallback={null}>
         <ChatbaseWidget />
       </Suspense>
