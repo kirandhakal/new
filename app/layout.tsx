@@ -1,16 +1,17 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import Script from "next/script";
-import { JetBrains_Mono, Manrope, Syne } from "next/font/google";
+import { Bricolage_Grotesque, Instrument_Sans, Noto_Serif_Devanagari, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/seo";
 
-const syne = Syne({ subsets: ["latin"], weight: ["500", "600", "700", "800"], variable: "--font-syne", display: "swap" });
-const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-manrope", display: "swap" });
-const jetbrains = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-jetbrains", display: "swap" });
+const bricolage = Bricolage_Grotesque({ subsets: ["latin"], weight: ["400", "600", "700", "800"], variable: "--font-bricolage", display: "swap" });
+const instrument = Instrument_Sans({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-instrument", display: "swap" });
+const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-spacemono", display: "swap" });
+const devanagari = Noto_Serif_Devanagari({ subsets: ["devanagari"], weight: ["600", "800"], variable: "--font-devanagari", display: "swap" });
 
 export const viewport: Viewport = {
-  themeColor: "#0c0d0b",
+  themeColor: "#0a0e1a",
   colorScheme: "dark",
 };
 
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${syne.variable} ${manrope.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${bricolage.variable} ${instrument.variable} ${spaceMono.variable} ${devanagari.variable}`}>
       <head>
         <Script id="gtm" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

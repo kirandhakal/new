@@ -3,43 +3,50 @@
 @tailwind utilities;
 
 /*
- * "Night Studio" theme — warm ink surfaces, bone text, one electric lime accent
- * with coral + lilac used sparingly for highlights. Solid colours only, no gradients.
+ * "Expedition" theme — a Himalayan night. Deep sky surfaces, snow-white text and the
+ * five lungta (prayer flag) colours as solid accents: blue sky, white air, red fire,
+ * green water, yellow earth. No gradients.
  */
 :root {
   color-scheme: dark;
 
-  --background: 80 8% 5%;          /* #0c0d0b ink */
-  --foreground: 45 24% 91%;        /* #eeebe1 bone */
-  --card: 90 9% 8%;                /* #141612 */
-  --card-foreground: 45 24% 91%;
-  --popover: 90 9% 8%;
-  --popover-foreground: 45 24% 91%;
-  --primary: 45 24% 91%;
-  --primary-foreground: 80 8% 5%;
-  --secondary: 90 10% 11%;         /* #1c1f19 */
-  --secondary-foreground: 45 24% 91%;
-  --accent: 75 100% 65%;           /* #d2ff4d lime */
-  --accent-foreground: 80 8% 5%;
-  --coral: 12 100% 67%;            /* #ff7a59 */
-  --lilac: 250 100% 82%;           /* #b4a5ff */
-  --muted: 90 10% 11%;
-  --muted-foreground: 60 5% 58%;   /* #9a9a8d */
-  --border: 90 9% 17%;             /* #2a2e26 */
-  --input: 90 9% 20%;
-  --ring: 75 100% 65%;
-  --success: 142 71% 55%;
-  --warning: 38 92% 60%;
-  --danger: 4 90% 66%;
+  --background: 225 44% 7%;        /* #0a0e1a night sky */
+  --foreground: 45 22% 93%;        /* #f2f0ea snow */
+  --card: 225 42% 11%;             /* #0f1528 */
+  --card-foreground: 45 22% 93%;
+  --popover: 225 42% 11%;
+  --popover-foreground: 45 22% 93%;
+  --primary: 45 22% 93%;
+  --primary-foreground: 225 44% 7%;
+  --secondary: 225 38% 16%;        /* #19213a ridge */
+  --secondary-foreground: 45 22% 93%;
+  --accent: 43 100% 62%;           /* #ffc93c summit sun (yellow flag) */
+  --accent-foreground: 225 44% 7%;
+  --flag-blue: 223 100% 65%;       /* #4c7dff */
+  --flag-red: 4 100% 65%;          /* #ff5a4e */
+  --flag-green: 147 61% 47%;       /* #2fbf71 */
+  --flag-yellow: 43 100% 62%;
+  --flag-white: 45 22% 93%;
+  --coral: var(--flag-red);
+  --lilac: var(--flag-blue);
+  --muted: 225 38% 16%;
+  --muted-foreground: 225 17% 64%; /* #949cb5 */
+  --border: 225 33% 20%;           /* #222a44 */
+  --input: 225 33% 23%;
+  --ring: 43 100% 62%;
+  --success: 147 61% 47%;
+  --warning: 43 100% 62%;
+  --danger: 4 100% 65%;
 
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: var(--font-syne), var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-bricolage), var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-spacemono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-deva: var(--font-devanagari), "Noto Sans Devanagari", serif;
 
   --text-eyebrow: 0.75rem;
   --text-body: 1rem;
   --text-lead: 1.125rem;
-  --text-display: clamp(2.75rem, 8vw, 7.5rem);
+  --text-display: clamp(3rem, 9vw, 7.5rem);
 
   --radius-sm: 0.375rem;
   --radius-md: 0.625rem;
@@ -47,8 +54,8 @@
   --radius-xl: 1.125rem;
   --radius-2xl: 1.5rem;
 
-  --shadow-soft: 0 1px 0 hsl(0 0% 100% / 0.04) inset, 0 10px 30px hsl(0 0% 0% / 0.35);
-  --shadow-lifted: 0 1px 0 hsl(0 0% 100% / 0.06) inset, 0 24px 60px hsl(0 0% 0% / 0.55);
+  --shadow-soft: 0 10px 30px hsl(228 60% 2% / 0.45);
+  --shadow-lifted: 0 24px 60px hsl(228 60% 2% / 0.65);
 }
 
 @layer base {
@@ -62,7 +69,6 @@
     color: hsl(var(--foreground));
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
   }
 
   ::selection {
@@ -77,56 +83,63 @@
 
   input::placeholder,
   textarea::placeholder {
-    color: hsl(var(--muted-foreground) / 0.6);
+    color: hsl(var(--muted-foreground) / 0.55);
   }
 }
 
 @layer components {
-  /* Small mono label used above every section heading. */
+  /* Mono "field label" used for coordinates, altitudes and small captions. */
   .eyebrow {
-    @apply inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground;
-  }
-  .eyebrow::before {
-    content: "";
-    @apply h-1.5 w-1.5 rounded-full bg-accent;
+    @apply inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground;
   }
 
-  /* Faint dot grid that gives dark surfaces a bit of texture. */
-  .grid-texture {
-    background-image: radial-gradient(hsl(var(--foreground) / 0.07) 1px, transparent 1px);
-    background-size: 22px 22px;
+  /* Topographic contour texture drawn with two offset dot grids. */
+  .topo-dots {
+    background-image: radial-gradient(hsl(var(--foreground) / 0.06) 1px, transparent 1.2px);
+    background-size: 26px 26px;
   }
 
-  /* Hollow display type for the hero and footer wordmark. */
-  .text-outline {
-    color: transparent;
-    -webkit-text-stroke: 1.5px hsl(var(--foreground) / 0.85);
-  }
-
-  .noise::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.05;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  /* Ruled notebook paper for the "field journal" panels. */
+  .ruled {
+    background-image: repeating-linear-gradient(to bottom, transparent 0 27px, hsl(var(--border) / 0.7) 27px 28px);
   }
 }
 
-/* Infinite marquee used for the tech strip. */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+/* Prayer flags sway from the string they hang on. */
+@keyframes flag-sway {
+  0%, 100% { transform: rotate(-5deg) skewX(-2deg); }
+  50% { transform: rotate(6deg) skewX(3deg); }
 }
-.animate-marquee {
-  animation: marquee 32s linear infinite;
+.animate-flag {
+  transform-origin: top center;
+  animation: flag-sway 3.2s ease-in-out infinite;
 }
 
-@keyframes spin-slow {
-  to { transform: rotate(360deg); }
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
 }
-.animate-spin-badge {
-  animation: spin-slow 18s linear infinite;
+.animate-twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+/* Luggage-tag swing for service cards. */
+@keyframes tag-swing {
+  0% { transform: rotate(0deg); }
+  30% { transform: rotate(4deg); }
+  60% { transform: rotate(-2.5deg); }
+  100% { transform: rotate(0deg); }
+}
+.group:hover .animate-tag-swing,
+.group:focus-within .animate-tag-swing {
+  animation: tag-swing 0.9s ease-out;
+}
+
+@keyframes trail-dash {
+  to { stroke-dashoffset: -40; }
+}
+.animate-trail {
+  animation: trail-dash 2.4s linear infinite;
 }
 
 @keyframes blink {
@@ -136,7 +149,7 @@
   animation: blink 1s steps(1) infinite;
 }
 
-/* Subtle entrance used by project cards on load and when changing filters. */
+/* Subtle entrance used by cards when changing filters. */
 @keyframes project-card-enter {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -153,8 +166,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee,
-  .animate-spin-badge,
+  .animate-flag,
+  .animate-twinkle,
+  .animate-trail,
   .animate-blink,
   .project-card-enter {
     animation: none;
@@ -165,13 +179,12 @@ img {
   object-fit: cover;
 }
 
-/* Safe area for bottom nav on mobile (notch/home indicator) */
 .safe-area-pb {
   padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
 /* AI Chatbase widget: mobile-friendly position, no overlap with bottom nav or content */
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
   .chatbase-widget-mobile-friendly,
   #chatbase-bubble-window,
   [data-chatbase-host="true"] {
@@ -179,8 +192,8 @@ img {
   }
 
   #chatbase-bubble-button {
-    bottom: calc(6rem + env(safe-area-inset-bottom, 0px)) !important;
-    right: 1.25rem !important;
+    bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px)) !important;
+    right: 1rem !important;
     left: auto !important;
     top: auto !important;
   }
@@ -191,7 +204,7 @@ img {
     left: 0.75rem !important;
     right: 0.75rem !important;
     top: calc(0.75rem + env(safe-area-inset-top, 0px)) !important;
-    bottom: calc(6rem + env(safe-area-inset-bottom, 0px)) !important;
+    bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px)) !important;
     width: auto !important;
     height: auto !important;
     max-width: none !important;

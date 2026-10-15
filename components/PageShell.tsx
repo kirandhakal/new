@@ -24,7 +24,7 @@ const PageShell = ({ activeSection, children }: PageShellProps) => {
     <div className="min-h-screen bg-background">
       <Header onHomeClick={() => onNavigate("home")} />
 
-      <main className="pt-16 md:pt-[72px]">
+      <main className="pt-16 lg:pl-24">
         <div className="max-w-7xl mx-auto">{children}</div>
       </main>
 

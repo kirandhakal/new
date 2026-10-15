@@ -1,11 +1,9 @@
 "use client";
 
 import React, { Suspense, useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { ArrowUp } from "lucide-react";
 import type { SectionKey } from "@/types/navigation";
 
 const HomeSection = React.lazy(() => import("./HomeSection"));
@@ -50,7 +48,6 @@ const SectionFallback = ({ label }: { label: string }) => (
 
 const PortfolioPage = () => {
   const [activeSection, setActiveSection] = useState<SectionKey>("home");
-  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const sectionRefs = {
     home: useRef<HTMLElement>(null),
@@ -90,11 +87,6 @@ const PortfolioPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const handleScrollPosition = () => setShowScrollTop(window.scrollY > 500);
-    window.addEventListener("scroll", handleScrollPosition);
-    return () => window.removeEventListener("scroll", handleScrollPosition);
-  }, []);
 
   const scrollToSection = (section: SectionKey) => {
     const element = sectionRefs[section]?.current;
@@ -107,7 +99,7 @@ const PortfolioPage = () => {
     <div className="min-h-screen bg-background">
       <Header onHomeClick={() => scrollToSection("home")} />
 
-      <main className="pt-16 md:pt-[72px]">
+      <main className="pt-16 lg:pl-24">
         <div>
           <section ref={sectionRefs.home} id="home" className="relative">
             <div>
@@ -159,21 +151,6 @@ const PortfolioPage = () => {
       </Suspense>
       <Footer />
 
-      <motion.button
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{
-          opacity: showScrollTop ? 1 : 0,
-          scale: showScrollTop ? 1 : 0,
-          pointerEvents: showScrollTop ? "auto" : "none",
-        }}
-        onClick={() => scrollToSection("home")}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        className="fixed bottom-24 right-4 z-40 hidden h-12 w-12 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-lifted transition-colors hover:bg-accent hover:text-accent-foreground md:bottom-8 md:right-8 md:flex"
-        aria-label="Scroll to top"
-      >
-        <ArrowUp size={20} />
-      </motion.button>
     </div>
   );
 };

@@ -22,9 +22,17 @@ const designTokens = {
     danger: "hsl(var(--danger) / <alpha-value>)",
     coral: "hsl(var(--coral) / <alpha-value>)",
     lilac: "hsl(var(--lilac) / <alpha-value>)",
+    flag: {
+      blue: "hsl(var(--flag-blue) / <alpha-value>)",
+      white: "hsl(var(--flag-white) / <alpha-value>)",
+      red: "hsl(var(--flag-red) / <alpha-value>)",
+      green: "hsl(var(--flag-green) / <alpha-value>)",
+      yellow: "hsl(var(--flag-yellow) / <alpha-value>)",
+    },
   },
   fontFamily: {
     sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+    deva: ["var(--font-deva)", "serif"],
     display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],
     mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
   },
