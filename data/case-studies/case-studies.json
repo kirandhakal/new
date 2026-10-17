@@ -51,52 +51,7 @@
         "intro": "Development and testing run continuously. The work is split into phases, with constant stakeholder collaboration and a repeating cycle of planning, executing, and evaluating.",
         "steps": ["Plan", "Design", "Develop", "Test", "Release", "Feedback"]
       }
-    },
-    {
-      "slug": "explorify",
-      "title": "Explorify",
-      "tagline": "An AI-powered travel companion that recommends destinations based on your interests and mood.",
-      "category": "Travel & AI",
-      "year": "2025",
-      "institution": "Gandaki College of Engineering and Science · Pokhara University",
-      "projectType": "Project · B.E. Computer Engineering",
-      "team": ["Bijay Timilsina", "Bijay Bastola", "Bipin Dhungana"],
-      "icon": "Compass",
-      "gradient": "from-sky-500 to-indigo-500",
-      "cover": "/images/case-studies/explorify/wireframe-hero.webp",
-      "stack": ["React", "Node.js", "Python", "PostgreSQL", "Figma", "Draw.io"],
-      "overview": "Explorify is a recommendation system that uses AI and machine learning to help travelers find places and activities that match their interests. It learns from past choices, preferences, and feedback, and its suggestions improve over time. Beyond recommendations, it is a full travel companion: destination search, maps, itineraries, travel partners, checklists, expense tracking, and a trip gallery.",
-      "problem": "Travel planning takes time and can be overwhelming, and travelers struggle to find destinations that suit them. Trips with family or friends add more to handle: itineraries, budgets, attractions, accommodation, and transport.",
-      "objective": "Provide personalized travel recommendations that improve the user experience and make trip planning simpler.",
-      "impact": "Saves travelers time with relevant suggestions and better decisions. It also supports tourism by promoting lesser-known destinations, which spreads visitors more evenly.",
-      "highlights": [
-        { "icon": "Sparkles", "title": "Smart recommendations", "description": "ML-driven suggestions based on past visits, preferences, and popular trends." },
-        { "icon": "Smile", "title": "Recommend by mood", "description": "Pick a mood like adventurous, romantic, or relaxed to get matching destinations, such as bungee jumping or paragliding." },
-        { "icon": "Map", "title": "Maps & itineraries", "description": "Explore destinations on a map and build day-by-day trip plans." },
-        { "icon": "Users", "title": "Travel partners", "description": "Coordinate trips with friends and family in one shared space." },
-        { "icon": "Wallet", "title": "Checklists & expenses", "description": "Prepare packing checklists and track the trip budget as you go." },
-        { "icon": "Images", "title": "Trip gallery", "description": "Upload and relive the trip's photos and videos." }
-      ],
-      "actors": [
-        { "name": "Recommended by category", "description": "Choose a category to see destinations tailored to your preferences, past visits, or popular trends." },
-        { "name": "View destination details", "description": "See location, duration, cost, scenery, reviews, and accommodation for any destination." },
-        { "name": "Add to favorites", "description": "Save destinations to a personal list stored on your profile for later." },
-        { "name": "Recommend by mood", "description": "Pick a mood to get matching destinations, or similar moods when nothing matches." }
-      ],
-      "research": {
-        "intro": "The design draws on recent research into recommender systems for tourism.",
-        "items": [
-          { "name": "Bansal & Agarwal (2021)", "description": "Travel recommendation systems: A survey and taxonomy.", "url": "https://scholar.google.com/scholar?q=Travel+recommendation+systems%3A+A+survey+and+taxonomy" },
-          { "name": "Chen & Zhang (2020)", "description": "A machine learning approach for personalized travel recommendations.", "url": "https://scholar.google.com/scholar?q=A+machine+learning+approach+for+personalized+travel+recommendations" },
-          { "name": "Liu & Xu (2020)", "description": "Using deep learning to improve personalized travel recommendations.", "url": "https://scholar.google.com/scholar?q=Using+deep+learning+to+improve+personalized+travel+recommendations" },
-          { "name": "Wang & Zhang (2023)", "description": "Context-aware travel recommendation using collaborative filtering and deep learning.", "url": "https://scholar.google.com/scholar?q=Context-aware+travel+recommendation+using+collaborative+filtering+and+deep+learning" }
-        ]
-      },
-      "approach": {
-        "name": "Agile model",
-        "intro": "Features ship in short two-to-four-week cycles. Each increment is tested continuously and released early so feedback comes in quickly.",
-        "steps": ["Requirements", "Design", "Development", "Testing", "Deployment", "Review"]
-      }
     }
+   
   ]
 }

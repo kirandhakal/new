@@ -48,14 +48,14 @@ const Header = ({ onHomeClick }: HeaderProps) => {
         </button>
 
         <div className="flex flex-none items-center gap-2 font-mono text-[11px] text-muted-foreground">
-          <span className="hidden items-center gap-2 rounded-md border border-border px-2.5 py-1.5 md:inline-flex">
+          {/* <span className="hidden items-center gap-2 rounded-md border border-border px-2.5 py-1.5 md:inline-flex">
             <span className="led text-led-green" />
             SYS OK · open to work
-          </span>
+          </span> */}
           <span className="hidden items-center gap-3 rounded-md border border-border px-2.5 py-1.5 sm:inline-flex" suppressHydrationWarning>
-            <span>UP <span className="tabular-nums text-foreground" suppressHydrationWarning>{uptime}</span></span>
-            <span className="text-border">|</span>
-            <span>KTM <span className="tabular-nums text-foreground" suppressHydrationWarning>{time}</span></span>
+            {/* <span>UP <span className="tabular-nums text-foreground" suppressHydrationWarning>{uptime}</span></span> */}
+            {/* <span className="text-border">|</span> */}
+            <span>KTM, Nepal <span className="tabular-nums text-foreground" suppressHydrationWarning>{time}</span></span>
           </span>
           <ThemeToggle />
         </div>
