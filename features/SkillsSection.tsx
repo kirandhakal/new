@@ -6,11 +6,21 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import skillsJson from '@/data/landing-page/home-skills.json';
 import type { SkillContent } from '@/types/content';
 import ModuleHeading from '@/components/ModuleHeading';
-import { LED_TEXT, hash, toHex } from '@/lib/board';
+import { hash } from '@/lib/board';
 import { codeFileName, highlight } from '@/lib/highlight';
 
 const content = skillsJson as SkillContent;
-const LEVELS = [92, 90, 86, 78, 88, 84, 76];
+
+/* Tier labels instead of percentages — each skill maps to a signal grade. */
+const TIERS = ['Core', 'Core', 'Core', 'Core', 'Core', 'Proficient', 'Proficient', 'Proficient', 'Familiar'] as const;
+type Tier = (typeof TIERS)[number];
+
+const TIER_META: Record<Tier, { pins: number; note: string }> = {
+  Core: { pins: 8, note: 'Primary stack · daily use' },
+  Proficient: { pins: 5, note: 'Solid in production' },
+  Familiar: { pins: 3, note: 'Comfortable · growing' },
+};
+
 const partNo = (name: string) => `KD${(hash(name) % 9000) + 1000}`;
 
 /* A square wave whose bit pattern comes from the skill's name, so every chip has its own signal. */
@@ -29,7 +39,7 @@ const waveform = (seed: number, bits = 24, w = 600, h = 34) => {
 };
 
 /* DIP chip on the breadboard: one per skill. */
-const DipChip = ({ name, active, onClick, led }: { name: string; active: boolean; onClick: () => void; led: string }) => (
+const DipChip = ({ name, active, onClick }: { name: string; active: boolean; onClick: () => void }) => (
   <button
     type="button"
     role="tab"
@@ -52,7 +62,6 @@ const DipChip = ({ name, active, onClick, led }: { name: string; active: boolean
       <span className="absolute left-0 top-1/2 h-4 w-2 -translate-y-1/2 rounded-r-full bg-board" aria-hidden="true" />
       <span className="font-mono text-[9px] tracking-[0.14em] opacity-60">{partNo(name)}</span>
       <span className="mt-0.5 line-clamp-2 font-display text-sm font-bold uppercase leading-tight">{name}</span>
-      {active && <span className={`led absolute right-2 top-2 ${led}`} />}
     </span>
   </button>
 );
@@ -62,7 +71,8 @@ const SkillsSection = () => {
   const [touched, setTouched] = useState(false);
   const total = content.items.length;
   const skill = content.items[active];
-  const level = LEVELS[active % LEVELS.length];
+  const tier = TIERS[active % TIERS.length];
+  const meta = TIER_META[tier];
   const seed = useMemo(() => hash(skill.name), [skill.name]);
 
   // Cycle through chips on its own until the visitor probes one.
@@ -93,7 +103,7 @@ const SkillsSection = () => {
         </div>
         <div role="tablist" aria-label="Skills" className="-mx-4 mt-3 flex snap-x gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:-mx-6 sm:px-6 lg:mx-0 lg:flex-wrap lg:justify-center lg:overflow-visible lg:px-0">
           {content.items.map((item, i) => (
-            <DipChip key={item.name} name={item.name} active={i === active} onClick={() => go(i)} led={LED_TEXT[i % LED_TEXT.length]} />
+            <DipChip key={item.name} name={item.name} active={i === active} onClick={() => go(i)} />
           ))}
         </div>
       </div>
@@ -102,7 +112,7 @@ const SkillsSection = () => {
       <div className="mt-6 overflow-hidden rounded-3xl border border-border bg-chip text-chip-foreground shadow-lifted">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-chip-foreground/10 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.16em]">
           <span className="text-chip-foreground/60">Probe · CH1–CH3 · 100 MHz</span>
-          <span className="text-led-green">● Trigger armed</span>
+          <span className="text-chip-foreground/70">Trigger armed</span>
         </div>
 
         <div className="grid lg:grid-cols-12">
@@ -115,9 +125,10 @@ const SkillsSection = () => {
                     <p className="font-mono text-[10px] tracking-[0.16em] text-chip-foreground/50">{partNo(skill.name)} · {skill.description}</p>
                     <h3 className="mt-1 font-display text-3xl font-bold uppercase tracking-tight">{skill.name}</h3>
                   </div>
-                  <p className="font-mono text-sm">
-                    level <span className="text-led-green">{level}%</span> <span className="text-chip-foreground/40">{toHex(level)}</span>
-                  </p>
+                  <div className="text-right">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-chip-foreground/50">Signal grade</p>
+                    <p className="mt-0.5 font-display text-xl font-bold uppercase tracking-tight text-accent">{tier}</p>
+                  </div>
                 </div>
 
                 <div className="mt-5 space-y-3">
@@ -145,14 +156,24 @@ const SkillsSection = () => {
                   ))}
                 </div>
 
-                {/* level as a 10-segment bar graph LED */}
-                <div className="mt-6 flex gap-1.5" aria-label={`Proficiency ${level} percent`}>
-                  {Array.from({ length: 10 }, (_, i) => (
-                    <span
-                      key={i}
-                      className={`h-3 flex-1 rounded-[2px] ${i < Math.round(level / 10) ? (i > 7 ? 'bg-led-red' : i > 5 ? 'bg-led-amber' : 'bg-led-green') : 'bg-chip-foreground/10'}`}
-                    />
-                  ))}
+                {/* Pin-depth meter instead of percentage bar */}
+                <div className="mt-6" aria-label={`Signal grade ${tier}`}>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-chip-foreground/50">Pin depth</span>
+                    <span className="font-mono text-[10px] text-chip-foreground/50">{meta.note}</span>
+                  </div>
+                  <div className="mt-2 flex gap-1.5">
+                    {Array.from({ length: 8 }, (_, i) => (
+                      <span
+                        key={i}
+                        className={`h-8 flex-1 rounded-sm border transition-colors ${
+                          i < meta.pins
+                            ? 'border-copper bg-copper/80'
+                            : 'border-chip-foreground/15 bg-transparent'
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>

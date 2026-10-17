@@ -75,13 +75,12 @@ export default function Terminal({ onNavigate }: { onNavigate: (key: SectionKey)
       case "services":
         return [line("Services loaded:", "muted"), ...services.items.map((s, i) => line(`[${i + 1}] ${s.title}`)), line("Run `open services` for details.", "muted")];
       case "skills": {
-        const levels = [92, 90, 86, 78, 88, 84, 76];
+        const tiers = ["Core", "Core", "Core", "Core", "Core", "Proficient", "Proficient", "Proficient", "Familiar"];
         return [
-          line("Skill            level", "muted"),
+          line("Skill                 grade", "muted"),
           ...skills.items.map((s, i) => {
-            const lvl = levels[i % levels.length];
-            const bar = "█".repeat(Math.round(lvl / 10)) + "░".repeat(10 - Math.round(lvl / 10));
-            return line(<><span className="inline-block w-48 truncate align-bottom">{s.name}</span><span className="text-accent">{bar}</span> <span className="text-muted-foreground">{lvl}%</span></>);
+            const tier = tiers[i % tiers.length];
+            return line(<><span className="inline-block w-48 truncate align-bottom">{s.name}</span><span className="text-accent">{tier}</span></>);
           }),
         ];
       }
@@ -95,7 +94,7 @@ export default function Terminal({ onNavigate }: { onNavigate: (key: SectionKey)
           ...projects.items.slice(0, 8).map((p) =>
             line(
               <>
-                <span className="text-led-green">●</span> <a href={p.demo} target="_blank" rel="noopener noreferrer" className="underline decoration-border underline-offset-2 hover:text-accent">{p.title}</a>{" "}
+                <span className="text-muted-foreground">›</span> <a href={p.demo} target="_blank" rel="noopener noreferrer" className="underline decoration-border underline-offset-2 hover:text-accent">{p.title}</a>{" "}
                 <span className="text-muted-foreground">· {p.tags.slice(0, 2).join(", ")}</span>
               </>,
             ),

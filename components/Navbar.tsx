@@ -41,7 +41,7 @@ const Navbar = ({ activeSection, setActiveSection }: NavBarProps) => {
         <div className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border bg-card/95 shadow-lifted backdrop-blur-xl">
           <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
             <span className="flex min-w-0 items-center gap-2 truncate">
-              <span className={`led ${active.led}`} /> {active.ref} · {active.addr} · {active.name}
+              {active.ref} · {active.addr} · {active.name}
             </span>
             <span className="flex-none text-accent">PC <motion.span>{pc}</motion.span></span>
           </div>
@@ -104,7 +104,6 @@ const Navbar = ({ activeSection, setActiveSection }: NavBarProps) => {
                 >
                   {m.ref}
                 </span>
-                {isActive && <span className={`led absolute -right-2 -top-1 ${m.led}`} />}
                 <span className="pointer-events-none absolute left-12 top-1/2 -translate-y-1/2 translate-x-1 whitespace-nowrap rounded-md border border-border bg-card px-3 py-1.5 text-left opacity-0 shadow-soft transition-all duration-200 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:opacity-100">
                   <span className="block font-display text-sm font-bold uppercase text-foreground">{m.name}</span>
                   <span className="block font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">{m.addr} · {m.label}</span>

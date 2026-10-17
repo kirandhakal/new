@@ -96,11 +96,14 @@ export default function CpuBoard({ onNavigate }: { onNavigate: (key: SectionKey)
         ))}
         <span className="absolute left-[7%] top-[6%] h-2 w-2 rounded-full border border-chip-foreground/50" aria-hidden="true" />
 
-        <div className="relative aspect-square w-[58%] overflow-hidden rounded-lg border-2 border-copper/70">
-          <img src={hero.image} alt={hero.imageAlt} className="h-full w-full object-cover" />
+        {/* Die window: photo fills the package like a microprocessor die */}
+        <div className="relative mt-[8%] aspect-square w-[78%] overflow-hidden rounded-md border-2 border-copper/70 shadow-[inset_0_0_0_1px_hsl(var(--chip))]">
+          <img src={hero.image} alt={hero.imageAlt} className="h-full w-full object-cover object-top" />
+          <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,hsl(var(--copper)/0.12),transparent_40%,hsl(var(--chip)/0.25))]" aria-hidden="true" />
+          <span className="pointer-events-none absolute inset-0 opacity-[0.15]" style={{ backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, hsl(var(--chip)) 3px, hsl(var(--chip)) 4px), repeating-linear-gradient(90deg, transparent, transparent 3px, hsl(var(--chip)) 3px, hsl(var(--chip)) 4px)" }} aria-hidden="true" />
         </div>
-        <p className="mt-[6%] font-display text-[clamp(0.6rem,1.5vw,0.95rem)] font-bold uppercase leading-none tracking-wider">Kiran Dhakal</p>
-        <p className="mt-1 font-mono text-[clamp(0.45rem,1vw,0.6rem)] uppercase tracking-[0.18em] opacity-60">KD-2026 · Full-stack</p>
+        <p className="mt-[4%] font-display text-[clamp(0.55rem,1.4vw,0.9rem)] font-bold uppercase leading-none tracking-wider">Kiran Dhakal</p>
+        <p className="mt-1 font-mono text-[clamp(0.4rem,0.95vw,0.55rem)] uppercase tracking-[0.18em] opacity-60">KD-2026 · Full-stack</p>
       </motion.div>
 
       {/* Module pads */}
@@ -122,7 +125,6 @@ export default function CpuBoard({ onNavigate }: { onNavigate: (key: SectionKey)
           >
             <span className="relative flex h-11 w-11 items-center justify-center rounded-lg border-2 border-copper bg-card text-foreground shadow-soft transition-all duration-300 group-hover:-translate-y-0.5 group-hover:bg-foreground group-hover:text-background sm:h-14 sm:w-14">
               <Icon size={20} />
-              <span className={`led absolute -right-1 -top-1 ${m.led} ${hovered === pad.key ? "" : "opacity-50"}`} />
             </span>
             <span className="whitespace-nowrap rounded bg-background/80 px-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-foreground sm:text-[10px]">
               {m.ref} · {m.name}

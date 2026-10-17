@@ -19,7 +19,6 @@ export default function ModuleHeading({ module, title, description, className }:
       <div className="md:col-span-8">
         <div className="flex flex-wrap items-center gap-3">
           <span className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-2.5 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-foreground">
-            <span className={cn("led", m.led)} />
             {m.ref}
           </span>
           <span className="silk">

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, type ChangeEvent, type FormEvent } from 'react';
+import React, { useState, type ChangeEvent, type FormEvent, type FocusEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Facebook, Instagram, Github, Linkedin, Mail, Phone, 
@@ -9,13 +9,16 @@ import {
 import type { LucideIcon } from 'lucide-react';
 import contactJson from '@/data/contact-form/contact.json';
 import type { ContactFormData } from '@/types/content';
-import { Form, FormField as FormFieldContainer, FormLabel, Input, Textarea } from '@/components/ui';
+import { Form, FormField as FormFieldContainer, FormLabel, FormMessage, Input, Textarea } from '@/components/ui';
 import ModuleHeading from '@/components/ModuleHeading';
 
 const content = contactJson;
 const icons: Record<string, LucideIcon> = {
   Facebook, Instagram, Github, Linkedin, Mail, Phone, MapPin, Twitter, Youtube,
 };
+
+type FieldName = keyof ContactFormData;
+type FieldErrors = Partial<Record<FieldName, string>>;
 
 interface SuccessMessageProps {
   onReset: () => void;
@@ -36,16 +39,17 @@ interface SocialIconBoxProps {
 
 interface FormFieldProps {
   label: string;
-  name: keyof ContactFormData;
+  name: FieldName;
   value: string;
   onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onBlur: (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   placeholder: string;
   type?: string;
   required?: boolean;
   isTextarea?: boolean;
+  error?: string;
 }
 
-// Move constant data outside component to avoid recreation on every render
 const SOCIAL_LINKS = [
   { name: 'Facebook', icon: Facebook, url: 'https://www.facebook.com/kirandhakal715' },
   { name: 'Instagram', icon: Instagram, url: 'https://www.instagram.com/dhakalkiran_' },
@@ -55,18 +59,55 @@ const SOCIAL_LINKS = [
   { name: 'YouTube', icon: Youtube, url: 'https://www.youtube.com/@kirandhakal715' },
 ];
 
-const CONTACT_INFO = [
-  { icon: Mail, label: 'Email', value: 'kirandhakal715@gmail.com', href: 'mailto:kirandhakal715@gmail.com' },
-  { icon: Phone, label: 'Phone', value: '+977 9827591616', href: 'tel:+9779827591616' },
-  { icon: MapPin, label: 'Location', value: 'Kathmandu, Nepal', href: '#' },
-];
-
 const CONTACT_API_URL = process.env.NEXT_PUBLIC_CONTACT_API_URL
   || 'https://contact.kirandhakal.me/';
 const CONTACT_FORM_KEY = process.env.NEXT_PUBLIC_CONTACT_FORM_KEY
   || 'frm_I-Sn9KqEu3BrCwky2xQMZxQK'; 
 
-// TX overlay shown while the message is on the wire.
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_RE = /^[+]?[\d\s().-]{7,20}$/;
+
+const fieldRequired = (name: FieldName) =>
+  content.fields.find((f) => f.name === name)?.required ?? name !== 'phone';
+
+const validateField = (name: FieldName, value: string): string => {
+  const trimmed = value.trim();
+  const required = fieldRequired(name);
+
+  if (required && !trimmed) {
+    const labels: Record<FieldName, string> = {
+      name: 'Please enter your name.',
+      email: 'Please enter your email address.',
+      phone: '',
+      message: 'Please write a message.',
+    };
+    return labels[name];
+  }
+
+  if (name === 'email' && trimmed && !EMAIL_RE.test(trimmed)) {
+    return 'Enter a valid email address (e.g. you@example.com).';
+  }
+
+  if (name === 'phone' && trimmed && !PHONE_RE.test(trimmed)) {
+    return 'Enter a valid phone number, or leave it blank.';
+  }
+
+  if (name === 'message' && trimmed && trimmed.length < 10) {
+    return 'Message should be at least 10 characters.';
+  }
+
+  return '';
+};
+
+const validateForm = (data: ContactFormData): FieldErrors => {
+  const errors: FieldErrors = {};
+  (Object.keys(data) as FieldName[]).forEach((name) => {
+    const msg = validateField(name, data[name]);
+    if (msg) errors[name] = msg;
+  });
+  return errors;
+};
+
 const EnvelopeAnimation = () => (
   <motion.div
     initial={{ opacity: 0 }}
@@ -75,8 +116,8 @@ const EnvelopeAnimation = () => (
     className="pointer-events-none absolute inset-0 z-50 flex flex-col items-center justify-center gap-4 rounded-3xl bg-background/85 backdrop-blur-sm"
   >
     <div className="flex items-center gap-6 font-mono text-xs uppercase tracking-[0.2em]">
-      <span className="flex items-center gap-2 text-led-amber"><span className="led animate-led" /> TX</span>
-      <span className="flex items-center gap-2 text-muted-foreground"><span className="led opacity-30" /> RX</span>
+      <span className="text-led-amber">TX →</span>
+      <span className="text-muted-foreground">RX</span>
     </div>
     <svg viewBox="0 0 240 40" className="h-10 w-60" aria-hidden="true">
       <motion.path
@@ -142,16 +183,72 @@ const SocialIconBox = ({ icon: Icon, url, name }: SocialIconBoxProps) => (
   </motion.a>
 );
 
-const FormField = ({ label, name, value, onChange, placeholder, type = 'text', required = true, isTextarea = false }: FormFieldProps) => (
-  <FormFieldContainer>
-    <FormLabel htmlFor={`contact-${name}`}>{label}</FormLabel>
-    {isTextarea ? (
-      <Textarea id={`contact-${name}`} name={name} required={required} rows={5} value={value} onChange={onChange} placeholder={placeholder} className="resize-none text-base" />
-    ) : (
-      <Input id={`contact-${name}`} type={type} name={name} required={required} value={value} onChange={onChange} placeholder={placeholder} className="text-base" />
-    )}
-  </FormFieldContainer>
-);
+const FormField = ({
+  label,
+  name,
+  value,
+  onChange,
+  onBlur,
+  placeholder,
+  type = 'text',
+  required = true,
+  isTextarea = false,
+  error,
+}: FormFieldProps) => {
+  const id = `contact-${name}`;
+  const errorId = `${id}-error`;
+  const invalid = Boolean(error);
+
+  return (
+    <FormFieldContainer>
+      <FormLabel htmlFor={id} className="flex items-center gap-1.5">
+        <span>{label}</span>
+        {required ? (
+          <span className="text-danger" aria-hidden="true">*</span>
+        ) : (
+          <span className="normal-case tracking-normal text-muted-foreground/70">(optional)</span>
+        )}
+        {required && <span className="sr-only">(required)</span>}
+      </FormLabel>
+      {isTextarea ? (
+        <Textarea
+          id={id}
+          name={name}
+          required={required}
+          aria-required={required}
+          aria-invalid={invalid}
+          aria-describedby={invalid ? errorId : undefined}
+          rows={5}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+          placeholder={placeholder}
+          className={`resize-none text-base ${invalid ? 'border-danger focus-visible:ring-danger' : ''}`}
+        />
+      ) : (
+        <Input
+          id={id}
+          type={type}
+          name={name}
+          required={required}
+          aria-required={required}
+          aria-invalid={invalid}
+          aria-describedby={invalid ? errorId : undefined}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+          placeholder={placeholder}
+          className={`text-base ${invalid ? 'border-danger focus-visible:ring-danger' : ''}`}
+        />
+      )}
+      {error && (
+        <FormMessage id={errorId} role="alert">
+          {error}
+        </FormMessage>
+      )}
+    </FormFieldContainer>
+  );
+};
 
 const ContactSection = () => {
   const [formData, setFormData] = useState<ContactFormData>({
@@ -160,15 +257,25 @@ const ContactSection = () => {
     phone: '',
     message: '',
   });
+  const [errors, setErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<'' | 'success' | 'error'>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setStatus('');
     setErrorMessage('');
+
+    const nextErrors = validateForm(formData);
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) {
+      setErrorMessage('Fix the highlighted fields, then try again.');
+      setStatus('error');
+      return;
+    }
+
+    setIsSubmitting(true);
 
     if (!CONTACT_FORM_KEY || CONTACT_FORM_KEY.includes('YOUR')) {
       setErrorMessage('Contact form is not configured yet. Add NEXT_PUBLIC_CONTACT_FORM_KEY before deploying.');
@@ -178,6 +285,13 @@ const ContactSection = () => {
     }
 
     try {
+      const payload = {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        message: formData.message.trim(),
+      };
+
       const response = await fetch(
         `${CONTACT_API_URL.replace(/\/$/, '')}/v1/forms/${encodeURIComponent(CONTACT_FORM_KEY)}/submissions`,
         {
@@ -186,13 +300,14 @@ const ContactSection = () => {
             'Content-Type': 'application/json',
             'Idempotency-Key': `${Date.now()}-${Math.random().toString(36).slice(2)}`,
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(payload),
         },
       );
 
       if (response.ok) {
         setStatus('success');
         setFormData({ name: '', email: '', phone: '', message: '' });
+        setErrors({});
       } else {
         let errorText = 'Failed to send message';
         try {
@@ -213,7 +328,18 @@ const ContactSection = () => {
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    const field = name as FieldName;
+    setFormData({ ...formData, [field]: value });
+    if (errors[field]) {
+      setErrors({ ...errors, [field]: validateField(field, value) || undefined });
+    }
+  };
+
+  const handleBlur = (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const field = e.target.name as FieldName;
+    const msg = validateField(field, formData[field]);
+    setErrors((prev) => ({ ...prev, [field]: msg || undefined }));
   };
 
   return (
@@ -237,21 +363,27 @@ const ContactSection = () => {
                 className="overflow-hidden rounded-2xl border border-border bg-card"
               >
                 <div className="flex items-center justify-between border-b border-dashed border-border px-6 py-4 sm:px-9">
-                  <span className="flex items-center gap-2 font-mono text-sm font-semibold text-foreground"><span className="led text-led-green" /> /dev/ttyKD0</span>
+                  <span className="font-mono text-sm font-semibold text-foreground">/dev/ttyKD0</span>
                   <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">115200 · 8N1</span>
                 </div>
-                <Form onSubmit={handleSubmit} className="p-6 sm:p-9">
+                <Form onSubmit={handleSubmit} className="p-6 sm:p-9" noValidate>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    Fields marked <span className="text-danger">*</span> are required
+                  </p>
                   <div className="grid gap-5 sm:grid-cols-2">
                     {content.fields.map((field) => (
                       <div key={field.name} className={field.type === 'textarea' || field.type === 'tel' ? 'sm:col-span-2' : ''}>
                         <FormField
                           label={field.label}
-                          name={field.name as keyof ContactFormData}
-                          value={formData[field.name as keyof ContactFormData]}
+                          name={field.name as FieldName}
+                          value={formData[field.name as FieldName]}
                           onChange={handleChange}
+                          onBlur={handleBlur}
                           placeholder={field.placeholder}
                           type={field.type === 'textarea' ? 'text' : field.type}
+                          required={field.required}
                           isTextarea={field.type === 'textarea'}
+                          error={errors[field.name as FieldName]}
                         />
                       </div>
                     ))}
@@ -286,8 +418,8 @@ const ContactSection = () => {
         {/* Pinout */}
         <div className="flex min-w-0 flex-col gap-6 lg:col-span-5">
           <div className="rounded-2xl border border-border bg-card px-6 py-2 sm:px-8">
-            <p className="flex items-center gap-2 pt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-              <span className="led animate-led text-led-green" /> J5 pinout · listening
+            <p className="pt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+              J5 pinout · listening
             </p>
             {content.contactInfo.map((info, i) => (
               <ContactInfoBox key={info.label} channel={i + 1} icon={icons[info.icon]} label={info.label} value={info.value} href={info.href} />

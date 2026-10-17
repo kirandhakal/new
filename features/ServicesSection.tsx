@@ -7,7 +7,6 @@ import type { LucideIcon } from 'lucide-react';
 import servicesJson from '@/data/landing-page/home-service.json';
 import type { ServiceContent } from '@/types/content';
 import ModuleHeading from '@/components/ModuleHeading';
-import { LED_TEXT } from '@/lib/board';
 
 const services = servicesJson as ServiceContent;
 const icons: Record<string, LucideIcon> = { Globe, Smartphone, Palette, Code, Database, Cloud };
@@ -25,7 +24,6 @@ const ServicesSection = () => (
     <ul className="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
       {services.items.map((service, index) => {
         const Icon = icons[service.icon] ?? Code;
-        const led = LED_TEXT[index % LED_TEXT.length];
         return (
           <li key={service.title} className="group relative">
             <motion.article
@@ -37,7 +35,7 @@ const ServicesSection = () => (
             >
               <div className="flex items-center justify-between">
                 <span className="silk">Slot {index + 1} · {BUS[index % BUS.length]}</span>
-                <span className={`led ${led} ${index % 2 ? 'animate-led' : ''}`} />
+                <span className="silk">J{index + 2}</span>
               </div>
 
               <div className="mt-5 flex items-center gap-4">

@@ -4,10 +4,10 @@
   "titleAccent": "Connect",
   "description": "Have a project in mind? Drop me a line below.",
   "fields": [
-    { "label": "Your Name", "name": "name", "placeholder": "John Doe", "type": "text" },
-    { "label": "Email Address", "name": "email", "placeholder": "john@example.com", "type": "email" },
-    { "label": "Phone Number", "name": "phone", "placeholder": "+977 98XXXXXXXX", "type": "tel" },
-    { "label": "Message", "name": "message", "placeholder": "Tell me about your project...", "type": "textarea" }
+    { "label": "Your Name", "name": "name", "placeholder": "John Doe", "type": "text", "required": true },
+    { "label": "Email Address", "name": "email", "placeholder": "john@example.com", "type": "email", "required": true },
+    { "label": "Phone Number", "name": "phone", "placeholder": "+977 98XXXXXXXX (optional)", "type": "tel", "required": false },
+    { "label": "Message", "name": "message", "placeholder": "Tell me about your project...", "type": "textarea", "required": true }
   ],
   "submitLabel": "Send Message",
   "submittingLabel": "Sending...",

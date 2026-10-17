@@ -45,9 +45,7 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
           {/* Copy */}
           <div className="lg:col-span-5">
-            <p className="eyebrow">
-              <span className="led text-led-green" /> U1 · 0x00 · main processor
-            </p>
+            <p className="eyebrow">U1 · 0x00 · main processor</p>
             <h1 className="mt-6 font-display text-[clamp(3.2rem,11vw,6.5rem)] font-bold uppercase leading-[0.86] tracking-[-0.03em] text-foreground">
               {firstName}
               <br />

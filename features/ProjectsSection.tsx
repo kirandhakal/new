@@ -48,12 +48,12 @@ const categoryNames = Object.fromEntries(
   content.categories.filter(({ key }) => key !== "all").map(({ key, label }) => [key, label]),
 );
 
-// Each category is a product family with its own part-number prefix and LED colour.
-const family: Record<string, { prefix: string; led: string }> = {
-  govtech: { prefix: "GOV", led: "text-led-blue" },
-  saas: { prefix: "SAS", led: "text-led-green" },
-  commerce: { prefix: "COM", led: "text-led-amber" },
-  creative: { prefix: "CRT", led: "text-led-red" },
+// Each category is a product family with its own part-number prefix.
+const family: Record<string, { prefix: string }> = {
+  govtech: { prefix: "GOV" },
+  saas: { prefix: "SAS" },
+  commerce: { prefix: "COM" },
+  creative: { prefix: "CRT" },
 };
 
 const partNumber = (category: string, index: number) => `KD-${family[category]?.prefix ?? "GEN"}-${String(index + 1).padStart(2, "0")}`;
@@ -62,7 +62,6 @@ const partNumber = (category: string, index: number) => `KD-${family[category]?.
 const QfpChip = ({ index, active, enabled, onSelect }: { index: number; active: boolean; enabled: boolean; onSelect: () => void }) => {
   const project = content.items[index];
   const Icon = icons[project.icon] ?? FileText;
-  const fam = family[project.category];
   const pins = (horizontal: boolean) =>
     Array.from({ length: 6 }, (_, i) => <span key={i} className={horizontal ? "h-[5px] w-[3px] bg-copper" : "h-[3px] w-[5px] bg-copper"} />);
 
@@ -85,7 +84,6 @@ const QfpChip = ({ index, active, enabled, onSelect }: { index: number; active: 
         }`}
       >
         <span className="absolute left-1.5 top-1.5 h-1.5 w-1.5 rounded-full border border-chip-foreground/40" aria-hidden="true" />
-        <span className={`led absolute right-1.5 top-1.5 h-1.5 w-1.5 ${fam?.led} ${active ? "" : "opacity-40"}`} />
         <Icon size={18} className="opacity-90" />
         <span className="font-mono text-[8px] tracking-[0.08em] opacity-60 sm:text-[9px]">{partNumber(project.category, index)}</span>
       </span>
@@ -100,7 +98,6 @@ export default function ProjectsSection() {
   const inCategory = (category: string) => activeCategory === "all" || category === activeCategory;
   const visible = content.items.map((p, i) => ({ ...p, index: i })).filter((p) => inCategory(p.category));
   const project = content.items[selected];
-  const fam = family[project.category];
   const position = visible.findIndex((p) => p.index === selected);
   const revision = (hash(project.title) % 5) + 1;
 
@@ -138,7 +135,6 @@ export default function ProjectsSection() {
                 isActive ? "border-foreground bg-foreground text-background" : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
               }`}
             >
-              {category.key !== "all" && <span className={`led ${family[category.key]?.led}`} />}
               {category.label}
               <span className="font-mono text-[10px] opacity-60">{count}</span>
             </button>
@@ -178,8 +174,8 @@ export default function ProjectsSection() {
             <div className="p-6 sm:p-8">
               <div className="flex items-start justify-between gap-4">
                 <h3 className="font-display text-3xl font-bold uppercase leading-tight tracking-tight text-foreground sm:text-4xl">{project.title}</h3>
-                <span className="mt-2 inline-flex flex-none items-center gap-2 rounded-md border border-border px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-foreground">
-                  <span className="led text-led-green" /> Live
+                <span className="mt-2 inline-flex flex-none items-center rounded-md border border-border px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-foreground">
+                  Live
                 </span>
               </div>
 
@@ -199,8 +195,8 @@ export default function ProjectsSection() {
 
               <p className="silk mt-6">3 · Operating status</p>
               <div className="mt-2 flex flex-wrap gap-2 font-mono text-xs">
-                <span className={`inline-flex items-center gap-2 rounded-md bg-secondary px-2.5 py-1.5 ${fam?.led}`}>
-                  <span className="led" /> <span className="text-foreground">{categoryNames[project.category]}</span>
+                <span className="inline-flex items-center rounded-md bg-secondary px-2.5 py-1.5 text-foreground">
+                  {categoryNames[project.category]}
                 </span>
                 <span className="rounded-md bg-secondary px-2.5 py-1.5 text-foreground">Deployed · production</span>
               </div>
