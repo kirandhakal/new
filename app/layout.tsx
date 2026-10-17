@@ -1,13 +1,37 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import Script from "next/script";
-import { Chakra_Petch, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { siteConfig } from "@/lib/seo";
 
-const chakra = Chakra_Petch({ subsets: ["latin"], weight: ["500", "600", "700"], variable: "--font-chakra", display: "swap" });
-const plexSans = IBM_Plex_Sans({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-plex-sans", display: "swap" });
-const plexMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-plex-mono", display: "swap" });
+const chakra = localFont({
+  src: [
+    { path: "./fonts/ChakraPetch-Medium.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/ChakraPetch-SemiBold.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/ChakraPetch-Bold.woff2", weight: "700", style: "normal" },
+  ],
+  variable: "--font-chakra",
+  display: "swap",
+});
+
+const plexSans = localFont({
+  src: "./fonts/IBMPlexSans-Variable.woff2",
+  weight: "400 700",
+  style: "normal",
+  variable: "--font-plex-sans",
+  display: "swap",
+});
+
+const plexMono = localFont({
+  src: [
+    { path: "./fonts/IBMPlexMono-Regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/IBMPlexMono-Medium.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/IBMPlexMono-SemiBold.woff2", weight: "600", style: "normal" },
+  ],
+  variable: "--font-plex-mono",
+  display: "swap",
+});
 
 export const viewport: Viewport = {
   themeColor: [
