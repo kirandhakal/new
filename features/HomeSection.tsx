@@ -7,7 +7,6 @@ import type { SectionKey } from "@/types/navigation";
 import heroJson from "@/data/landing-page/home-hero.json";
 import type { HeroContent } from "@/types/content";
 import { toHex } from "@/lib/board";
-import BootScreen from "./hero/BootScreen";
 import CpuBoard from "./hero/CpuBoard";
 import Terminal from "./hero/Terminal";
 
@@ -39,8 +38,6 @@ const HomeSection = ({ setActiveSection }: HomeSectionProps) => {
 
   return (
     <div className="relative">
-      <BootScreen />
-
       <div className="mx-auto w-full max-w-7xl px-5 pb-20 pt-10 sm:px-6 md:pt-14 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
           {/* Copy */}

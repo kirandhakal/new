@@ -6,8 +6,8 @@ import { Power } from "lucide-react";
 
 const POST_LINES: Array<[string, string?]> = [
   ["KD-BIOS v26.10  (c) Kiran Dhakal, Kathmandu"],
-  ["CPU0: Kiran Dhakal @ full-stack, 1 core, unlimited curiosity", "ok"],
-  ["Memory test: 20+ projects ............................ OK", "ok"],
+  ["CPU0: Kiran Dhakal @ full-stack, 2 core, unlimited curiosity", "ok"],
+  ["Memory test: 10+ projects ............................ OK", "ok"],
   ["Detecting buses: PCIe (services) · I2C (skills) · SPI (projects)", "ok"],
   ["Loading module react.ko", "ok"],
   ["Loading module nextjs.ko", "ok"],
@@ -19,29 +19,49 @@ const POST_LINES: Array<[string, string?]> = [
   ["All systems nominal. Welcome."],
 ];
 
+interface BootScreenProps {
+  onBootComplete?: () => void;
+}
+
 /* First-visit power-on sequence. Remembered per tab session so it only plays once. */
-export default function BootScreen() {
+export default function BootScreen({ onBootComplete }: BootScreenProps = {}) {
   const [phase, setPhase] = useState<"off" | "booting" | "done">("off");
   const [shown, setShown] = useState(0);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     try {
-      if (sessionStorage.getItem("kd-booted")) setPhase("done");
+      if (sessionStorage.getItem("kd-booted")) {
+        setPhase("done");
+        onBootComplete?.();
+      }
     } catch {
       // No storage: just show the boot screen.
     }
-  }, []);
+  }, [onBootComplete]);
+
+  // Lock body scroll while in the boot screen sequence
+  useEffect(() => {
+    if (phase !== "done") {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [phase]);
 
   const finish = useCallback(() => {
     if (timer.current) clearInterval(timer.current);
     setPhase("done");
     try {
       sessionStorage.setItem("kd-booted", "1");
+      document.documentElement.setAttribute("data-booted", "true");
     } catch {
       // Ignore: the boot screen will simply play again next time.
     }
-  }, []);
+    onBootComplete?.();
+  }, [onBootComplete]);
 
   const powerOn = useCallback(() => {
     if (phase !== "off") return;
@@ -77,9 +97,10 @@ export default function BootScreen() {
     <AnimatePresence>
       {phase !== "done" && (
         <motion.div
+          id="boot-screen"
           exit={{ opacity: 0, scaleY: 0.02, filter: "brightness(2)" }}
           transition={{ duration: 0.45, ease: "easeIn" }}
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-background px-5"
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-background px-5"
         >
           {phase === "off" ? (
             <div className="flex flex-col items-center text-center">

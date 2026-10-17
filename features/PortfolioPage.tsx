@@ -6,7 +6,9 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import type { SectionKey } from "@/types/navigation";
 
-const HomeSection = React.lazy(() => import("./HomeSection"));
+import HomeSection from "./HomeSection";
+import BootScreen from "./hero/BootScreen";
+
 const SkillsSection = React.lazy(() => import("./SkillsSection"));
 const ProjectsSection = React.lazy(() => import("./ProjectsSection"));
 const ServicesSection = React.lazy(() => import("./ServicesSection"));
@@ -48,6 +50,15 @@ const SectionFallback = ({ label }: { label: string }) => (
 
 const PortfolioPage = () => {
   const [activeSection, setActiveSection] = useState<SectionKey>("home");
+  const [isBooted, setIsBooted] = useState(false);
+
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem("kd-booted")) {
+        setIsBooted(true);
+      }
+    } catch {}
+  }, []);
 
   const sectionRefs = {
     home: useRef<HTMLElement>(null),
@@ -58,7 +69,6 @@ const PortfolioPage = () => {
     chatbase: useRef<HTMLElement>(null),
   };
 
-  const isHomeNear = useIsNearViewport(sectionRefs.home);
   const isServicesNear = useIsNearViewport(sectionRefs.services);
   const isSkillsNear = useIsNearViewport(sectionRefs.skills);
   const isProjectsNear = useIsNearViewport(sectionRefs.projects);
@@ -97,16 +107,13 @@ const PortfolioPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <BootScreen onBootComplete={() => setIsBooted(true)} />
       <Header onHomeClick={() => scrollToSection("home")} />
 
       <main className="pt-16 lg:pl-24">
         <div>
-          <section ref={sectionRefs.home} id="home" className="relative">
-            <div>
-            <Suspense fallback={<SectionFallback label="Loading home..." />}>
-              {isHomeNear ? <HomeSection setActiveSection={scrollToSection} /> : null}
-            </Suspense>
-            </div>
+          <section ref={sectionRefs.home} id="home" className="relative min-h-[calc(100vh-4rem)]">
+            <HomeSection setActiveSection={scrollToSection} />
           </section>
 
           <section ref={sectionRefs.services} id="services" className="relative">
@@ -146,9 +153,11 @@ const PortfolioPage = () => {
       </main>
 
       <Navbar activeSection={activeSection} setActiveSection={scrollToSection} />
-      <Suspense fallback={null}>
-        <ChatbaseWidget />
-      </Suspense>
+      {isBooted && (
+        <Suspense fallback={null}>
+          <ChatbaseWidget />
+        </Suspense>
+      )}
       <Footer />
 
     </div>

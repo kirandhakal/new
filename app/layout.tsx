@@ -41,7 +41,7 @@ export const viewport: Viewport = {
 };
 
 // Runs before first paint so a saved light/dark choice never flashes the wrong theme. Dark is the default.
-const themeScript = `try{var t=localStorage.getItem("theme");document.documentElement.classList.toggle("dark",t!=="light")}catch(e){}`;
+const themeScript = `try{var t=localStorage.getItem("theme");document.documentElement.classList.toggle("dark",t!=="light");if(sessionStorage.getItem("kd-booted"))document.documentElement.setAttribute("data-booted","true")}catch(e){}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
